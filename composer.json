@@ -1,0 +1,22 @@
+{
+    "name": "arcanedev/head",
+    "description": "Head Helper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ARCANEDEV",
+            "email": "arcanedev.maroc@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "~4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arcanedev\\Head\\": "src/",
+            "Arcanedev\\Head\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev"
+}

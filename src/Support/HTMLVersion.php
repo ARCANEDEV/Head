@@ -42,7 +42,7 @@ class HTMLVersion
     }
 
     /**
-     * @param string $version
+     * @param string|HTMLVersion $version
      *
      * @throws InvalidTypeException
      * @throws InvalidHTMLVersionException
@@ -51,6 +51,10 @@ class HTMLVersion
      */
     public function set($version)
     {
+        if ( $version instanceof HTMLVersion) {
+            $version = $version->get();
+        }
+
         $this->check($version);
 
         $this->version = $version;

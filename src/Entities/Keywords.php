@@ -30,6 +30,13 @@ class Keywords extends AbstractMeta
         return $this->keywords;
     }
 
+    /**
+     * @param string|array $keywords
+     *
+     * @throws InvalidTypeException
+     *
+     * @return Keywords
+     */
     public function set($keywords)
     {
         if ( ! is_string($keywords) and ! is_array($keywords) ) {
@@ -45,6 +52,8 @@ class Keywords extends AbstractMeta
         if ( is_array($keywords) ) {
             $this->setFromArray($keywords);
         }
+
+        return $this;
     }
 
     /**

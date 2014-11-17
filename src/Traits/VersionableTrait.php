@@ -45,7 +45,7 @@ trait VersionableTrait
      * Get HTML Version
      *
      *
-     * @param string $version
+     * @param string|HTMLVersion $version
      *
      * @throws InvalidTypeException
      * @throws InvalidHTMLVersionException

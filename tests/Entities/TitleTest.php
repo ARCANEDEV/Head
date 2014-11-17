@@ -1,7 +1,5 @@
 <?php namespace Arcanedev\Head\Tests\Entities;
 
-use Arcanedev\Head\Tests\TestCase;
-
 use Arcanedev\Head\Entities\Title;
 
 class TitleTest extends TestCase

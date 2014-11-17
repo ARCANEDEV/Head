@@ -95,6 +95,67 @@ class Head implements RenderableInterface, VersionableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * @return string
+     */
+    public function getCharset()
+    {
+        return $this->charset->get();
+    }
+
+    /**
+     * @param Keywords|string $charset
+     *
+     * @return Head
+     */
+    public function setCharset($charset)
+    {
+        $this->checkCharset($charset);
+
+        if ( is_string($charset) ) {
+            $this->charset->set($charset);
+        }
+        elseif ( $charset instanceof Charset ) {
+            $this->charset = $charset;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCharsetTag()
+    {
+        return $this->charset->render();
+    }
+
+    /**
+     * @param       string $title
+     * @param       string $description
+     * @param array|string $keywords
+     *
+     * @throws InvalidTypeException
+     *
+     * @return Head
+     */
+    public function set($title, $description, $keywords = [])
+    {
+        return $this->setTitle($title)
+                    ->setDescription($description)
+                    ->setKeywords($keywords);
+    }
+
+    /**
+     * Get the Title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title->get();
+    }
+
+    /**
      * @param Title|string $title
      *
      * @throws InvalidTypeException
@@ -113,6 +174,26 @@ class Head implements RenderableInterface, VersionableInterface
         }
 
         return $this;
+    }
+
+    /**
+     * Get Title Tag
+     *
+     * @return string
+     */
+    public function getTitleTag()
+    {
+        return $this->title->render();
+    }
+
+    /**
+     * Get the description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description->get();
     }
 
     /**
@@ -137,6 +218,24 @@ class Head implements RenderableInterface, VersionableInterface
     }
 
     /**
+     * @return string
+     */
+    public function getDescriptionTag()
+    {
+        return $this->description->render();
+    }
+
+    /**
+     * @return array
+     */
+    public function getKeywords()
+    {
+        return $this->keywords->get();
+    }
+
+    /**
+     * Set Keywords
+     *
      * @param Keywords|string $keywords
      *
      * @throws InvalidTypeException
@@ -151,25 +250,32 @@ class Head implements RenderableInterface, VersionableInterface
             $this->keywords->set($keywords);
         }
 
-        if ( $keywords instanceof Description ) {
+        if ( $keywords instanceof Keywords ) {
             $this->keywords = $keywords;
         }
 
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getKeywordsTag()
+    {
+        return $this->keywords->render();
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-
     public function render()
     {
         $tags = [
-            $this->charset->render(),
-            $this->title->render(),
-            $this->description->render(),
-            $this->keywords->render(),
+            $this->getCharsetTag(),
+            $this->getTitleTag(),
+            $this->getDescriptionTag(),
+            $this->getKeywordsTag(),
         ];
 
         return implode(PHP_EOL, array_filter($tags));
@@ -180,6 +286,18 @@ class Head implements RenderableInterface, VersionableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * @param Charset|string $charset
+     *
+     * @throws InvalidTypeException
+     */
+    private function checkCharset($charset)
+    {
+        if ( ! is_string($charset) and ! ($charset instanceof Title) ) {
+            throw new InvalidTypeException('charset', $charset, 'string or Charset Object');
+        }
+    }
+
+    /**
      * @param $title
      *
      * @throws InvalidTypeException
@@ -187,7 +305,7 @@ class Head implements RenderableInterface, VersionableInterface
     private function checkTitle($title)
     {
         if ( ! is_string($title) and ! ($title instanceof Title) ) {
-            throw new InvalidTypeException('title', $title, 'string or Title Class');
+            throw new InvalidTypeException('title', $title, 'string or Title Object');
         }
     }
 
@@ -199,7 +317,7 @@ class Head implements RenderableInterface, VersionableInterface
     private function checkDescription($description)
     {
         if ( ! is_string($description) and !($description instanceof Description) ) {
-            throw new InvalidTypeException('description', $description, 'string or Description Class');
+            throw new InvalidTypeException('description', $description, 'string or Description Object');
         }
     }
 
@@ -211,7 +329,7 @@ class Head implements RenderableInterface, VersionableInterface
     private function checkKeywords($keywords)
     {
         if ( ! is_string($keywords) and ! is_array($keywords) and ! ($keywords instanceof Keywords) ) {
-            throw new InvalidTypeException('keywords', $keywords, 'string, array or Keywords Class');
+            throw new InvalidTypeException('keywords', $keywords, 'string, array or Keywords Object');
         }
     }
 }

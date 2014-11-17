@@ -1,10 +1,12 @@
 <?php namespace Arcanedev\Head\Entities;
 
+use Arcanedev\Head\Contracts\RenderableInterface;
 use Arcanedev\Head\Contracts\TitleInterface;
+
 use Arcanedev\Head\Exceptions\EmptyTitleException;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
-class Title implements TitleInterface
+class Title implements TitleInterface, RenderableInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -231,17 +233,16 @@ class Title implements TitleInterface
      */
     public function render()
     {
-        if ( ! $this->isEmpty() ) {
-
-            $title = [];
-            $this->getFirst($title);
-            $this->renderSeparator($title);
-            $this->getLast($title);
-
-            return '<title>' . implode(' ', $title) . '</title>';
+        if ( $this->isEmpty() ) {
+            return '';
         }
 
-        return '';
+        $title = [];
+        $this->getFirst($title);
+        $this->renderSeparator($title);
+        $this->getLast($title);
+
+        return '<title>' . implode(' ', $title) . '</title>';
     }
 
     /**

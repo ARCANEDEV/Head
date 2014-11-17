@@ -1,8 +1,6 @@
-<?php namespace Arcanedev\Head\Entities;
+<?php namespace Arcanedev\Head\Support;
 
-use Arcanedev\Head\Support\Collection;
-
-class MetaCollection extends Collection
+class Collection
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -11,10 +9,19 @@ class MetaCollection extends Collection
     protected $items = [];
 
     /* ------------------------------------------------------------------------------------------------
-     |  Constructors
+     |  Constructor
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * @param array $items
      */
     function __construct(array $items = [])
     {
+        $this->items = $items;
     }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Main Functions
+     | ------------------------------------------------------------------------------------------------
+     */
 }

@@ -39,10 +39,4 @@ interface TitleInterface
     public function siteNameLast();
 
     public function separator($separator = '|');
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function render();
 }

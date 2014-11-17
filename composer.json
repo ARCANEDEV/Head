@@ -1,6 +1,8 @@
 {
     "name": "arcanedev/head",
     "description": "Head Helper",
+    "keywords": ["title", "description", "charset", "meta", "style", "stylesheet", "script", "favicon", "google analytics"],
+    "homepage": "http://www.arcanedev.net",
     "license": "MIT",
     "authors": [
         {
@@ -17,6 +19,9 @@
             "Arcanedev\\Head\\": "src/",
             "Arcanedev\\Head\\Tests\\": "tests/"
         }
+    },
+    "suggest": {
+        "ext-mbstring": "To get encoding charset list."
     },
     "minimum-stability": "dev"
 }

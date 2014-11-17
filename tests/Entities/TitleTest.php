@@ -1,8 +1,10 @@
 <?php namespace Arcanedev\Head\Tests\Entities;
 
+use Arcanedev\Head\Tests\TestCase;
+
 use Arcanedev\Head\Entities\Title;
 
-class TitleTest extends \PHPUnit_Framework_TestCase
+class TitleTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -37,6 +39,9 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Arcanedev\\Head\\Entities\\Title', $this->title);
     }
 
+    /**
+     * @test
+     */
     public function testCanSetTitle()
     {
         $this->title->set('My awesome title');
@@ -44,6 +49,9 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->title->isEmpty());
     }
 
+    /**
+     * @test
+     */
     public function testCanSetSitename()
     {
         $this->title->setSiteName('Company Name');
@@ -51,6 +59,9 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->title->isSiteNameEmpty());
     }
 
+    /**
+     * @test
+     */
     public function testCanToggleSiteNameVisibility()
     {
         $this->assertTrue($this->title->isSiteNameVisible());
@@ -65,6 +76,9 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->title->isSiteNameHidden());
     }
 
+    /**
+     * @test
+     */
     public function testCanSetSeparator()
     {
         $this->title->separator(' -');
@@ -80,17 +94,26 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->title->isSeparatorEmpty());
     }
 
+    /**
+     * @test
+     */
     public function testCanRenderTitleOne()
     {
         $this->assertEmpty($this->title->render());
     }
 
+    /**
+     * @test
+     */
     public function testCanRenderTitleTwo()
     {
         $this->title->set('My awesome title');
         $this->assertEquals('<title>My awesome title</title>', $this->title->render());
     }
 
+    /**
+     * @test
+     */
     public function testCanRenderTitleThree()
     {
         $this->title->set('My awesome title');
@@ -98,6 +121,9 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('<title>My awesome title | Company Name</title>', $this->title->render());
     }
 
+    /**
+     * @test
+     */
     public function testCanRenderTitleFour()
     {
         $this->title->set('My awesome title');
@@ -106,6 +132,9 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('<title>My awesome title</title>', $this->title->render());
     }
 
+    /**
+     * @test
+     */
     public function testCanRenderTitleFive()
     {
         $this->title->set('My awesome title');
@@ -119,6 +148,9 @@ class TitleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('<title>My awesome title | Company Name</title>', $this->title->render());
     }
 
+    /**
+     * @test
+     */
     public function testCanRenderTitleSix()
     {
         $this->title->set('My awesome title');

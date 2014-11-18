@@ -35,8 +35,8 @@ class ImageMediaTest extends VisualMediaTestCase
     public function testCanInstantiate()
     {
         $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\ImageMedia', $this->media);
-        $this->assertVisualMediaInstance($this->media);
-        $this->assertAbstractMediaInstance($this->media);
+        $this->assertVisualMediaInstance();
+        $this->assertAbstractMediaInstance();
     }
 
     /**

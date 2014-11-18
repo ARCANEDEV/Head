@@ -32,7 +32,7 @@ class AudioMediaTest extends AbstractMediaTestCase
     public function testCanInstantiate()
     {
         $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\AudioMedia', $this->media);
-        $this->assertAbstractMediaInstance($this->media);
+        $this->assertAbstractMediaInstance();
     }
 
     /**
@@ -43,11 +43,17 @@ class AudioMediaTest extends AbstractMediaTestCase
         parent::testCanSetAndGetURL('http://www.company.com/audio.mp3');
     }
 
+    /**
+     * @test
+     */
     public function testCanSetAndGetSecureURL($secureURL = '')
     {
         parent::testCanSetAndGetSecureURL('https://www.company.com/audio.mp3');
     }
 
+    /**
+     * @test
+     */
     public function testCanSetAndGetType($type = '')
     {
         parent::testCanSetAndGetType('audio/mpeg');

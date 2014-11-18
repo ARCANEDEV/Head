@@ -20,7 +20,7 @@ abstract class VisualMediaTestCase extends AbstractMediaTestCase
      */
     public function assertVisualMediaInstance()
     {
-        if ( ! is_null($this->media) ) {
+        if ( $this->isMediaNotNull() ) {
             $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VisualMedia', $this->media);
         }
     }
@@ -30,7 +30,7 @@ abstract class VisualMediaTestCase extends AbstractMediaTestCase
      */
     public function assertCanSetAndGetWidthAndHeight()
     {
-        if ( ! is_null($this->media) ) {
+        if ( $this->isMediaNotNull() ) {
             $width  = 300;
             $height = 300;
 

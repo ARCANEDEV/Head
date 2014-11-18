@@ -29,23 +29,35 @@ class VideoMediaTest extends VisualMediaTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * @test
+     */
     public function testCanInstantiate()
     {
         $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VideoMedia', $this->media);
-        $this->assertVisualMediaInstance($this->media);
-        $this->assertAbstractMediaInstance($this->media);
+        $this->assertVisualMediaInstance();
+        $this->assertAbstractMediaInstance();
     }
 
+    /**
+     * @test
+     */
     public function testCanSetAndGetURL($url = '')
     {
         parent::testCanSetAndGetURL('http://www.company.com/video.mp4');
     }
 
+    /**
+     * @test
+     */
     public function testCanSetAndGetSecureURL($secureURL = '')
     {
         parent::testCanSetAndGetSecureURL('https://www.company.com/video.mp4');
     }
 
+    /**
+     * @test
+     */
     public function testCanSetAndGetType($type = '')
     {
         parent::testCanSetAndGetType('application/x-shockwave-flash');

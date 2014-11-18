@@ -1,31 +1,16 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph;
 
-use Arcanedev\Head\Contracts\ArrayableInterface;
-
+use Arcanedev\Head\Contracts\RenderableInterface;
 use Arcanedev\Head\Entities\OpenGraph\Medias\AudioMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
 
-class OpenGraph
+class OpenGraph implements RenderableInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Property prefix
-     *
-     * @var string
-     */
-    const PREFIX = 'og';
-
-    /**
-     * prefix namespace
-     *
-     * @var string
-     */
-    const NS    = 'http://ogp.me/ns#';
-
     /**
      * Version
      *
@@ -40,12 +25,8 @@ class OpenGraph
      */
     const VERIFY_URLS = false;
 
-    /**
-     * Meta attribute name. Use 'property' if you prefer RDF or 'name' if you prefer HTML validation
-     *
-     * @var string
-     */
-    const META_ATTR = 'property';
+    /** @var bool */
+    protected $enabled = false;
 
     /**
      * Page classification according to a pre-defined set of base types.
@@ -66,7 +47,7 @@ class OpenGraph
      *
      * @var string
      */
-    protected $siteName;
+    protected $site_name;
 
     /**
      * A one to two sentence description of your object.
@@ -186,7 +167,7 @@ class OpenGraph
      */
     public function getSiteName()
     {
-        return $this->siteName;
+        return $this->site_name;
     }
 
     /**
@@ -199,7 +180,7 @@ class OpenGraph
         if ( is_string($site_name) && ! empty($site_name) ) {
             $site_name = trim($site_name);
 
-            $this->siteName = (strlen( $site_name ) > 128)
+            $this->site_name = (strlen( $site_name ) > 128)
                 ? substr($site_name, 0, 128)
                 : $site_name;
         }
@@ -336,6 +317,7 @@ class OpenGraph
     }
 
     /**
+     * @param string     $imageUrl
      * @param ImageMedia $image
      */
     private function addImageToCollection($imageUrl, ImageMedia $image)
@@ -425,66 +407,183 @@ class OpenGraph
         return $this;
     }
 
+    /**
+     * @param bool $enabled
+     *
+     * @return OpenGraph
+     */
+    private function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Build Open Graph protocol HTML markup based on an array
-     *
-     * @param array  $og     - associative array of OGP properties and values
-     * @param string $prefix - optional prefix to prepend to all properties
-     *
-     * @return string
+     * @return OpenGraph
      */
-    public static function buildHTML(array $og, $prefix = self::PREFIX)
+    public function enable()
     {
-        $output = '';
-
-        if ( empty($og) ) {
-            return $output;
-        }
-
-        foreach ($og as $property => $content) {
-            if ( is_object($content) || is_array($content) ) {
-                if ( is_object($content) and $content instanceof ArrayableInterface) {
-                    $content = $content->toArray();
-                }
-
-                $output .= ( ! is_string($property) or empty($property) )
-                    ? static::buildHTML($content, $prefix )
-                    : static::buildHTML($content, $prefix . ':' . $property);
-            }
-            elseif ( ! empty($content) ) {
-                $output .= self::buildMeta($prefix, $property, $content);
-            }
-        }
-
-        return $output;
+        return $this->setEnabled(true);
     }
 
     /**
-     * @param string $prefix
-     * @param string $property
-     * @param string $content
+     * @return OpenGraph
+     */
+    public function disable()
+    {
+        return $this->setEnabled(false);
+    }
+
+    public function render()
+    {
+        return $this->isEnabled() ? $this->toHTML() : '';
+    }
+
+    /**
+     * Output the OpenGraphProtocol object as HTML elements string
+     *
+     * @return string meta elements
+     */
+    public function toHTML()
+    {
+        $attributes = get_object_vars($this);
+
+        $allowed = array_flip([
+            'type', 'title', 'site_name', 'description', 'url', 'determiner', 'images', 'videos', 'audios'
+        ]);
+
+        $attributes = array_intersect_key($attributes, $allowed);
+
+        return MetaBuilder::html($attributes);
+    }
+
+    /**
+     * Cleans a URL string, then checks to see if a given URL is addressable, returns a 200 OK response, and matches the accepted Internet media types (if provided).
+     *
+     * @param string $url           - Publicly addressable URL
+     * @param array  $acceptedMimes - Given URL correspond to an accepted Internet media (MIME) type.
+     *
+     * @return string - cleaned URL string, or empty string on failure.
+     */
+    public static function isValidUrl($url, array $acceptedMimes = [])
+    {
+        if ( ! is_string($url) or empty($url) ) {
+            return '';
+        }
+
+        return self::curlParsedURL($url, $acceptedMimes);
+    }
+
+    /**
+     * @param string $url
      *
      * @return string
      */
-    private static function buildMeta($prefix, $property, $content)
+    private static function parseUrl($url)
     {
-        $output = '';
+        $urlParts   = parse_url($url);
 
-        $output .= '<meta ' . self::META_ATTR . '="' . $prefix;
+        $url        = '';
 
-        if ( is_string($property) and ! empty($property) ) {
-            $output .= ':' . htmlspecialchars($property);
+        if ( isset($urlParts['scheme']) and in_array($urlParts['scheme'], ['http', 'https'], true) ) {
+            $url = "{$urlParts['scheme']}://{$urlParts['host']}{$urlParts['path']}";
+
+            if ( empty($urlParts['path']) ) {
+                $url .= '/';
+            }
+
+            if ( ! empty($urlParts['query']) ) {
+                $url .= '?' . $urlParts['query'];
+            }
+
+            if ( ! empty($urlParts['fragment']) ) {
+                $url .= '#' . $urlParts['fragment'];
+            }
         }
 
-        $output .= '" content="' . htmlspecialchars($content) . '">';
-
-        return $output . PHP_EOL;
+        return $url;
     }
 
+    /**
+     * @param       $url
+     * @param array $acceptedMimes
+     *
+     * @return string
+     */
+    private static function curlParsedURL($url, array $acceptedMimes)
+    {
+        /*
+         * Validate URI string by letting PHP break up the string and put it back together again
+         * Excludes username:password and port number URI parts
+         */
+        $url = self::parseUrl($url);
+
+        if ( ! empty($url) ) {
+            // test if URL exists
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
+            curl_setopt($ch, CURLOPT_NOBODY, true); // HEAD
+            curl_setopt($ch, CURLOPT_USERAGENT, 'Open Graph protocol validator ' . self::VERSION . ' (+http://ogp.me/)');
+
+            if ( !empty($acceptedMimes) ) {
+                curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: ' . implode(',', $acceptedMimes)]);
+            }
+
+            $response       = curl_exec($ch);
+            $statusCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+            if ( $statusCode != 200 or empty($acceptedMimes) ) {
+                return '';
+            }
+
+            if ( $statusCode == 200 and ! empty($acceptedMimes) ) {
+                $contentType    = explode(';', curl_getinfo($ch, CURLINFO_CONTENT_TYPE));
+
+                if ( empty($contentType) or ! in_array($contentType[0], $acceptedMimes) ) {
+                    return '';
+                }
+            }
+
+            unset($response);
+        }
+
+        return $url;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    public function imagesCount()
+    {
+        return isset($this->images) ? count($this->images) : 0;
+    }
+
+    public function videosCount()
+    {
+        return isset($this->videos) ? count($this->videos) : 0;
+    }
+
+    public function audiosCount()
+    {
+        return isset($this->videos) ? count($this->videos) : 0;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * A list of allowed page types in the Open Graph Protocol
      *
@@ -658,116 +757,5 @@ class OpenGraph
         return ( $keysOnly === true )
             ? array_keys($locales)
             : $locales;
-    }
-
-    /**
-     * Cleans a URL string, then checks to see if a given URL is addressable, returns a 200 OK response, and matches the accepted Internet media types (if provided).
-     *
-     * @param string $url           - Publicly addressable URL
-     * @param array  $acceptedMimes - Given URL correspond to an accepted Internet media (MIME) type.
-     *
-     * @return string - cleaned URL string, or empty string on failure.
-     */
-    public static function isValidUrl($url, array $acceptedMimes = [])
-    {
-        if ( ! is_string($url) or empty($url) ) {
-            return '';
-        }
-
-        return self::curlParsedURL($url, $acceptedMimes);
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return string
-     */
-    private static function parseUrl($url)
-    {
-        $urlParts   = parse_url($url);
-
-        $url        = '';
-
-        if ( isset($urlParts['scheme']) and in_array($urlParts['scheme'], ['http', 'https'], true) ) {
-            $url = "{$urlParts['scheme']}://{$urlParts['host']}{$urlParts['path']}";
-
-            if ( empty($urlParts['path']) ) {
-                $url .= '/';
-            }
-
-            if ( ! empty($urlParts['query']) ) {
-                $url .= '?' . $urlParts['query'];
-            }
-
-            if ( ! empty($urlParts['fragment']) ) {
-                $url .= '#' . $urlParts['fragment'];
-            }
-        }
-
-        return $url;
-    }
-
-    /**
-     * @param       $url
-     * @param array $acceptedMimes
-     *
-     * @return string
-     */
-    private static function curlParsedURL($url, array $acceptedMimes)
-    {
-        /*
-         * Validate URI string by letting PHP break up the string and put it back together again
-         * Excludes username:password and port number URI parts
-         */
-        $url = self::parseUrl($url);
-
-        if ( ! empty($url) ) {
-            // test if URL exists
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-            curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
-            curl_setopt($ch, CURLOPT_NOBODY, true); // HEAD
-            curl_setopt($ch, CURLOPT_USERAGENT, 'Open Graph protocol validator ' . self::VERSION . ' (+http://ogp.me/)');
-
-            if ( !empty($acceptedMimes) ) {
-                curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: ' . implode(',', $acceptedMimes)]);
-            }
-
-            $response       = curl_exec($ch);
-            $statusCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            if ( $statusCode != 200 or empty($acceptedMimes) ) {
-                return '';
-            }
-
-            if ( $statusCode == 200 and ! empty($acceptedMimes) ) {
-                $contentType    = explode(';', curl_getinfo($ch, CURLINFO_CONTENT_TYPE));
-
-                if ( empty($contentType) or ! in_array($contentType[0], $acceptedMimes) ) {
-                    return '';
-                }
-            }
-        }
-
-        return $url;
-    }
-
-    /**
-     * Output the OpenGraphProtocol object as HTML elements string
-     *
-     * @return string meta elements
-     */
-    public function toHTML()
-    {
-        return rtrim(self::buildHTML(get_object_vars($this)), PHP_EOL);
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Check Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function imagesCount()
-    {
-        return isset($this->images) ? count($this->images) : 0;
     }
 }

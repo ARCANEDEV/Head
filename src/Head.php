@@ -4,6 +4,7 @@ use Arcanedev\Head\Contracts\RenderableInterface    as RenderableInterface;
 use Arcanedev\Head\Contracts\VersionableInterface   as VersionableInterface;
 
 use Arcanedev\Head\Entities\Charset                 as Charset;
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use Arcanedev\Head\Entities\Title                   as Title;
 use Arcanedev\Head\Entities\Description             as Description;
 use Arcanedev\Head\Entities\Keywords                as Keywords;
@@ -52,6 +53,9 @@ class Head implements RenderableInterface, VersionableInterface
 
     protected $misc		    	= [];
 
+    /** @var OpenGraph */
+    protected $openGraph;
+
     /* ------------------------------------------------------------------------------------------------
      |  Traits
      | ------------------------------------------------------------------------------------------------
@@ -78,6 +82,8 @@ class Head implements RenderableInterface, VersionableInterface
         $this->metas        = new MetaCollection;
         $this->stylesheets  = new StylesheetCollection;
         $this->scripts      = new ScriptCollection;
+
+        $this->openGraph    = new OpenGraph;
 
         $this->initVersion();
     }
@@ -173,7 +179,16 @@ class Head implements RenderableInterface, VersionableInterface
             $this->title = $title;
         }
 
+        $this->updateTitleDependencies();
+
         return $this;
+    }
+
+    private function updateTitleDependencies()
+    {
+        $title      = $this->title->get();
+        $siteName   = $this->title->getSiteName();
+        $this->openGraph->setTitle($title)->setSiteName($siteName);
     }
 
     /**
@@ -214,7 +229,15 @@ class Head implements RenderableInterface, VersionableInterface
             $this->description = $description;
         }
 
+        $this->updateDescriptionDependencies();
+
         return $this;
+    }
+
+    private function updateDescriptionDependencies()
+    {
+        $description = $this->getDescription();
+        $this->openGraph->setDescription($description);
     }
 
     /**
@@ -266,6 +289,29 @@ class Head implements RenderableInterface, VersionableInterface
     }
 
     /* ------------------------------------------------------------------------------------------------
+     |  Facebook / OpenGraph Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    public function doFacebook()
+    {
+        $this->openGraph->enable();
+
+        return $this;
+    }
+
+    public function noFacebook()
+    {
+        $this->openGraph->disable();
+
+        return $this;
+    }
+
+    private function getOpenGraphTags()
+    {
+        return $this->openGraph->render();
+    }
+
+    /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
@@ -276,6 +322,7 @@ class Head implements RenderableInterface, VersionableInterface
             $this->getTitleTag(),
             $this->getDescriptionTag(),
             $this->getKeywordsTag(),
+            $this->getOpenGraphTags(),
         ];
 
         return implode(PHP_EOL, array_filter($tags));

@@ -18,7 +18,8 @@
         "psr-4": {
             "Arcanedev\\Head\\": "src/",
             "Arcanedev\\Head\\Tests\\": "tests/"
-        }
+        },
+        "files": ["src/helpers.php"]
     },
     "suggest": {
         "ext-mbstring": "To get encoding charset list."

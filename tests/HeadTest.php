@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\Head\Tests;
 
+use Arcanedev\Head\Entities\Charset;
 use Arcanedev\Head\Entities\Description;
 use Arcanedev\Head\Entities\Keywords;
 use Arcanedev\Head\Entities\Title;
@@ -38,6 +39,7 @@ class HeadTest extends TestCase
     public function testCanInstantiate()
     {
         $this->assertInstanceOf('Arcanedev\\Head\\Head', $this->head);
+        $this->assertEquals('UTF-8', $this->head->getCharset());
     }
 
     /**
@@ -125,5 +127,38 @@ class HeadTest extends TestCase
         $keywordsTag = '<meta name="keywords" content="' . implode(', ', $arrayKeywords) . '">';
 
         $this->assertEquals($keywordsTag, $this->head->getKeywordsTag());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanSetAndGetTitleDescriptionKeyword()
+    {
+        $title       = 'Hello Title';
+        $description = 'Hello Description';
+        $keywords    = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
+        $this->head->set($title, $description, $keywords);
+
+        $this->assertEquals($title,       $this->head->getTitle());
+        $this->assertEquals($description, $this->head->getDescription());
+        $this->assertEquals($keywords,    $this->head->getKeywords());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanSetAndGetCharset()
+    {
+        $this->assertEquals('UTF-8', $this->head->getCharset());
+        $this->assertEquals('<meta charset="UTF-8">', $this->head->getCharsetTag());
+
+        $this->head->setCharset('ISO-8859-1');
+        $this->assertEquals('ISO-8859-1', $this->head->getCharset());
+        $this->assertEquals('<meta charset="ISO-8859-1">', $this->head->getCharsetTag());
+
+        $charset = Charset::make('UTF-8');
+        $this->head->setCharset($charset);
+        $this->assertEquals('UTF-8', $this->head->getCharset());
+        $this->assertEquals('<meta charset="UTF-8">', $this->head->getCharsetTag());
     }
 }

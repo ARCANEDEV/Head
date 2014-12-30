@@ -1,18 +1,20 @@
 <?php namespace Arcanedev\Head;
 
-use Arcanedev\Head\Contracts\RenderableInterface    as RenderableInterface;
-use Arcanedev\Head\Contracts\VersionableInterface   as VersionableInterface;
+use Arcanedev\Head\Contracts\RenderableInterface   as RenderableInterface;
+use Arcanedev\Head\Contracts\VersionableInterface  as VersionableInterface;
 
-use Arcanedev\Head\Entities\Charset                 as Charset;
-use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
-use Arcanedev\Head\Entities\Title                   as Title;
-use Arcanedev\Head\Entities\Description             as Description;
-use Arcanedev\Head\Entities\Keywords                as Keywords;
-use Arcanedev\Head\Entities\StylesheetCollection    as StylesheetCollection;
-use Arcanedev\Head\Entities\ScriptCollection        as ScriptCollection;
-use Arcanedev\Head\Entities\MetaCollection          as MetaCollection;
+use Arcanedev\Head\Entities\Charset                as Charset;
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph    as OpenGraph;
+use Arcanedev\Head\Entities\Title                  as Title;
+use Arcanedev\Head\Entities\Description            as Description;
+use Arcanedev\Head\Entities\Keywords               as Keywords;
+use Arcanedev\Head\Entities\StylesheetCollection   as StylesheetCollection;
+use Arcanedev\Head\Entities\ScriptCollection       as ScriptCollection;
+use Arcanedev\Head\Entities\MetaCollection         as MetaCollection;
 
-use Arcanedev\Head\Exceptions\InvalidTypeException  as InvalidTypeException;
+use Arcanedev\Head\Traits\VersionableTrait         as VersionableTrait;
+
+use Arcanedev\Head\Exceptions\InvalidTypeException as InvalidTypeException;
 
 class Head implements RenderableInterface, VersionableInterface
 {
@@ -60,7 +62,7 @@ class Head implements RenderableInterface, VersionableInterface
      |  Traits
      | ------------------------------------------------------------------------------------------------
      */
-    use \Arcanedev\Head\Traits\VersionableTrait;
+    use VersionableTrait;
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -117,11 +119,11 @@ class Head implements RenderableInterface, VersionableInterface
     {
         $this->checkCharset($charset);
 
-        if ( is_string($charset) ) {
-            $this->charset->set($charset);
-        }
-        elseif ( $charset instanceof Charset ) {
+        if ($charset instanceof Charset) {
             $this->charset = $charset;
+        }
+        elseif (is_string($charset)) {
+            $this->charset->set($charset);
         }
 
         return $this;
@@ -339,7 +341,7 @@ class Head implements RenderableInterface, VersionableInterface
      */
     private function checkCharset($charset)
     {
-        if ( ! is_string($charset) and ! ($charset instanceof Title) ) {
+        if ( ! is_string($charset) and ! ($charset instanceof Charset) ) {
             throw new InvalidTypeException('charset', $charset, 'string or Charset Object');
         }
     }

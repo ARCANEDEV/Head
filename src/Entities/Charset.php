@@ -42,6 +42,18 @@ class Charset extends Meta implements VersionableInterface
             : $this->getDefaultCharsets();
     }
 
+    /**
+     * Make a charset
+     *
+     * @param string $charset
+     *
+     * @return Charset
+     */
+    public static function make($charset)
+    {
+        return (new self)->setCharset($charset);
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------

@@ -13,8 +13,8 @@ class AudioMedia extends AbstractMedia
      */
     protected function checkType($type)
     {
-        return $type === 'application/x-shockwave-flash'
-            or substr_compare($type, 'audio/', 0, 6) === 0;
+        return $type === 'application/x-shockwave-flash' or
+               substr_compare($type, 'audio/', 0, 6) === 0;
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -31,8 +31,8 @@ class AudioMedia extends AbstractMedia
      */
     public static function extensionToMediaType($extension)
     {
-        if ( ! self::checkExtension($extension) ) {
-            return "";
+        if ( ! parent::checkExtension($extension) ) {
+            return '';
         }
 
         switch ($extension)

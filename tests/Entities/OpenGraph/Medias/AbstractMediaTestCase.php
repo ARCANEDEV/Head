@@ -14,6 +14,20 @@ abstract class AbstractMediaTestCase extends TestCase
     protected $media;
 
     /* ------------------------------------------------------------------------------------------------
+     |  Main Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+    }
+
+    /* ------------------------------------------------------------------------------------------------
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
@@ -27,6 +41,9 @@ abstract class AbstractMediaTestCase extends TestCase
         }
     }
 
+    /**
+     * @test
+     */
     public function testCanSetAndGetURL($url)
     {
         if ( $this->isMediaNotNull() ) {
@@ -34,6 +51,9 @@ abstract class AbstractMediaTestCase extends TestCase
         }
     }
 
+    /**
+     * @test
+     */
     public function testCanSetAndGetSecureURL($secureURL = '')
     {
         if ( $this->isMediaNotNull() ) {
@@ -41,6 +61,9 @@ abstract class AbstractMediaTestCase extends TestCase
         }
     }
 
+    /**
+     * @test
+     */
     public function testCanSetAndGetType($type = '')
     {
         if ( $this->isMediaNotNull() ) {

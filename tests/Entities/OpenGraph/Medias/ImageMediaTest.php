@@ -8,6 +8,7 @@ class ImageMediaTest extends VisualMediaTestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    const OPENGRAPH_IMAGEMEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\ImageMedia';
     /** @var ImageMedia */
     protected $media;
 
@@ -15,13 +16,17 @@ class ImageMediaTest extends VisualMediaTestCase
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         $this->media = new ImageMedia;
     }
 
-    protected function tearDown()
+    public function tearDown()
     {
+        parent::tearDown();
+
         unset($this->media);
     }
 
@@ -34,7 +39,7 @@ class ImageMediaTest extends VisualMediaTestCase
      */
     public function testCanInstantiate()
     {
-        $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\ImageMedia', $this->media);
+        $this->assertInstanceOf(self::OPENGRAPH_IMAGEMEDIA_CLASS, $this->media);
         $this->assertVisualMediaInstance();
         $this->assertAbstractMediaInstance();
     }
@@ -69,5 +74,26 @@ class ImageMediaTest extends VisualMediaTestCase
     public function assertCanSetAndGetWidthAndHeight()
     {
         parent::assertCanSetAndGetWidthAndHeight();
+    }
+
+    /**
+     * @test
+     */
+    public function testCanConvertExtensionToMediaType()
+    {
+        $extensions = [
+            'jpeg'  => 'image/jpeg',
+            'jpg'   => 'image/jpeg',
+            'png'   => 'image/png',
+            'gif'   => 'image/gif',
+            'svg'   => 'image/svg+sml',
+            'ico'   => 'image/vnd.microsoft.icon',
+            'lol'   => null,
+            true    => null
+        ];
+
+        foreach ($extensions as $ext => $type) {
+            $this->assertEquals($type, ImageMedia::extensionToMediaType($ext));
+        }
     }
 }

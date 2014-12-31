@@ -16,17 +16,23 @@ class OpenGraphTest extends TestCase
     /** @var OpenGraph */
     protected $og;
 
+    const OPENGRAPH_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\OpenGraph';
+
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->og = new OpenGraph;
     }
 
     protected function tearDown()
     {
+        parent::tearDown();
+
         unset($this->og);
     }
 
@@ -39,7 +45,7 @@ class OpenGraphTest extends TestCase
      */
     public function testCanInstantiate()
     {
-        $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\OpenGraph', $this->og);
+        $this->assertInstanceOf(self::OPENGRAPH_CLASS, $this->og);
         // TODO: Add Countable to collections
         $this->assertEquals(0, count($this->og->getImages()));
         $this->assertEquals(0, count($this->og->getVideos()));

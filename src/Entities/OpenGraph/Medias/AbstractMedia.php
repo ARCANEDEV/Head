@@ -154,7 +154,7 @@ abstract class AbstractMedia implements ArrayableInterface
      */
     protected static function checkExtension($extension)
     {
-        return is_string($extension) && ! empty($extension);
+        return is_string($extension) and ! empty($extension);
     }
 
     /**
@@ -182,7 +182,9 @@ abstract class AbstractMedia implements ArrayableInterface
             return $secureURL;
         }
 
-        return $this->isSecureURL($secureURL) ? $this->validateURL($secureURL) : '';
+        return $this->isSecureURL($secureURL)
+            ? $this->validateURL($secureURL)
+            : '';
     }
 
     /**
@@ -233,6 +235,8 @@ abstract class AbstractMedia implements ArrayableInterface
      */
     private function validateURL($url)
     {
-        return OpenGraph::isValidUrl($url, ['text/html', 'application/xhtml+xml']);
+        return OpenGraph::isValidUrl($url, [
+            'text/html', 'application/xhtml+xml'
+        ]);
     }
 }

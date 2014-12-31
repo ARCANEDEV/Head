@@ -23,7 +23,7 @@ class OpenGraph implements RenderableInterface
      *
      * @var bool
      */
-    const VERIFY_URLS = false;
+    const VERIFY_URLS  = false;
 
     /** @var bool */
     protected $enabled = false;

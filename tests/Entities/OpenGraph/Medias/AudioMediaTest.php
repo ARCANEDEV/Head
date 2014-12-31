@@ -8,6 +8,7 @@ class AudioMediaTest extends AbstractMediaTestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    const OPENGRAPH_AUDIOMEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\AudioMedia';
     /** @var AudioMedia */
     protected $media;
 
@@ -15,13 +16,17 @@ class AudioMediaTest extends AbstractMediaTestCase
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         $this->media = new AudioMedia;
     }
 
-    protected function tearDown()
+    public function tearDown()
     {
+        parent::tearDown();
+
         unset($this->media);
     }
 
@@ -31,7 +36,7 @@ class AudioMediaTest extends AbstractMediaTestCase
      */
     public function testCanInstantiate()
     {
-        $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\AudioMedia', $this->media);
+        $this->assertInstanceOf(self::OPENGRAPH_AUDIOMEDIA_CLASS, $this->media);
         $this->assertAbstractMediaInstance();
     }
 
@@ -57,5 +62,25 @@ class AudioMediaTest extends AbstractMediaTestCase
     public function testCanSetAndGetType($type = '')
     {
         parent::testCanSetAndGetType('audio/mpeg');
+    }
+
+    /**
+     * @test
+     */
+    public function testCanConvertExtensionToMediaType()
+    {
+        $extensions = [
+            'swf'   => 'application/x-shockwave-flash',
+            'mp3'   => 'audio/mpeg',
+            'm4a'   => 'audio/mp4',
+            'ogg'   => 'audio/ogg',
+            'oga'   => 'audio/ogg',
+            'lol'   => '',
+            true    => ''
+        ];
+
+        foreach ($extensions as $ext => $type) {
+            $this->assertEquals($type, AudioMedia::extensionToMediaType($ext));
+        }
     }
 }

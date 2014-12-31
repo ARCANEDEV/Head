@@ -8,6 +8,7 @@ class VideoMediaTest extends VisualMediaTestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    const OPENGRAPH_VIDEOMEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VideoMedia';
     /** @var VideoMedia */
     protected $media;
 
@@ -15,13 +16,17 @@ class VideoMediaTest extends VisualMediaTestCase
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         $this->media = new VideoMedia;
     }
 
-    protected function tearDown()
+    public function tearDown()
     {
+        parent::tearDown();
+
         unset($this->media);
     }
 
@@ -34,7 +39,7 @@ class VideoMediaTest extends VisualMediaTestCase
      */
     public function testCanInstantiate()
     {
-        $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VideoMedia', $this->media);
+        $this->assertInstanceOf(self::OPENGRAPH_VIDEOMEDIA_CLASS, $this->media);
         $this->assertVisualMediaInstance();
         $this->assertAbstractMediaInstance();
     }
@@ -45,6 +50,8 @@ class VideoMediaTest extends VisualMediaTestCase
     public function testCanSetAndGetURL($url = '')
     {
         parent::testCanSetAndGetURL('http://www.company.com/video.mp4');
+
+        $this->assertEquals('video/mp4', $this->media->getTypeFromUrl());
     }
 
     /**
@@ -69,5 +76,24 @@ class VideoMediaTest extends VisualMediaTestCase
     public function assertCanSetAndGetWidthAndHeight()
     {
         parent::assertCanSetAndGetWidthAndHeight();
+    }
+
+    /**
+     * @test
+     */
+    public function testCanConvertExtensionToMediaType()
+    {
+        $extensions = [
+            'swf'   => 'application/x-shockwave-flash',
+            'mp4'   => 'video/mp4',
+            'ogv'   => 'video/ogg',
+            'webm'  => 'video/webm',
+            'lol'   => '',
+            true    => '',
+        ];
+
+        foreach ($extensions as $ext => $type) {
+            $this->assertEquals($type, VideoMedia::extensionToMediaType($ext));
+        }
     }
 }

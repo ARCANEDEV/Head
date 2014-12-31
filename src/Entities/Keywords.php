@@ -121,7 +121,7 @@ class Keywords extends AbstractMeta
      */
     private function checkType($keywords)
     {
-        if (!is_string($keywords) and !is_array($keywords)) {
+        if (! is_string($keywords) and ! is_array($keywords)) {
             throw new InvalidTypeException('keywords', $keywords, 'string or array');
         }
     }

@@ -3,8 +3,9 @@
 use Arcanedev\Head\Contracts\VersionableInterface;
 
 use Arcanedev\Head\Exceptions\InvalidTypeException;
+use Arcanedev\Head\Traits\VersionableTrait;
 
-class Charset extends Meta implements VersionableInterface
+class Charset extends AbstractMeta implements VersionableInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -26,7 +27,7 @@ class Charset extends Meta implements VersionableInterface
      |  Traits
      | ------------------------------------------------------------------------------------------------
      */
-    use \Arcanedev\Head\Traits\VersionableTrait;
+    use VersionableTrait;
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -121,7 +122,6 @@ class Charset extends Meta implements VersionableInterface
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-
     public function render()
     {
         $charset = $this->getCharset();

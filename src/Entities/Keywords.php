@@ -11,7 +11,7 @@ class Keywords extends AbstractMeta
     /**
      * @var array
      */
-    protected $keywords = [];
+    protected $keywords;
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -19,11 +19,17 @@ class Keywords extends AbstractMeta
      */
     public function __construct()
     {
+        $this->keywords = [];
     }
 
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get Keywords
+     *
+     * @return array
      */
     public function get()
     {
@@ -31,6 +37,8 @@ class Keywords extends AbstractMeta
     }
 
     /**
+     * Set Keywords
+     *
      * @param string|array $keywords
      *
      * @throws InvalidTypeException
@@ -39,17 +47,13 @@ class Keywords extends AbstractMeta
      */
     public function set($keywords)
     {
-        if ( ! is_string($keywords) and ! is_array($keywords) ) {
-            throw new InvalidTypeException('keywords', $keywords, 'string or array');
+        $this->checkType($keywords);
+
+        if (is_string($keywords)) {
+            $keywords = $this->convertStringToArray($keywords);
         }
 
-        if ( is_string($keywords) ) {
-            $keywords = array_map(function($keyword) {
-                return trim($keyword);
-            }, explode(',', $keywords));
-        }
-
-        if ( is_array($keywords) ) {
+        if (is_array($keywords)) {
             $this->setFromArray($keywords);
         }
 
@@ -75,28 +79,82 @@ class Keywords extends AbstractMeta
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Render Keywords tag
+     *
+     * @return string
+     */
     public function render()
     {
-        return parent::renderMetaTag('keywords', $this->getSEOKeywords());
+        return ! $this->isEmpty()
+            ? parent::renderMetaTag('keywords', $this->getSEOKeywords())
+            : '';
+    }
+
+    /**
+     * Get Keywords Count
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->keywords);
     }
 
     /* ------------------------------------------------------------------------------------------------
      |  Check Functions
      | ------------------------------------------------------------------------------------------------
      */
-    private function checkAllKeywords($keywords)
-    {
-        foreach($keywords as $keyword) {
-            if ( ! is_string($keyword) )
-                throw new InvalidTypeException('keyword', $keyword);
-        }
-    }
-
     /**
+     * Check if keywords is empty
+     *
      * @return bool
      */
     public function isEmpty()
     {
         return empty($this->keywords);
+    }
+
+    /**
+     * @param $keywords
+     * @throws InvalidTypeException
+     */
+    private function checkType($keywords)
+    {
+        if (!is_string($keywords) and !is_array($keywords)) {
+            throw new InvalidTypeException('keywords', $keywords, 'string or array');
+        }
+    }
+
+    /**
+     * Check all keywords are strings
+     *
+     * @param array $keywords
+     *
+     * @throws InvalidTypeException
+     */
+    private function checkAllKeywords($keywords)
+    {
+        foreach($keywords as $keyword) {
+            if (is_string($keyword)) {
+                continue;
+            }
+
+            throw new InvalidTypeException('keyword', $keyword);
+        }
+    }
+
+    /**
+     * Convert Keywords string to array
+     *
+     * @param string $keywords
+     *
+     * @return array
+     */
+    private function convertStringToArray($keywords)
+    {
+        $keywords = array_map('trim', explode(',', $keywords));
+
+        return $keywords;
     }
 }

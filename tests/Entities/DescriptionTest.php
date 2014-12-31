@@ -8,7 +8,10 @@ class DescriptionTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /** @var Description */
     protected $description;
+
+    const DESCRIPTION_CLASS = 'Arcanedev\\Head\\Entities\\Description';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -33,6 +36,48 @@ class DescriptionTest extends TestCase
      */
     public function testCanInstantiate()
     {
-        $this->assertInstanceOf('Arcanedev\\Head\\Entities\\Description', $this->description);
+        $this->assertInstanceOf(self::DESCRIPTION_CLASS, $this->description);
+        $this->assertTrue($this->description->isEmpty());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanSetAndGetDescription()
+    {
+        $this->assertEquals('', $this->description->get());
+
+        $description = 'Hello world description';
+
+        $this->assertEquals(
+            $description,
+            $this->description->set($description)->get()
+        );
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
+     */
+    public function testMustThrowInvalidTypeException()
+    {
+        $this->description->set(true);
+    }
+
+    /**
+     * @test
+     */
+    public function testCanRender()
+    {
+        $this->assertEquals('', $this->description->render());
+
+        $description = 'Hello world description';
+        $this->description->set($description);
+
+        $this->assertEquals(
+            '<meta name="description" content="' . $description .'">',
+            $this->description->render()
+        );
     }
 }

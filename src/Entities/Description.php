@@ -1,5 +1,7 @@
 <?php namespace Arcanedev\Head\Entities;
 
+use Arcanedev\Head\Exceptions\InvalidTypeException;
+
 class Description extends AbstractMeta
 {
     /* ------------------------------------------------------------------------------------------------
@@ -9,7 +11,7 @@ class Description extends AbstractMeta
     /**
      * @var string
      */
-    private $description = '';
+    private $description;
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -17,19 +19,36 @@ class Description extends AbstractMeta
      */
     public function __construct()
     {
+        $this->description = '';
     }
 
     /* ------------------------------------------------------------------------------------------------
      |   Getters & Setters
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Get Description
+     *
+     * @return string
+     */
     public function get()
     {
         return $this->description;
     }
 
+    /**
+     * Set Description
+     *
+     * @param string $description
+     *
+     * @throws InvalidTypeException
+     *
+     * @return Description
+     */
     public function set($description)
     {
+        $this->check($description);
+
         $this->description = $description;
 
         return $this;
@@ -49,7 +68,9 @@ class Description extends AbstractMeta
      */
     public function render()
     {
-        return parent::renderMetaTag('description', $this->getSEODescription());
+        return ! $this->isEmpty()
+            ? parent::renderMetaTag('description', $this->getSEODescription())
+            : '';
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -59,5 +80,21 @@ class Description extends AbstractMeta
     public function isEmpty()
     {
         return empty($this->description);
+    }
+
+    /**
+     * Check Description
+     *
+     * @param string $description
+     *
+     * @throws InvalidTypeException
+     */
+    private function check(&$description)
+    {
+        if (! is_string($description)) {
+            throw new InvalidTypeException('description', $description, 'string');
+        }
+
+        $description = trim($description);
     }
 }

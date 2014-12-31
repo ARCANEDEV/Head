@@ -12,7 +12,9 @@
     ],
     "require": {},
     "require-dev": {
-        "phpunit/phpunit": "~4.3"
+        "phpunit/phpunit": "~4.4",
+        "phpunit/phpcov": "~2.0",
+        "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -24,5 +26,5 @@
     "suggest": {
         "ext-mbstring": "To get encoding charset list."
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

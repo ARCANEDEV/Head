@@ -147,7 +147,7 @@ class Charset extends Meta implements VersionableInterface
      */
     private function check(&$charset)
     {
-        if ( ! is_string($charset) ) {
+        if (! is_string($charset)) {
             throw new InvalidTypeException('charset', $charset);
         }
 

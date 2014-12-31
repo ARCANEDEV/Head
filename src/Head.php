@@ -1,20 +1,19 @@
 <?php namespace Arcanedev\Head;
 
-use Arcanedev\Head\Contracts\RenderableInterface   as RenderableInterface;
-use Arcanedev\Head\Contracts\VersionableInterface  as VersionableInterface;
-
 use Arcanedev\Head\Entities\Charset                as Charset;
-use Arcanedev\Head\Entities\OpenGraph\OpenGraph    as OpenGraph;
 use Arcanedev\Head\Entities\Title                  as Title;
 use Arcanedev\Head\Entities\Description            as Description;
 use Arcanedev\Head\Entities\Keywords               as Keywords;
+use Arcanedev\Head\Entities\MetaCollection         as MetaCollection;
 use Arcanedev\Head\Entities\StylesheetCollection   as StylesheetCollection;
 use Arcanedev\Head\Entities\ScriptCollection       as ScriptCollection;
-use Arcanedev\Head\Entities\MetaCollection         as MetaCollection;
-
-use Arcanedev\Head\Traits\VersionableTrait         as VersionableTrait;
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph    as OpenGraph;
 
 use Arcanedev\Head\Exceptions\InvalidTypeException as InvalidTypeException;
+
+use Arcanedev\Head\Contracts\RenderableInterface   as RenderableInterface;
+use Arcanedev\Head\Contracts\VersionableInterface  as VersionableInterface;
+use Arcanedev\Head\Traits\VersionableTrait         as VersionableTrait;
 
 class Head implements RenderableInterface, VersionableInterface
 {
@@ -111,6 +110,8 @@ class Head implements RenderableInterface, VersionableInterface
     }
 
     /**
+     * Set Charset
+     *
      * @param Keywords|string $charset
      *
      * @return Head
@@ -342,7 +343,7 @@ class Head implements RenderableInterface, VersionableInterface
     private function checkCharset($charset)
     {
         if ( ! is_string($charset) and ! ($charset instanceof Charset) ) {
-            throw new InvalidTypeException('charset', $charset, 'string or Charset Object');
+            throw new InvalidTypeException('charset', $charset, 'string or Charset Object !');
         }
     }
 
@@ -353,7 +354,10 @@ class Head implements RenderableInterface, VersionableInterface
      */
     private function checkTitle($title)
     {
-        if ( ! is_string($title) and ! ($title instanceof Title) ) {
+        if (
+            ! is_string($title) and
+            ! ($title instanceof Title)
+        ) {
             throw new InvalidTypeException('title', $title, 'string or Title Object');
         }
     }
@@ -365,7 +369,10 @@ class Head implements RenderableInterface, VersionableInterface
      */
     private function checkDescription($description)
     {
-        if ( ! is_string($description) and !($description instanceof Description) ) {
+        if (
+            ! is_string($description) and
+            ! ($description instanceof Description)
+        ) {
             throw new InvalidTypeException('description', $description, 'string or Description Object');
         }
     }
@@ -377,7 +384,11 @@ class Head implements RenderableInterface, VersionableInterface
      */
     private function checkKeywords($keywords)
     {
-        if ( ! is_string($keywords) and ! is_array($keywords) and ! ($keywords instanceof Keywords) ) {
+        if (
+            ! is_string($keywords) and
+            ! is_array($keywords) and
+            ! ($keywords instanceof Keywords)
+        ) {
             throw new InvalidTypeException('keywords', $keywords, 'string, array or Keywords Object');
         }
     }

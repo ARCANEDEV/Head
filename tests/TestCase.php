@@ -2,18 +2,13 @@
 
 use ReflectionClass;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Dummy Function
+     |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     const BASE_NAMESPACE = 'Arcanedev\\Head\\';
-
-    public function testDummy()
-    {
-        $this->assertTrue(true);
-    }
 
     /* ------------------------------------------------------------------------------------------------
      |  Helper Functions

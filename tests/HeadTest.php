@@ -1,10 +1,11 @@
 <?php namespace Arcanedev\Head\Tests;
 
-use Arcanedev\Head\Entities\Charset;
-use Arcanedev\Head\Entities\Description;
-use Arcanedev\Head\Entities\Keywords;
-use Arcanedev\Head\Entities\Title;
 use Arcanedev\Head\Head;
+
+use Arcanedev\Head\Entities\Charset     as Charset;
+use Arcanedev\Head\Entities\Title       as Title;
+use Arcanedev\Head\Entities\Description as Description;
+use Arcanedev\Head\Entities\Keywords    as Keywords;
 
 class HeadTest extends TestCase
 {
@@ -21,11 +22,15 @@ class HeadTest extends TestCase
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->head = new Head;
     }
 
     protected function tearDown()
     {
+        parent::tearDown();
+
         unset($this->head);
     }
 
@@ -45,22 +50,62 @@ class HeadTest extends TestCase
     /**
      * @test
      */
+    public function testCanSetAndGetCharset()
+    {
+        $this->assertEquals('UTF-8', $this->head->getCharset());
+        $this->assertEquals(
+            '<meta charset="UTF-8">',
+            $this->head->getCharsetTag()
+        );
+
+        $this->head->setCharset('ISO-8859-1');
+
+        $this->assertEquals('ISO-8859-1', $this->head->getCharset());
+        $this->assertEquals(
+            '<meta charset="ISO-8859-1">',
+            $this->head->getCharsetTag()
+        );
+
+        $this->head->setCharset(Charset::make('UTF-8'));
+
+        $this->assertEquals('UTF-8', $this->head->getCharset());
+        $this->assertEquals(
+            '<meta charset="UTF-8">',
+            $this->head->getCharsetTag()
+        );
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
+     */
+    public function testMustThrowInvalidTypeExceptionOnCharset()
+    {
+        $this->head->setCharset(true);
+    }
+
+    /**
+     * @test
+     */
     public function canSetAndGetTitle()
     {
         $title = 'Hello Title';
         $this->head->setTitle($title);
 
         $this->assertEquals($title, $this->head->getTitle());
-        $this->assertEquals('<title>Hello Title</title>', $this->head->getTitleTag());
+        $this->assertEquals(
+            '<title>Hello Title</title>',
+            $this->head->getTitleTag()
+        );
     }
 
     /**
      * @test
      */
-    public function canSetAndGetTitleByObject()
+    public function canSetAndGetByTitleClass()
     {
         $title = new Title;
-
         $title->set('Hello Title')
               ->setSiteName('Company Name')
               ->separator('||');
@@ -68,7 +113,20 @@ class HeadTest extends TestCase
         $this->head->setTitle($title);
 
         $this->assertEquals('Hello Title', $this->head->getTitle());
-        $this->assertEquals('<title>Hello Title || Company Name</title>', $this->head->getTitleTag());
+        $this->assertEquals(
+            '<title>Hello Title || Company Name</title>',
+            $this->head->getTitleTag()
+        );
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
+     */
+    public function testMustThrowInvalidTypeExceptionOnTitle()
+    {
+        $this->head->setTitle(true);
     }
 
     /**
@@ -86,7 +144,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function canSetAndGetDescriptionByObject()
+    public function canSetAndGetByDescriptionClass()
     {
         $description = new Description;
         $description->set('Hello Description');
@@ -94,6 +152,16 @@ class HeadTest extends TestCase
 
         $this->assertEquals('Hello Description', $this->head->getDescription());
         $this->assertEquals('<meta name="description" content="Hello Description">', $this->head->getDescriptionTag());
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
+     */
+    public function testMustThrowInvalidTypeExceptionOnDescription()
+    {
+        $this->head->setDescription(true);
     }
 
     /**
@@ -116,12 +184,11 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testSetAndGetKeywordsByObject()
+    public function testSetAndGetByKeywordsClass()
     {
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
 
-        $keywords = new Keywords;
-        $keywords->set($arrayKeywords);
+        $keywords = (new Keywords)->set($arrayKeywords);
 
         $this->head->setKeywords($keywords);
         $keywordsTag = '<meta name="keywords" content="' . implode(', ', $arrayKeywords) . '">';
@@ -131,8 +198,18 @@ class HeadTest extends TestCase
 
     /**
      * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testCanSetAndGetTitleDescriptionKeyword()
+    public function testMustThrowInvalidTypeExceptionOnKeywords()
+    {
+        $this->head->setKeywords(true);
+    }
+
+    /**
+     * @test
+     */
+    public function testCanSetAndGetTitleDescriptionKeywords()
     {
         $title       = 'Hello Title';
         $description = 'Hello Description';
@@ -147,18 +224,22 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetCharset()
+    public function testCanRender()
     {
-        $this->assertEquals('UTF-8', $this->head->getCharset());
-        $this->assertEquals('<meta charset="UTF-8">', $this->head->getCharsetTag());
+        $title         = 'Hello world';
+        $description   = 'Description of the hello world';
+        $arrayKeywords = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
+        $tagsArray     = [
+            '<meta charset="UTF-8">',
+            '<title>' . $title . '</title>',
+            '<meta name="description" content="' . $description . '">',
+            '<meta name="keywords" content="' . implode(', ', $arrayKeywords) .'">',
+        ];
 
-        $this->head->setCharset('ISO-8859-1');
-        $this->assertEquals('ISO-8859-1', $this->head->getCharset());
-        $this->assertEquals('<meta charset="ISO-8859-1">', $this->head->getCharsetTag());
+        $this->head->setTitle($title);
+        $this->head->setDescription($description);
+        $this->head->setKeywords($arrayKeywords);
 
-        $charset = Charset::make('UTF-8');
-        $this->head->setCharset($charset);
-        $this->assertEquals('UTF-8', $this->head->getCharset());
-        $this->assertEquals('<meta charset="UTF-8">', $this->head->getCharsetTag());
+        $this->assertEquals(implode(PHP_EOL, $tagsArray), $this->head->render());
     }
 }

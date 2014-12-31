@@ -8,6 +8,7 @@ class TitleTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    const TITLE_CLASS = 'Arcanedev\\Head\\Entities\\Title';
     /** @var Title */
     protected $title;
 
@@ -34,13 +35,15 @@ class TitleTest extends TestCase
      */
     public function testCanInstantiate()
     {
-        $this->assertInstanceOf('Arcanedev\\Head\\Entities\\Title', $this->title);
+        $this->assertInstanceOf(self::TITLE_CLASS, $this->title);
+
+        $this->assertEmpty($this->title->render());
     }
 
     /**
      * @test
      */
-    public function testCanSetTitle()
+    public function testCanSetAndGetTitle()
     {
         $this->title->set('My awesome title');
         $this->assertEquals('My awesome title', $this->title->get());
@@ -49,8 +52,28 @@ class TitleTest extends TestCase
 
     /**
      * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\EmptyTitleException
      */
-    public function testCanSetSitename()
+    public function testMustThrowEmptyTitleException()
+    {
+        $this->title->set('');
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
+     */
+    public function testMustThrowInvalidTypeException()
+    {
+        $this->title->set(true);
+    }
+
+    /**
+     * @test
+     */
+    public function testCanSetAndGetSiteName()
     {
         $this->title->setSiteName('Company Name');
         $this->assertEquals('Company Name', $this->title->siteName());
@@ -77,7 +100,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetSeparator()
+    public function testCanSetAndGetSeparator()
     {
         $this->title->separator(' -');
         $this->assertEquals('-', $this->title->separator());
@@ -95,55 +118,74 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderTitleOne()
+    public function testCanRenderTitle()
     {
-        $this->assertEmpty($this->title->render());
+        $title = 'Hello world';
+
+        $this->assertEquals(
+            "<title>$title</title>",
+            $this->title->set($title)->render()
+        );
     }
 
     /**
      * @test
      */
-    public function testCanRenderTitleTwo()
+    public function testCanRenderTitleWithSiteName()
     {
-        $this->title->set('My awesome title');
-        $this->assertEquals('<title>My awesome title</title>', $this->title->render());
+        $title    = 'My awesome title';
+        $siteName = 'Site Name';
+        $this->title->set($title)->setSiteName($siteName);
+
+        $this->assertEquals(
+            "<title>$title | $siteName</title>",
+            $this->title->render()
+        );
     }
 
     /**
      * @test
      */
-    public function testCanRenderTitleThree()
+    public function testCanRenderTitleWithoutSiteName()
     {
-        $this->title->set('My awesome title');
-        $this->title->setSiteName('Company Name');
-        $this->assertEquals('<title>My awesome title | Company Name</title>', $this->title->render());
-    }
+        $title    = 'My awesome title';
+        $siteName = 'Site Name';
+        $this->title->set($title)->setSiteName($siteName);
 
-    /**
-     * @test
-     */
-    public function testCanRenderTitleFour()
-    {
-        $this->title->set('My awesome title');
-        $this->title->setSiteName('Company Name');
         $this->title->hideSiteName();
-        $this->assertEquals('<title>My awesome title</title>', $this->title->render());
+
+        $this->assertEquals(
+            '<title>My awesome title</title>',
+            $this->title->render()
+        );
     }
 
     /**
      * @test
      */
-    public function testCanRenderTitleFive()
+    public function testCanRenderTitleWithOrder()
     {
-        $this->title->set('My awesome title');
-        $this->title->setSiteName('Company Name');
-        $this->assertEquals('<title>My awesome title | Company Name</title>', $this->title->render());
+
+        $title    = 'My awesome title';
+        $siteName = 'Site Name';
+        $this->title->set($title)->setSiteName($siteName);
+
+        $this->assertEquals(
+            "<title>$title | $siteName</title>",
+            $this->title->render()
+        );
 
         $this->title->siteNameFirst();
-        $this->assertEquals('<title>Company Name | My awesome title</title>', $this->title->render());
+        $this->assertEquals(
+            "<title>$siteName | $title</title>",
+            $this->title->render()
+        );
 
         $this->title->siteNameLast();
-        $this->assertEquals('<title>My awesome title | Company Name</title>', $this->title->render());
+        $this->assertEquals(
+            "<title>$title | $siteName</title>",
+            $this->title->render()
+        );
     }
 
     /**
@@ -151,9 +193,9 @@ class TitleTest extends TestCase
      */
     public function testCanRenderTitleSix()
     {
-        $this->title->set('My awesome title');
-        $this->title->setSiteName('Company Name');
+        $this->title->set('My awesome title')->setSiteName('Company Name');
         $this->title->setSeparator('');
+
         $this->assertEquals('<title>My awesome title Company Name</title>', $this->title->render());
     }
 }

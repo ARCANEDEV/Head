@@ -1,10 +1,10 @@
 <?php namespace Arcanedev\Head\Entities;
 
-use Arcanedev\Head\Contracts\RenderableInterface;
-use Arcanedev\Head\Contracts\TitleInterface;
+use Arcanedev\Head\Contracts\TitleInterface         as TitleInterface;
+use Arcanedev\Head\Contracts\RenderableInterface    as RenderableInterface;
 
-use Arcanedev\Head\Exceptions\EmptyTitleException;
-use Arcanedev\Head\Exceptions\InvalidTypeException;
+use Arcanedev\Head\Exceptions\EmptyTitleException   as EmptyTitleException;
+use Arcanedev\Head\Exceptions\InvalidTypeException  as InvalidTypeException;
 
 class Title implements TitleInterface, RenderableInterface
 {
@@ -15,27 +15,27 @@ class Title implements TitleInterface, RenderableInterface
     /**
      * @var string
      */
-    protected $title              = '';
+    protected $title;
 
     /**
      * @var string
      */
-    protected $siteName           = '';
+    protected $siteName;
 
     /**
      * @var bool
      */
-    protected $siteNameVisible    = true;
+    protected $siteNameVisible = true;
 
     /**
      * @var bool
      */
-    protected $siteNameFirst      = false;
+    protected $siteNameFirst   = false;
 
     /**
      * @var string
      */
-    protected $separator          = '|';
+    protected $separator       = '|';
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -43,6 +43,8 @@ class Title implements TitleInterface, RenderableInterface
      */
     function __construct(array $config = [])
     {
+        $this->title    = '';
+        $this->siteName = '';
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -391,7 +393,10 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
-     * @param $value
+     * Check if the value is a string value
+     *
+     * @param string $name
+     * @param mixed  $value
      *
      * @throws InvalidTypeException
      */

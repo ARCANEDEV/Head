@@ -10,19 +10,23 @@ class HTMLVersion
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    protected $version      = '';
+    protected $version;
 
-    private $supported      = ['4', '5'];
+    const HTML_5            = '5';
+    const HTML_4            = '4';
+    const DEFAULT_VERSION   = self::HTML_5;
 
-    const DEFAULT_VERSION   = '5';
+    private $supported      = [self::HTML_4, self::HTML_5];
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    public function __construct()
+    public function __construct($version = '')
     {
-        // TODO: Implement __construct() method.
+        if (! empty($version)) {
+            $this->set($version);
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -42,7 +46,7 @@ class HTMLVersion
     }
 
     /**
-     * @param string|HTMLVersion $version
+     * @param string $version
      *
      * @throws InvalidTypeException
      * @throws InvalidHTMLVersionException
@@ -51,10 +55,6 @@ class HTMLVersion
      */
     public function set($version)
     {
-        if ( $version instanceof HTMLVersion) {
-            $version = $version->get();
-        }
-
         $this->check($version);
 
         $this->version = $version;
@@ -94,7 +94,7 @@ class HTMLVersion
      */
     public function isHTML5()
     {
-        return $this->get() === '5';
+        return $this->get() === self::HTML_5;
     }
 
     /**
@@ -108,7 +108,9 @@ class HTMLVersion
     {
         $this->checkVersionType($version);
 
-        $version = is_string($version) ? trim($version) : (string) $version;
+        $version = is_string($version)
+            ? trim($version)
+            : (string) $version;
 
         if ( empty($version) ) {
             throw new Exception('The HTML Version is empty.');

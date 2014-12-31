@@ -87,6 +87,20 @@ class Collection implements Countable, ArrayAccess
     }
 
     /**
+     * Push an item
+     *
+     * @param mixed $value
+     *
+     * @return Collection
+     */
+    protected function push($value)
+    {
+        $this->items[] = $value;
+
+        return $this;
+    }
+
+    /**
      * Remove an item from the collection by key.
      *
      * @param  mixed  $key
@@ -106,9 +120,17 @@ class Collection implements Countable, ArrayAccess
      */
     public function each(Closure $callback)
     {
-        array_map($callback, $this->items);
+        return array_map($callback, $this->items);
+    }
 
-        return $this;
+    /**
+     * Get array items
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->all();
     }
 
     /* ------------------------------------------------------------------------------------------------

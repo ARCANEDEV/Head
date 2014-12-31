@@ -82,6 +82,12 @@ class CollectionTest extends TestCase
         $this->assertEquals(2, count($items));
         $this->assertArrayHasKey('foo', $items);
         $this->assertArrayHasKey('bar', $items);
+
+        $items = $this->collection->toArray();
+
+        $this->assertEquals(2, count($items));
+        $this->assertArrayHasKey('foo', $items);
+        $this->assertArrayHasKey('bar', $items);
     }
 
     /**

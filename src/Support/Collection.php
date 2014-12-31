@@ -18,9 +18,9 @@ class Collection implements Countable, ArrayAccess
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @param array $items
+     * @param Collection|array $items
      */
-    function __construct(array $items = [])
+    function __construct($items = [])
     {
         $items = ! is_null($items)
             ? $this->getArrayableItems($items)
@@ -30,7 +30,7 @@ class Collection implements Countable, ArrayAccess
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Getters & Setters
+     |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
     /**
@@ -49,7 +49,7 @@ class Collection implements Countable, ArrayAccess
      *
      * @return mixed
      */
-    public function get($key, $default= null)
+    public function get($key, $default = null)
     {
         if ( $this->offsetExists($key) ) {
             return $this->offsetGet($key);
@@ -86,10 +86,6 @@ class Collection implements Countable, ArrayAccess
         return $this->set($key, $value);
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
     /**
      * Remove an item from the collection by key.
      *

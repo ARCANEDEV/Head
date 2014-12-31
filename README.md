@@ -12,9 +12,6 @@ Head Tags Manager
 ### Requirements
     
     - PHP >= 5.4.0
-    - ext-curl: *
-    - ext-json: *
-    - ext-mbstring: *
     
 ### Composer
 

@@ -54,6 +54,9 @@ class ScriptTest extends TestCase
         $this->assertEquals($src, $this->script->getSrc());
     }
 
+    /**
+     * @test
+     */
     public function testCanGetFilenameFromSource()
     {
         $this->assertEquals('', $this->script->getFile());

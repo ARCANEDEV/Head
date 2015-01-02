@@ -102,6 +102,18 @@ class Collection implements Countable, ArrayAccess, ArrayableInterface
     }
 
     /**
+     * Check if has an item by Key
+     *
+     * @param mixed $key
+     *
+     * @return bool
+     */
+    public function has($key)
+    {
+        return $this->offsetExists($key);
+    }
+
+    /**
      * Remove an item from the collection by key.
      *
      * @param  mixed  $key

@@ -46,7 +46,7 @@ class HTMLVersion
     }
 
     /**
-     * @param string $version
+     * @param int|string $version
      *
      * @throws InvalidTypeException
      * @throws InvalidHTMLVersionException

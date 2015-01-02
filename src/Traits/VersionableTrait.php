@@ -27,7 +27,7 @@ trait VersionableTrait
     }
 
     /**
-     * @param string $version
+     * @param int|string $version
      *
      * @throws InvalidTypeException
      * @throws InvalidHTMLVersionException
@@ -45,7 +45,7 @@ trait VersionableTrait
      * Get HTML Version
      *
      *
-     * @param string|HTMLVersion $version
+     * @param int|string|HTMLVersion $version
      *
      * @throws InvalidTypeException
      * @throws InvalidHTMLVersionException
@@ -60,11 +60,24 @@ trait VersionableTrait
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Functions
+     |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
     public function initVersion()
     {
         $this->version = new HTMLVersion;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Function
+     | ------------------------------------------------------------------------------------------------
+     */
+    public function isHTML5()
+    {
+        if (! isset($this->version)) {
+            $this->initVersion();
+        }
+
+        return $this->version->isHTML5();
     }
 }

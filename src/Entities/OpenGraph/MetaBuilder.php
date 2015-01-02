@@ -58,28 +58,34 @@ class MetaBuilder
     }
 
     /**
-     * @param $output
-     * @param $prefix
-     * @param $content
-     * @param $property
+     * Generate Property Meta
+     *
+     * @param array  $output
+     * @param string $prefix
+     * @param string $content
+     * @param string $property
      */
     protected static function generatePropertyMeta(&$output, $prefix, $content, $property)
     {
-        if ( is_object($content) or is_array($content) ) {
+        if (is_object($content) or is_array($content)) {
             if ( is_object($content) and $content instanceof ArrayableInterface ) {
                 $content = $content->toArray();
             }
 
-            $prefix .= ((is_string($property) and ! empty($property)) ? ':' . $property : '');
+            if ((is_string($property) and ! empty($property))) {
+                $prefix .= ':' . $property;
+            }
 
             $output[] = self::html($content, $prefix);
         }
-        elseif ( !empty($content) ) {
+        elseif (! empty($content)) {
             $output[] = self::meta($prefix, $property, $content);
         }
     }
 
     /**
+     * Render Meta Tag
+     *
      * @param string $prefix
      * @param string $property
      * @param string $content
@@ -88,26 +94,52 @@ class MetaBuilder
      */
     private static function meta($prefix, $property, $content)
     {
-        return '<meta ' . self::getMetaProperty($prefix, $property) . ' ' . self::getMetaContent($content) .'>';
+        $property = self::getMetaProperty($prefix, $property);
+        $content  = self::getMetaContent($content);
+
+        return "<meta $property $content>";
     }
 
+    /**
+     * Get Meta Property
+     *
+     * @param string $prefix
+     * @param string $property
+     *
+     * @return string
+     */
     private static function getMetaProperty($prefix, $property)
     {
-        $output = [
-            self::META_ATTR . '="' . $prefix,
-            (is_string($property) and ! empty($property)) ? ':' . htmlspecialchars($property) : '',
-            '"',
-        ];
+        $property = (is_string($property) and ! empty($property))
+            ? ':' . htmlspecialchars($property)
+            : '';
 
-        return self::implode($output);
+        return self::implode([
+            self::META_ATTR . '="' . $prefix, $property, '"',
+        ]);
     }
 
+    /**
+     * Get Meta Content
+     *
+     * @param $content
+     *
+     * @return string
+     */
     private static function getMetaContent($content)
     {
         return 'content="' . htmlspecialchars($content) . '"';
     }
 
-    private static function implode($output, $glue = '')
+    /**
+     * Implode output array
+     *
+     * @param array  $output
+     * @param string $glue
+     *
+     * @return string
+     */
+    private static function implode(array $output, $glue = '')
     {
         return implode($glue, array_filter($output));
     }

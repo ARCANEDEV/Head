@@ -276,6 +276,34 @@ class OpenGraphTest extends TestCase
     {
         $this->og->enable();
         $this->assertEquals('', $this->og->render());
+
+        $type        = "website";
+        $title       = "Hello World";
+        $siteName    = "Company Name";
+        $description = "$title Description";
+        $determiner  = "the";
+        $locale      = "fr_FR";
+        $url         = "http://www.arcanedev.net";
+
+        $this->og->setType($type)
+            ->setTitle($title)
+            ->setSiteName($siteName)
+            ->setDescription($description)
+            ->setURL($url)
+            ->setDeterminer($determiner)
+            ->setLocale($locale);
+
+        $tags = [
+            "<meta property=\"og:type\" content=\"$type\">",
+            "<meta property=\"og:title\" content=\"$title\">",
+            "<meta property=\"og:site_name\" content=\"$siteName\">",
+            "<meta property=\"og:description\" content=\"$description\">",
+            "<meta property=\"og:url\" content=\"$url\">",
+            "<meta property=\"og:determiner\" content=\"$determiner\">",
+            "<meta property=\"og:locale\" content=\"$locale\">",
+        ];
+
+        $this->assertEquals(implode(PHP_EOL, $tags), $this->og->render());
     }
 
     /**

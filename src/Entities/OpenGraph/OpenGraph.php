@@ -265,8 +265,8 @@ class OpenGraph implements OpenGraphInterface, RenderableInterface
         }
 
         $url = trim($url);
-        
-        if ( self::VERIFY_URLS ) {
+
+        if (self::VERIFY_URLS) {
             $url = self::isValidUrl($url, [
                 'text/html', 'application/xhtml+xml'
             ]);
@@ -522,8 +522,6 @@ class OpenGraph implements OpenGraphInterface, RenderableInterface
      */
     private function toHTML()
     {
-        $attributes = get_object_vars($this);
-
         $allowed    = array_flip([
             'type',
             'title',
@@ -531,12 +529,13 @@ class OpenGraph implements OpenGraphInterface, RenderableInterface
             'description',
             'url',
             'determiner',
+            'locale',
             'images',
             'videos',
             'audios'
         ]);
 
-        $attributes = array_intersect_key($attributes, $allowed);
+        $attributes = array_intersect_key(get_object_vars($this), $allowed);
 
         return MetaBuilder::html($attributes);
     }

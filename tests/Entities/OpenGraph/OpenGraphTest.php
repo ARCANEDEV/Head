@@ -47,6 +47,7 @@ class OpenGraphTest extends TestCase
     {
         $this->assertInstanceOf(self::OPENGRAPH_CLASS, $this->og);
         // TODO: Add Countable to collections
+        $this->assertFalse($this->og->isEnabled());
         $this->assertEquals(0, count($this->og->getImages()));
         $this->assertEquals(0, count($this->og->getVideos()));
         $this->assertEquals(0, count($this->og->getAudios()));
@@ -114,9 +115,15 @@ class OpenGraphTest extends TestCase
      */
     public function testCanSetAndGetURL()
     {
+        $this->og->setURL('');
+        $this->assertEmpty($this->og->getURL());
+
         $url = 'http://www.company.com';
         $this->og->setURL($url);
 
+        $this->assertEquals($url, $this->og->getURL());
+
+        $this->og->setURL('');
         $this->assertEquals($url, $this->og->getURL());
     }
 
@@ -142,44 +149,156 @@ class OpenGraphTest extends TestCase
         $this->assertEquals($locale, $this->og->getLocale());
     }
 
-    public function testCanAddImage()
+    /**
+     * @test
+     */
+    public function testCanEnableAndDisableOpenGraph()
     {
-        $image = new ImageMedia();
-        $image->setURL('http://example.com/image-1.jpg');
-        $image->setSecureURL('https://example.com/image-1.jpg');
-        $image->setType('image/jpeg');
-        $image->setWidth(400);
-        $image->setHeight(300);
+        $this->assertFalse($this->og->isEnabled());
 
-        $this->og->addImage($image);
+        $this->og->enable();
+        $this->assertTrue($this->og->isEnabled());
 
-        $this->assertEquals(1, count($this->og->getImages()));
-    }
-
-    public function testCanAddVideo()
-    {
-        $video = new VideoMedia();
-        $video->setURL('http://example.com/video.swf');
-        $video->setSecureURL('https://example.com/video.swf');
-        $video->setType($video->getTypeFromUrl());
-        $video->setWidth(500);
-        $video->setHeight(400);
-
-        $this->og->addVideo($video);
-
-        $this->assertCount(1, $this->og->getVideos());
+        $this->og->disable();
+        $this->assertFalse($this->og->isEnabled());
     }
 
     /**
      * @test
      */
-    public function testCanAddAudio()
+    public function testCanAddImage()
     {
+        $this->assertEquals(0, $this->og->imagesCount());
+
+        $image = new ImageMedia();
+        $image->setURL('http://example.com/image-1.jpg')
+              ->setSecureURL('https://example.com/image-1.jpg')
+              ->setType('image/jpeg')
+              ->setWidth(400)
+              ->setHeight(300);
+        $this->og->addImage($image);
+
+        $this->assertEquals(1, $this->og->imagesCount());
+
+        $image = new ImageMedia();
+        $image->setURL('http://example.com/image-2.jpg')
+            ->setSecureURL('https://example.com/image-2.jpg')
+            ->setType('image/jpeg')
+            ->setWidth(400)
+            ->setHeight(300);
+        $this->og->addImage($image);
+
+        $this->assertEquals(2, $this->og->imagesCount());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanAddVideo()
+    {
+        $this->assertEquals(0, $this->og->videosCount());
+
+        $video = new VideoMedia();
+        $video->setURL('http://example.com/video-1.swf')
+              ->setSecureURL('https://example.com/video-1.swf')
+              ->setType($video->getTypeFromUrl())
+              ->setWidth(500)
+              ->setHeight(400);
+        $this->og->addVideo($video);
+
+        $this->assertEquals(1, $this->og->videosCount());
+
+        $video = new VideoMedia();
+        $video->setURL('http://example.com/video-2.swf')
+            ->setSecureURL('https://example.com/video-2.swf')
+            ->setType($video->getTypeFromUrl())
+            ->setWidth(500)
+            ->setHeight(400);
+        $this->og->addVideo($video);
+
+        $this->assertEquals(2, $this->og->videosCount());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanNotAddVideoWithoutURL()
+    {
+        $this->assertEquals(0, $this->og->videosCount());
+
+        $video = new VideoMedia;
+
+        $this->og->addVideo($video);
+        $this->assertEquals(0, $this->og->videosCount());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanAddAudios()
+    {
+        $this->assertEquals(0, $this->og->audiosCount());
+
         $audio = new AudioMedia;
-        $audio->setURL('http://example.com/audio.mp3');
-        $audio->setSecureURL('https://example.com/audio.mp3');
-        $audio->setType('audio/mpeg');
+        $audio->setURL('http://example.com/audio-1.mp3')
+              ->setSecureURL('https://example.com/audio-1.mp3')
+              ->setType('audio/mpeg');
+        $this->og->addAudio($audio);
+
+        $this->assertEquals(1, $this->og->audiosCount());
+
+        $audio = new AudioMedia;
+        $audio->setURL('http://example.com/audio-2.mp3')
+            ->setSecureURL('https://example.com/audio-2.mp3')
+            ->setType('audio/mpeg');
+        $this->og->addAudio($audio);
+
+        $this->assertEquals(2, $this->og->audiosCount());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanNotAddAudioWithoutURL()
+    {
+        $this->assertEquals(0, $this->og->audiosCount());
+
+        $audio = new AudioMedia;
 
         $this->og->addAudio($audio);
+        $this->assertEquals(0, $this->og->audiosCount());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanRender()
+    {
+        $this->og->enable();
+        $this->assertEquals('', $this->og->render());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanValidateUrl()
+    {
+        $this->assertEmpty(OpenGraph::isValidUrl(''));
+        $this->assertEmpty(OpenGraph::isValidUrl('invalid-url'));
+        $this->assertEmpty(OpenGraph::isValidUrl('http://invalid-url.org'));
+        $this->assertEmpty(OpenGraph::isValidUrl('http://invalid-url.org?q=hello#home'));
+
+        $url = 'https://www.facebook.com/arcanedev.agence.web.casablanca';
+        $this->assertEquals($url, OpenGraph::isValidUrl($url));
+    }
+
+    /**
+     * @test
+     */
+    public function testGetGetSupportedTypes()
+    {
+        $this->assertEquals(8, count(OpenGraph::supportedTypes()));
+
+        $this->assertEquals(43, count(OpenGraph::supportedTypes(true)));
     }
 }

@@ -1,11 +1,13 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph;
 
-use Arcanedev\Head\Contracts\RenderableInterface;
 use Arcanedev\Head\Entities\OpenGraph\Medias\AudioMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
 
-class OpenGraph implements RenderableInterface
+use Arcanedev\Head\Contracts\Entities\OpenGraphInterface;
+use Arcanedev\Head\Contracts\RenderableInterface;
+
+class OpenGraph implements OpenGraphInterface, RenderableInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -115,7 +117,9 @@ class OpenGraph implements RenderableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @return String the type slug
+     * Get the Type slug
+     *
+     * @return string
      */
     public function getType()
     {
@@ -123,7 +127,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @param string $type - type slug
+     * Set the Type slug
+     *
+     * @param string $type
      *
      * @return OpenGraph
      */
@@ -140,7 +146,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @return string - Document title
+     * Get Title
+     *
+     * @return string
      */
     public function getTitle()
     {
@@ -148,7 +156,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @param string $title - Document title
+     * Set Title
+     *
+     * @param string $title
      *
      * @return OpenGraph
      */
@@ -168,7 +178,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @return string - Site name
+     * Get Site name
+     *
+     * @return string
      */
     public function getSiteName()
     {
@@ -198,7 +210,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @return string Description
+     * Get Description
+     *
+     * @return string
      */
     public function getDescription()
     {
@@ -206,7 +220,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @param string $description - Document description
+     * Set Description
+     *
+     * @param string $description
      *
      * @return OpenGraph
      */
@@ -226,7 +242,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @return string - URL
+     * Get URL
+     *
+     * @return string
      */
     public function getURL()
     {
@@ -234,30 +252,37 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @param string $url - Canonical URL
+     * Set the Canonical URL
+     *
+     * @param string $url
      *
      * @return OpenGraph
      */
     public function setURL($url)
     {
-        if (is_string($url) and ! empty($url)) {
-            $url = trim($url);
+        if (! is_string($url) or empty($url)) {
+            return $this;
+        }
 
-            if ( self::VERIFY_URLS ) {
-                $url = self::isValidUrl($url, [
-                    'text/html', 'application/xhtml+xml'
-                ]);
-            }
+        $url = trim($url);
+        
+        if ( self::VERIFY_URLS ) {
+            $url = self::isValidUrl($url, [
+                'text/html', 'application/xhtml+xml'
+            ]);
+        }
 
-            if ( ! empty( $url ) )
-                $this->url = $url;
+        if (! empty($url)) {
+            $this->url = $url;
         }
 
         return $this;
     }
 
     /**
-     * @return string - Get the determiner
+     * Get the determiner
+     *
+     * @return string
      */
     public function getDeterminer()
     {
@@ -265,6 +290,8 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
+     * Set the determiner
+     *
      * @param string $determiner
      *
      * @return OpenGraph
@@ -277,8 +304,11 @@ class OpenGraph implements RenderableInterface
 
         return $this;
     }
+
     /**
-     * @return string - language_TERRITORY
+     * Get the locale (language_TERRITORY)
+     *
+     * @return string
      */
     public function getLocale()
     {
@@ -286,7 +316,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @var string $locale - locale in the format language_TERRITORY
+     * Set locale in the format (language_TERRITORY)
+     *
+     * @var string $locale
      *
      * @return OpenGraph
      */
@@ -303,7 +335,9 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @return array - ImageMedia array
+     * Get ImageMedia array
+     *
+     * @return array
      */
     public function getImages()
     {
@@ -315,7 +349,7 @@ class OpenGraph implements RenderableInterface
      * The first image added is given priority by the Open Graph Protocol spec.
      * Implementors may choose a different image based on size requirements or preferences.
      *
-     * @param ImageMedia $image - Image object to add
+     * @param ImageMedia $image
      *
      * @return OpenGraph
      */
@@ -333,8 +367,12 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
+     * Add ImageMedia to Collection
+     *
      * @param string     $imageUrl
      * @param ImageMedia $image
+     *
+     * @return $this
      */
     private function addImageToCollection($imageUrl, ImageMedia $image)
     {
@@ -346,10 +384,54 @@ class OpenGraph implements RenderableInterface
         else {
             $this->images[]  = $value;
         }
+
+        return $this;
     }
 
     /**
-     * @return array - AudioMedia objects
+     * Get VideoMedia array
+     *
+     * @return array
+     */
+    public function getVideos()
+    {
+        return $this->videos;
+    }
+
+    /**
+     * Add a video reference
+     * The first video is given priority by the Open Graph protocol spec.
+     * Implementors may choose a different video based on size requirements or preferences.
+     *
+     * @param VideoMedia $video
+     *
+     * @return OpenGraph
+     */
+    public function addVideo(VideoMedia $video)
+    {
+        $video_url = $video->getURL();
+
+        if (empty($video_url)) {
+            return $this;
+        }
+
+        $video->removeURL();
+        $value = [$video_url, [$video]];
+
+        if (! isset($this->videos)) {
+            $this->videos = [$value];
+        }
+        else {
+            $this->videos[] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get AudioMedia array
+     *
+     * @return array
      */
     public function getAudios()
     {
@@ -360,11 +442,11 @@ class OpenGraph implements RenderableInterface
      * Add an audio reference
      * The first audio is given priority by the Open Graph protocol spec.
      *
-     * @param AudioMedia $audio - Audio object to add
+     * @param AudioMedia $audio
      *
      * @return OpenGraph
      */
-    public function addAudio(AudioMedia $audio )
+    public function addAudio(AudioMedia $audio)
     {
         $audio_url = $audio->getURL();
 
@@ -385,45 +467,33 @@ class OpenGraph implements RenderableInterface
         return $this;
     }
 
-    /**
-     * @return array - Array VideoMedia objects
+    /* ------------------------------------------------------------------------------------------------
+     |  Main Functions
+     | ------------------------------------------------------------------------------------------------
      */
-    public function getVideos()
-    {
-        return $this->videos;
-    }
-
     /**
-     * Add a video reference
-     * The first video is given priority by the Open Graph protocol spec.
-     * Implementors may choose a different video based on size requirements or preferences.
-     *
-     * @param VideoMedia $video - video object to add
+     * Enable OpenGraph
      *
      * @return OpenGraph
      */
-    public function addVideo(VideoMedia $video)
+    public function enable()
     {
-        $video_url = $video->getURL();
-
-        if (empty($video_url)) {
-            return $this;
-        }
-
-        $video->removeURL();
-        $value = [$video_url, [$video]];
-
-        if (! isset( $this->videos )) {
-            $this->videos = [$value];
-        }
-        else {
-            $this->videos[] = $value;
-        }
-
-        return $this;
+        return $this->setEnabled(true);
     }
 
     /**
+     * Disable OpenGraph
+     *
+     * @return OpenGraph
+     */
+    public function disable()
+    {
+        return $this->setEnabled(false);
+    }
+
+    /**
+     * Set OpenGraph to Enable/Disable
+     *
      * @param bool $enabled
      *
      * @return OpenGraph
@@ -433,26 +503,6 @@ class OpenGraph implements RenderableInterface
         $this->enabled = $enabled;
 
         return $this;
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * @return OpenGraph
-     */
-    public function enable()
-    {
-        return $this->setEnabled(true);
-    }
-
-    /**
-     * @return OpenGraph
-     */
-    public function disable()
-    {
-        return $this->setEnabled(false);
     }
 
     /**
@@ -470,12 +520,20 @@ class OpenGraph implements RenderableInterface
      *
      * @return string meta elements
      */
-    public function toHTML()
+    private function toHTML()
     {
         $attributes = get_object_vars($this);
 
         $allowed    = array_flip([
-            'type', 'title', 'site_name', 'description', 'url', 'determiner', 'images', 'videos', 'audios'
+            'type',
+            'title',
+            'site_name',
+            'description',
+            'url',
+            'determiner',
+            'images',
+            'videos',
+            'audios'
         ]);
 
         $attributes = array_intersect_key($attributes, $allowed);
@@ -484,10 +542,61 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * Cleans a URL string, then checks to see if a given URL is addressable, returns a 200 OK response, and matches the accepted Internet media types (if provided).
+     * Get Images Count
      *
-     * @param string $url           - Publicly addressable URL
-     * @param array  $acceptedMimes - Given URL correspond to an accepted Internet media (MIME) type.
+     * @return int
+     */
+    public function imagesCount()
+    {
+        $images = $this->getImages();
+
+        return isset($images) ? count($images) : 0;
+    }
+
+    /**
+     * Get Videos Count
+     *
+     * @return int
+     */
+    public function videosCount()
+    {
+        $videos = $this->getVideos();
+
+        return isset($videos) ? count($videos) : 0;
+    }
+
+    /**
+     * Get Audios Count
+     *
+     * @return int
+     */
+    public function audiosCount()
+    {
+        $audios = $this->getAudios();
+
+        return isset($audios) ? count($audios) : 0;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Check if Open Graph is enabled
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Cleans a URL string, then checks to see if a given URL is addressable,
+     * returns a 200 OK response, and matches the accepted Internet media types (if provided).
+     *
+     * @param string $url
+     * @param array  $acceptedMimes
      *
      * @return string - cleaned URL string, or empty string on failure.
      */
@@ -497,10 +606,81 @@ class OpenGraph implements RenderableInterface
             return '';
         }
 
+        if (empty($acceptedMimes)) {
+            $acceptedMimes = [
+                'text/html', 'application/xhtml+xml'
+            ];
+        }
+
         return self::curlParsedURL($url, $acceptedMimes);
     }
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
+     * CURL Parsed URL
+     *
+     * @param       $url
+     * @param array $acceptedMimes
+     *
+     * @return string
+     */
+    private static function curlParsedURL($url, array $acceptedMimes)
+    {
+        /*
+         * Validate URI string by letting PHP break up the string and put it back together again
+         * Excludes username:password and port number URI parts
+         */
+        $url = self::parseUrl($url);
+
+        if (empty($url)) {
+            return $url;
+        }
+
+        // test if URL exists
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_NOBODY, true); // HEAD
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Open Graph protocol validator ' . self::VERSION . ' (+http://ogp.me/)');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        if (! empty($acceptedMimes)) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: ' . implode(',', $acceptedMimes)]);
+        }
+
+        $response       = curl_exec($ch);
+        $statusCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if ($statusCode != 200 or empty($acceptedMimes)) {
+            return '';
+        }
+
+        if ($statusCode == 200 and ! empty($acceptedMimes)) {
+            $contentType    = explode(';', curl_getinfo($ch, CURLINFO_CONTENT_TYPE));
+
+            if (
+                empty($contentType) or
+                ! in_array($contentType[0], $acceptedMimes)
+            ) {
+                return '';
+            }
+        }
+
+        unset($response);
+
+        return $url;
+    }
+
+    /**
+     * Parse URL
+     *
      * @param string $url
      *
      * @return string
@@ -515,9 +695,11 @@ class OpenGraph implements RenderableInterface
             isset($urlParts['scheme']) and
             in_array($urlParts['scheme'], ['http', 'https'], true)
         ) {
-            $url = "{$urlParts['scheme']}://{$urlParts['host']}{$urlParts['path']}";
+            $url  = $urlParts['scheme'] . "://";
+            $url .= $urlParts['host'];
+            $url .= isset($urlParts['path']) ? $urlParts['path'] : '';
 
-            if (empty($urlParts['path'])) {
+            if (! isset($urlParts['path']) or empty($urlParts['path'])) {
                 $url .= '/';
             }
 
@@ -533,84 +715,6 @@ class OpenGraph implements RenderableInterface
         return $url;
     }
 
-    /**
-     * @param       $url
-     * @param array $acceptedMimes
-     *
-     * @return string
-     */
-    private static function curlParsedURL($url, array $acceptedMimes)
-    {
-        /*
-         * Validate URI string by letting PHP break up the string and put it back together again
-         * Excludes username:password and port number URI parts
-         */
-        $url = self::parseUrl($url);
-
-        if (! empty($url)) {
-            // test if URL exists
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-            curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
-            curl_setopt($ch, CURLOPT_NOBODY, true); // HEAD
-            curl_setopt($ch, CURLOPT_USERAGENT, 'Open Graph protocol validator ' . self::VERSION . ' (+http://ogp.me/)');
-
-            if (! empty($acceptedMimes)) {
-                curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: ' . implode(',', $acceptedMimes)]);
-            }
-
-            $response       = curl_exec($ch);
-            $statusCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            if ($statusCode != 200 or empty($acceptedMimes)) {
-                return '';
-            }
-
-            if ($statusCode == 200 and ! empty($acceptedMimes)) {
-                $contentType    = explode(';', curl_getinfo($ch, CURLINFO_CONTENT_TYPE));
-
-                if (
-                    empty($contentType) or
-                    ! in_array($contentType[0], $acceptedMimes)
-                ) {
-                    return '';
-                }
-            }
-
-            unset($response);
-        }
-
-        return $url;
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Check Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function isEnabled()
-    {
-        return $this->enabled;
-    }
-
-    public function imagesCount()
-    {
-        return isset($this->images) ? count($this->images) : 0;
-    }
-
-    public function videosCount()
-    {
-        return isset($this->videos) ? count($this->videos) : 0;
-    }
-
-    public function audiosCount()
-    {
-        return isset($this->videos) ? count($this->videos) : 0;
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
-     */
     /**
      * A list of allowed page types in the Open Graph Protocol
      *
@@ -682,17 +786,17 @@ class OpenGraph implements RenderableInterface
             ]
         ];
 
-        if ( $flatten === true ) {
-            $typesValues = [];
-
-            foreach ( $types as $category => $values ) {
-                $typesValues = array_merge($typesValues, array_keys($values));
-            }
-
-            return $typesValues;
+        if ($flatten === false) {
+            return $types;
         }
 
-        return $types;
+        $typesValues = [];
+
+        foreach ($types as $category => $values) {
+            $typesValues = array_merge($typesValues, array_keys($values));
+        }
+
+        return $typesValues;
     }
 
     /**
@@ -700,7 +804,7 @@ class OpenGraph implements RenderableInterface
      * A few popular languages such as English and French support multiple territories.
      * Map the Facebook list to avoid throwing errors in Facebook parsers that prevent further content indexing
      *
-     * @param bool $keysOnly - return only keys
+     * @param bool $keysOnly
      *
      * @return array - associative array of locale code and locale name.
      */

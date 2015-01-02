@@ -1,8 +1,8 @@
-<?php namespace Arcanedev\Head\Entities\OpenGraph;
+<?php namespace Arcanedev\Head\Support;
 
 use Arcanedev\Head\Contracts\ArrayableInterface;
 
-class MetaBuilder
+abstract class AbstractMetaBuilder
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -13,14 +13,14 @@ class MetaBuilder
      *
      * @var string
      */
-    const PREFIX = 'og';
+    protected static $prefix = '';
 
     /**
      * Meta attribute name. Use 'property' if you prefer RDF or 'name' if you prefer HTML validation
      *
      * @var string
      */
-    const META_ATTR = 'property';
+    protected static $metaName = 'name';
 
     /* ------------------------------------------------------------------------------------------------
      |  Functions
@@ -34,11 +34,15 @@ class MetaBuilder
      *
      * @return string
      */
-    public static function html(array $attributes, $prefix = self::PREFIX)
+    public static function html(array $attributes, $prefix = '')
     {
         $output = [];
 
-        if ( ! empty($attributes) ) {
+        if (empty($prefix)) {
+            $prefix = static::$prefix;
+        }
+
+        if (! empty($attributes)) {
             self::generateAttributesMetas($output, $attributes, $prefix);
         }
 
@@ -60,15 +64,15 @@ class MetaBuilder
     /**
      * Generate Property Meta
      *
-     * @param array  $output
-     * @param string $prefix
-     * @param string $content
-     * @param string $property
+     * @param array               $output
+     * @param string              $prefix
+     * @param object|array|string $content
+     * @param string              $property
      */
     protected static function generatePropertyMeta(&$output, $prefix, $content, $property)
     {
         if (is_object($content) or is_array($content)) {
-            if ( is_object($content) and $content instanceof ArrayableInterface ) {
+            if (is_object($content) and $content instanceof ArrayableInterface) {
                 $content = $content->toArray();
             }
 
@@ -115,7 +119,7 @@ class MetaBuilder
             : '';
 
         return self::implode([
-            self::META_ATTR . '="' . $prefix, $property, '"',
+            static::$metaName . '="' . $prefix, $property, '"',
         ]);
     }
 

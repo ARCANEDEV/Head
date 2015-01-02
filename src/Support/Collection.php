@@ -3,8 +3,9 @@
 use Closure;
 use Countable;
 use ArrayAccess;
+use Arcanedev\Head\Contracts\ArrayableInterface;
 
-class Collection implements Countable, ArrayAccess
+class Collection implements Countable, ArrayAccess, ArrayableInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties

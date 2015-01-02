@@ -537,7 +537,7 @@ class OpenGraph implements OpenGraphInterface, RenderableInterface
 
         $attributes = array_intersect_key(get_object_vars($this), $allowed);
 
-        return MetaBuilder::html($attributes);
+        return OGMetaBuilder::html($attributes);
     }
 
     /**

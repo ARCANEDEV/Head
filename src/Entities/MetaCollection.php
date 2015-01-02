@@ -52,6 +52,13 @@ class MetaCollection extends Collection
         return $this;
     }
 
+    /**
+     * @param array $meta
+     *
+     * @throws Exception
+     *
+     * @return $this
+     */
     public function addMetaArray(array $meta)
     {
         $name       = $this->getAttribute('name', $meta);
@@ -77,7 +84,19 @@ class MetaCollection extends Collection
      */
     public function addMeta($name, $content, array $attributes = [])
     {
-        $this->push(Meta::make($name, $content, $attributes));
+        $meta = Meta::make($name, $content, $attributes);
+
+        return $this->setMeta($meta);
+    }
+
+    /**
+     * @param Meta $meta
+     *
+     * @return MetaCollection
+     */
+    public function setMeta(Meta $meta)
+    {
+        $this->push($meta);
 
         return $this;
     }

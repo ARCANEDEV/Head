@@ -1,11 +1,13 @@
 <?php namespace Arcanedev\Head\Entities;
 
+use Arcanedev\Head\Contracts\Entities\CharsetInterface;
 use Arcanedev\Head\Contracts\VersionableInterface;
 
-use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Head\Traits\VersionableTrait;
 
-class Charset extends AbstractMeta implements VersionableInterface
+use Arcanedev\Head\Exceptions\InvalidTypeException;
+
+class Charset extends AbstractMeta implements CharsetInterface, VersionableInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -19,7 +21,7 @@ class Charset extends AbstractMeta implements VersionableInterface
     /**
      * @var array
      */
-    protected $supportedCharset = [];
+    protected static $supportedCharset = [];
 
     const DEFAULT_CHARSET       = 'UTF-8';
 
@@ -38,21 +40,9 @@ class Charset extends AbstractMeta implements VersionableInterface
         $this->initVersion();
 
         // Load all supported Charsets
-        $this->supportedCharset = function_exists('mb_list_encodings')
+        self::$supportedCharset = function_exists('mb_list_encodings')
             ? mb_list_encodings()
             : $this->getDefaultCharsets();
-    }
-
-    /**
-     * Make a charset
-     *
-     * @param string $charset
-     *
-     * @return Charset
-     */
-    public static function make($charset)
-    {
-        return (new self)->setCharset($charset);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -60,6 +50,8 @@ class Charset extends AbstractMeta implements VersionableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Get Charset
+     *
      * @return string
      */
     public function get()
@@ -68,6 +60,8 @@ class Charset extends AbstractMeta implements VersionableInterface
     }
 
     /**
+     * Get Charset
+     *
      * @return string
      */
     public function getCharset()
@@ -78,6 +72,8 @@ class Charset extends AbstractMeta implements VersionableInterface
     }
 
     /**
+     * Set Charset
+     *
      * @param string $charset
      *
      * @return Charset
@@ -88,6 +84,8 @@ class Charset extends AbstractMeta implements VersionableInterface
     }
 
     /**
+     * Set Charset
+     *
      * @param string $charset
      *
      * @throws InvalidTypeException
@@ -113,14 +111,36 @@ class Charset extends AbstractMeta implements VersionableInterface
         return self::DEFAULT_CHARSET;
     }
 
-    public function getAllSupportedCharsets()
+    /**
+     * Get all Supported Charsets
+     *
+     * @return array
+     */
+    public static function getAllSupportedCharsets()
     {
-        return $this->supportedCharset;
+        return self::$supportedCharset;
     }
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Make a charset
+     *
+     * @param string $charset
+     *
+     * @return Charset
+     */
+    public static function make($charset)
+    {
+        return (new self)->setCharset($charset);
+    }
+
+    /**
+     * Render Charset Tags
+     *
+     * @return string
      */
     public function render()
     {
@@ -135,12 +155,19 @@ class Charset extends AbstractMeta implements VersionableInterface
      |  Check Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Check if Charset is empty
+     *
+     * @return bool
+     */
     public function isEmpty()
     {
         return empty($this->charset);
     }
 
     /**
+     * Check Charset
+     *
      * @param string $charset
      *
      * @throws InvalidTypeException
@@ -157,24 +184,27 @@ class Charset extends AbstractMeta implements VersionableInterface
     }
 
     /**
-     * @param $charset
+     * Check if charset is supported
+     *
+     * @param string $charset
      *
      * @return bool
      */
-    public function supported($charset)
+    public static function supported($charset)
     {
-        return $this->isSupported($charset);
+        return self::isSupported($charset);
     }
 
     /**
-     * @param $charset
+     * @param string $charset
+     *
+     * @throws InvalidTypeException
      *
      * @return bool
-     * @throws InvalidTypeException
      */
-    private function isSupported($charset)
+    private static function isSupported($charset)
     {
-        $result = $this->getFromSupported($charset);
+        $result = self::getFromSupported($charset);
 
         return count($result) > 0;
     }
@@ -185,12 +215,12 @@ class Charset extends AbstractMeta implements VersionableInterface
      *
      * @return array|string
      */
-    private function getFromSupported($charset, $getValue = false)
+    private static function getFromSupported($charset, $getValue = false)
     {
         $charset = trim($charset);
         $charset = str_replace(' ', '', $charset);
 
-        $result = array_intersect($this->getAllSupportedCharsets(), [
+        $result = array_intersect(self::getAllSupportedCharsets(), [
             $charset,
             strtolower($charset),
             strtoupper($charset)
@@ -200,6 +230,8 @@ class Charset extends AbstractMeta implements VersionableInterface
     }
 
     /**
+     * Check if it is HTML5
+     *
      * @return bool
      */
     public function isHTML5()
@@ -210,6 +242,11 @@ class Charset extends AbstractMeta implements VersionableInterface
     /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get all default charsets
+     *
+     * @return array
      */
     private function getDefaultCharsets()
     {

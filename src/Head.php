@@ -4,6 +4,7 @@ use Arcanedev\Head\Entities\Charset                as Charset;
 use Arcanedev\Head\Entities\Title                  as Title;
 use Arcanedev\Head\Entities\Description            as Description;
 use Arcanedev\Head\Entities\Keywords               as Keywords;
+use Arcanedev\Head\Entities\Meta                   as Meta;
 use Arcanedev\Head\Entities\MetaCollection         as MetaCollection;
 use Arcanedev\Head\Entities\StylesheetCollection   as StylesheetCollection;
 use Arcanedev\Head\Entities\ScriptCollection       as ScriptCollection;
@@ -11,11 +12,12 @@ use Arcanedev\Head\Entities\OpenGraph\OpenGraph    as OpenGraph;
 
 use Arcanedev\Head\Exceptions\InvalidTypeException as InvalidTypeException;
 
+use Arcanedev\Head\Contracts\HeadInterface         as HeadInterface;
 use Arcanedev\Head\Contracts\RenderableInterface   as RenderableInterface;
 use Arcanedev\Head\Contracts\VersionableInterface  as VersionableInterface;
 use Arcanedev\Head\Traits\VersionableTrait         as VersionableTrait;
 
-class Head implements RenderableInterface, VersionableInterface
+class Head implements HeadInterface, RenderableInterface, VersionableInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -74,6 +76,9 @@ class Head implements RenderableInterface, VersionableInterface
         $this->loadConfig($config);
     }
 
+    /**
+     * Init Head
+     */
     private function init()
     {
         $this->charset      = new Charset;
@@ -90,6 +95,8 @@ class Head implements RenderableInterface, VersionableInterface
     }
 
     /**
+     * Load Configuration
+     *
      * @param array $config
      */
     private function loadConfig($config)
@@ -102,6 +109,8 @@ class Head implements RenderableInterface, VersionableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Get Charset
+     *
      * @return string
      */
     public function getCharset()
@@ -131,16 +140,20 @@ class Head implements RenderableInterface, VersionableInterface
     }
 
     /**
+     * Render Charset Tag
+     *
      * @return string
      */
-    public function getCharsetTag()
+    public function renderCharsetTag()
     {
         return $this->charset->render();
     }
 
     /**
-     * @param       string $title
-     * @param       string $description
+     * Set SEO Tags
+     *
+     * @param string       $title
+     * @param string       $description
      * @param array|string $keywords
      *
      * @throws InvalidTypeException
@@ -182,16 +195,21 @@ class Head implements RenderableInterface, VersionableInterface
             $this->title = $title;
         }
 
-        $this->updateTitleDependencies();
-
-        return $this;
+        return $this->updateTitleDependencies();
     }
 
+    /**
+     * Update Title Dependencies (OpenGraph & Twitter)
+     *
+     * @return Head
+     */
     private function updateTitleDependencies()
     {
         $title      = $this->title->get();
         $siteName   = $this->title->getSiteName();
         $this->openGraph->setTitle($title)->setSiteName($siteName);
+
+        return $this;
     }
 
     /**
@@ -199,7 +217,7 @@ class Head implements RenderableInterface, VersionableInterface
      *
      * @return string
      */
-    public function getTitleTag()
+    public function renderTitleTag()
     {
         return $this->title->render();
     }
@@ -232,26 +250,35 @@ class Head implements RenderableInterface, VersionableInterface
             $this->description = $description;
         }
 
-        $this->updateDescriptionDependencies();
-
-        return $this;
+        return $this->updateDescriptionDependencies();
     }
 
+    /**
+     * Update Description Dependencies (OpenGraph & Twitter)
+     *
+     * @return Head
+     */
     private function updateDescriptionDependencies()
     {
         $description = $this->getDescription();
         $this->openGraph->setDescription($description);
+
+        return $this;
     }
 
     /**
+     * Render Description tag
+     *
      * @return string
      */
-    public function getDescriptionTag()
+    public function renderDescriptionTag()
     {
         return $this->description->render();
     }
 
     /**
+     * Get Keywords tags
+     *
      * @return array
      */
     public function getKeywords()
@@ -284,16 +311,73 @@ class Head implements RenderableInterface, VersionableInterface
     }
 
     /**
+     * Render Keywords
+     *
      * @return string
      */
-    public function getKeywordsTag()
+    public function renderKeywordsTag()
     {
         return $this->keywords->render();
+    }
+
+    /**
+     * Get Meta Collection
+     *
+     * @return MetaCollection
+     */
+    public function getMetas()
+    {
+        return $this->metas;
+    }
+
+    /**
+     * Add Meta
+     *
+     * @param string $name
+     * @param string $content
+     * @param array  $attributes
+     *
+     * @return Head
+     */
+    public function addMeta($name, $content, $attributes = [])
+    {
+        $this->metas->addMeta($name, $content, $attributes);
+
+        return $this;
+    }
+
+    /**
+     * Set Meta
+     *
+     * @param Meta $meta
+     *
+     * @return Head
+     */
+    public function setMeta(Meta $meta)
+    {
+        $this->metas->setMeta($meta);
+
+        return $this;
+    }
+
+    /**
+     * Render Metas tags
+     *
+     * @return String
+     */
+    public function renderMetasTags()
+    {
+        return $this->metas->render();
     }
 
     /* ------------------------------------------------------------------------------------------------
      |  Facebook / OpenGraph Functions
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Enable OpenGraph
+     *
+     * @return Head
      */
     public function doFacebook()
     {
@@ -302,6 +386,11 @@ class Head implements RenderableInterface, VersionableInterface
         return $this;
     }
 
+    /**
+     * Disable OpenGraph
+     *
+     * @return Head
+     */
     public function noFacebook()
     {
         $this->openGraph->disable();
@@ -309,7 +398,12 @@ class Head implements RenderableInterface, VersionableInterface
         return $this;
     }
 
-    private function getOpenGraphTags()
+    /**
+     * Render OpenGraph Tags
+     *
+     * @return string
+     */
+    public function renderOpenGraphTags()
     {
         return $this->openGraph->render();
     }
@@ -318,17 +412,21 @@ class Head implements RenderableInterface, VersionableInterface
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Render Head Tags
+     *
+     * @return string
+     */
     public function render()
     {
-        $tags = [
-            $this->getCharsetTag(),
-            $this->getTitleTag(),
-            $this->getDescriptionTag(),
-            $this->getKeywordsTag(),
-            $this->getOpenGraphTags(),
-        ];
-
-        return implode(PHP_EOL, array_filter($tags));
+        return implode(PHP_EOL, array_filter([
+            $this->renderCharsetTag(),
+            $this->renderTitleTag(),
+            $this->renderDescriptionTag(),
+            $this->renderKeywordsTag(),
+            $this->renderMetasTags(),
+            $this->renderOpenGraphTags(),
+        ]));
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -336,13 +434,26 @@ class Head implements RenderableInterface, VersionableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Check if OpenGraph Enabled
+     *
+     * @return bool
+     */
+    public function isOpenGraphEnabled()
+    {
+        return $this->openGraph->isEnabled();
+    }
+
+    /**
      * @param Charset|string $charset
      *
      * @throws InvalidTypeException
      */
     private function checkCharset($charset)
     {
-        if ( ! is_string($charset) and ! ($charset instanceof Charset) ) {
+        if (
+            ! is_string($charset) and
+            ! ($charset instanceof Charset)
+        ) {
             throw new InvalidTypeException('charset', $charset, 'string or Charset Object !');
         }
     }

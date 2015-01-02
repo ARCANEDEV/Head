@@ -1,8 +1,10 @@
 <?php namespace Arcanedev\Head\Entities;
 
+use Arcanedev\Head\Contracts\Entities\DescriptionInterface;
+
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
-class Description extends AbstractMeta
+class Description extends AbstractMeta implements DescriptionInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -55,16 +57,24 @@ class Description extends AbstractMeta
     }
 
     /**
+     * Get SEO Description
+     *
      * @return string
      */
     private function getSEODescription()
     {
+        // TODO: Get Optimized Description
         return $this->description;
     }
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Render Description tag
+     *
+     * @return string
      */
     public function render()
     {
@@ -76,6 +86,11 @@ class Description extends AbstractMeta
     /* ------------------------------------------------------------------------------------------------
      |  Check function
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Check if description is empty
+     *
+     * @return bool
      */
     public function isEmpty()
     {

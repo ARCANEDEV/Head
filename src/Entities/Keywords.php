@@ -1,8 +1,9 @@
 <?php namespace Arcanedev\Head\Entities;
 
+use Arcanedev\Head\Contracts\Entities\KeywordsInterface;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
-class Keywords extends AbstractMeta
+class Keywords extends AbstractMeta implements KeywordsInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -61,17 +62,29 @@ class Keywords extends AbstractMeta
     }
 
     /**
+     * Set Keywords form array
+     *
      * @param array $keywords
+     *
+     * @return Keywords
      */
     private function setFromArray(array $keywords = [])
     {
         $this->checkAllKeywords($keywords);
 
         $this->keywords = array_filter($keywords);
+
+        return $this;
     }
 
+    /**
+     * Get SEO Keywords
+     *
+     * @return string
+     */
     protected function getSEOKeywords()
     {
+        // TODO: Optimize the keywords render
         return implode(', ', $this->keywords);
     }
 
@@ -116,12 +129,18 @@ class Keywords extends AbstractMeta
     }
 
     /**
-     * @param $keywords
+     * Check Keywords Type
+     *
+     * @param string|array $keywords
+     *
      * @throws InvalidTypeException
      */
     private function checkType($keywords)
     {
-        if (! is_string($keywords) and ! is_array($keywords)) {
+        if (
+            ! is_string($keywords) and
+            ! is_array($keywords)
+        ) {
             throw new InvalidTypeException('keywords', $keywords, 'string or array');
         }
     }

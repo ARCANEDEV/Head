@@ -1,10 +1,10 @@
 <?php namespace Arcanedev\Head\Entities;
 
-use Arcanedev\Head\Contracts\TitleInterface         as TitleInterface;
-use Arcanedev\Head\Contracts\RenderableInterface    as RenderableInterface;
+use Arcanedev\Head\Contracts\Entities\TitleInterface as TitleInterface;
+use Arcanedev\Head\Contracts\RenderableInterface     as RenderableInterface;
 
-use Arcanedev\Head\Exceptions\EmptyTitleException   as EmptyTitleException;
-use Arcanedev\Head\Exceptions\InvalidTypeException  as InvalidTypeException;
+use Arcanedev\Head\Exceptions\EmptyTitleException    as EmptyTitleException;
+use Arcanedev\Head\Exceptions\InvalidTypeException   as InvalidTypeException;
 
 class Title implements TitleInterface, RenderableInterface
 {
@@ -52,6 +52,8 @@ class Title implements TitleInterface, RenderableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Get Title
+     *
      * @return string
      */
     public function get()
@@ -60,6 +62,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Get Title
+     *
      * @return string
      */
     public function getTitle()
@@ -68,6 +72,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Set Title
+     *
      * @param string $title
      *
      * @throws InvalidTypeException
@@ -85,6 +91,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Set or Get Site Name
+     *
      * @param string $siteName
      *
      * @throws InvalidTypeException
@@ -103,6 +111,7 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Set Site Name
      * @param string $siteName
      *
      * @throws InvalidTypeException
@@ -119,6 +128,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Get Site Name
+     *
      * @return string
      */
     public function getSiteName()
@@ -127,6 +138,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Hide Site Name
+     *
      * @return Title
      */
     public function hideSiteName()
@@ -135,6 +148,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Show Site Name
+     *
      * @return Title
      */
     public function showSiteName()
@@ -143,6 +158,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Set Site Name visibility
+     *
      * @param bool $visible
      *
      * @return Title
@@ -155,6 +172,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Set Site Name first
+     *
      * @return Title
      */
     public function siteNameFirst()
@@ -163,6 +182,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Set Site Name last
+     *
      * @return Title
      */
     public function siteNameLast()
@@ -171,6 +192,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Set Site Name Position
+     *
      * @param bool $first
      *
      * @return Title
@@ -183,6 +206,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Set or Get Separator
+     *
      * @param string $separator
      *
      * @throws InvalidTypeException
@@ -201,6 +226,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Get Separator
+     *
      * @return string
      */
     public function getSeparator()
@@ -229,13 +256,13 @@ class Title implements TitleInterface, RenderableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Render title html tag
+     * Render Title tag
      *
      * @return string
      */
     public function render()
     {
-        if ( $this->isEmpty() ) {
+        if ($this->isEmpty()) {
             return '';
         }
 
@@ -248,11 +275,13 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Get First Element
+     *
      * @param array $title
      */
     private function getFirst(&$title)
     {
-        if ( $this->checkSiteName() and $this->isSiteNameFirst() ) {
+        if ($this->checkSiteName() and $this->isSiteNameFirst()) {
             $this->renderSiteName($title);
 
             return;
@@ -262,6 +291,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Get Last Element
+     *
      * @param array $title
      */
     private function getLast(&$title)
@@ -280,6 +311,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Render Title
+     *
      * @param array $title
      */
     private function renderTitle(&$title)
@@ -288,6 +321,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Render Site Name
+     *
      * @param array $title
      */
     private function renderSiteName(&$title)
@@ -298,6 +333,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Render Separator
+     *
      * @param array $title
      */
     private function renderSeparator(&$title)
@@ -312,6 +349,8 @@ class Title implements TitleInterface, RenderableInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Check if Title is empty
+     *
      * @return bool
      */
     public function isEmpty()
@@ -320,6 +359,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Check if Site Name is empty
+     *
      * @return bool
      */
     public function isSiteNameEmpty()
@@ -328,6 +369,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Check if Site Name is visible
+     *
      * @return bool
      */
     public function isSiteNameVisible()
@@ -336,6 +379,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Check if Site Name is hidden
+     *
      * @return bool
      */
     public function isSiteNameHidden()
@@ -344,6 +389,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Check if Site Name is First
+     *
      * @return bool
      */
     public function isSiteNameFirst()
@@ -352,6 +399,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Check Site Name is renderable
+     *
      * @return bool
      */
     private function checkSiteName()
@@ -360,6 +409,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Check if Separator is empty
+     *
      * @return bool
      */
     public function isSeparatorEmpty()
@@ -368,6 +419,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Check if Separator is Renderable
+     *
      * @return bool
      */
     private function checkSeparator()
@@ -376,6 +429,8 @@ class Title implements TitleInterface, RenderableInterface
     }
 
     /**
+     * Check Title
+     *
      * @param string $title
      *
      * @throws EmptyTitleException

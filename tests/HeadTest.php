@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\Head\Tests;
 
+use Arcanedev\Head\Entities\Meta;
 use Arcanedev\Head\Head;
 
 use Arcanedev\Head\Entities\Charset     as Charset;
@@ -55,7 +56,7 @@ class HeadTest extends TestCase
         $this->assertEquals('UTF-8', $this->head->getCharset());
         $this->assertEquals(
             '<meta charset="UTF-8">',
-            $this->head->getCharsetTag()
+            $this->head->renderCharsetTag()
         );
 
         $this->head->setCharset('ISO-8859-1');
@@ -63,7 +64,7 @@ class HeadTest extends TestCase
         $this->assertEquals('ISO-8859-1', $this->head->getCharset());
         $this->assertEquals(
             '<meta charset="ISO-8859-1">',
-            $this->head->getCharsetTag()
+            $this->head->renderCharsetTag()
         );
 
         $this->head->setCharset(Charset::make('UTF-8'));
@@ -71,7 +72,7 @@ class HeadTest extends TestCase
         $this->assertEquals('UTF-8', $this->head->getCharset());
         $this->assertEquals(
             '<meta charset="UTF-8">',
-            $this->head->getCharsetTag()
+            $this->head->renderCharsetTag()
         );
     }
 
@@ -96,7 +97,7 @@ class HeadTest extends TestCase
         $this->assertEquals($title, $this->head->getTitle());
         $this->assertEquals(
             '<title>Hello Title</title>',
-            $this->head->getTitleTag()
+            $this->head->renderTitleTag()
         );
     }
 
@@ -115,7 +116,7 @@ class HeadTest extends TestCase
         $this->assertEquals('Hello Title', $this->head->getTitle());
         $this->assertEquals(
             '<title>Hello Title || Company Name</title>',
-            $this->head->getTitleTag()
+            $this->head->renderTitleTag()
         );
     }
 
@@ -138,7 +139,7 @@ class HeadTest extends TestCase
         $this->head->setDescription($description);
 
         $this->assertEquals($description, $this->head->getDescription());
-        $this->assertEquals('<meta name="description" content="' . $description . '">', $this->head->getDescriptionTag());
+        $this->assertEquals('<meta name="description" content="' . $description . '">', $this->head->renderDescriptionTag());
     }
 
     /**
@@ -151,7 +152,7 @@ class HeadTest extends TestCase
         $this->head->setDescription($description);
 
         $this->assertEquals('Hello Description', $this->head->getDescription());
-        $this->assertEquals('<meta name="description" content="Hello Description">', $this->head->getDescriptionTag());
+        $this->assertEquals('<meta name="description" content="Hello Description">', $this->head->renderDescriptionTag());
     }
 
     /**
@@ -178,7 +179,7 @@ class HeadTest extends TestCase
         $keywordsTag    = '<meta name="keywords" content="' . $stringKeywords . '">';
 
         $this->assertEquals($arrayKeywords, $this->head->setKeywords($stringKeywords)->getKeywords());
-        $this->assertEquals($keywordsTag, $this->head->getKeywordsTag());
+        $this->assertEquals($keywordsTag, $this->head->renderKeywordsTag());
     }
 
     /**
@@ -193,7 +194,7 @@ class HeadTest extends TestCase
         $this->head->setKeywords($keywords);
         $keywordsTag = '<meta name="keywords" content="' . implode(', ', $arrayKeywords) . '">';
 
-        $this->assertEquals($keywordsTag, $this->head->getKeywordsTag());
+        $this->assertEquals($keywordsTag, $this->head->renderKeywordsTag());
     }
 
     /**
@@ -224,6 +225,39 @@ class HeadTest extends TestCase
     /**
      * @test
      */
+    public function testCanSetAndGetMetas()
+    {
+        $this->assertEquals('', $this->head->renderMetasTags());
+
+        $this->head->addMeta('author', 'ARCANEDEV');
+
+        $this->assertCount(1, $this->head->getMetas());
+
+        $meta = Meta::make('robots', 'noindex, nofollow');
+        $this->head->setMeta($meta);
+
+        $this->assertCount(2, $this->head->getMetas());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanEnableAndDisableOpenGraph()
+    {
+        $this->assertFalse($this->head->isOpenGraphEnabled());
+
+        $this->head->doFacebook();
+
+        $this->assertTrue($this->head->isOpenGraphEnabled());
+
+        $this->head->noFacebook();
+
+        $this->assertFalse($this->head->isOpenGraphEnabled());
+    }
+
+    /**
+     * @test
+     */
     public function testCanRender()
     {
         $title         = 'Hello world';
@@ -234,11 +268,16 @@ class HeadTest extends TestCase
             '<title>' . $title . '</title>',
             '<meta name="description" content="' . $description . '">',
             '<meta name="keywords" content="' . implode(', ', $arrayKeywords) .'">',
+            '<meta name="author" content="ARCANEDEV">',
+            '<meta name="robots" content="noindex, nofollow">',
         ];
 
         $this->head->setTitle($title);
         $this->head->setDescription($description);
         $this->head->setKeywords($arrayKeywords);
+        $this->head->addMeta('author', 'ARCANEDEV');
+        $meta = Meta::make('robots', 'noindex, nofollow');
+        $this->head->setMeta($meta);
 
         $this->assertEquals(implode(PHP_EOL, $tagsArray), $this->head->render());
     }

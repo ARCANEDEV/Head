@@ -164,7 +164,7 @@ abstract class AbstractMedia implements ArrayableInterface
      */
     private function verifyUrl($url)
     {
-        if ( ! OpenGraph::VERIFY_URLS ) {
+        if (! OpenGraph::VERIFY_URLS) {
             return $url;
         }
 
@@ -178,7 +178,7 @@ abstract class AbstractMedia implements ArrayableInterface
      */
     private function verifySecureURL($secureURL)
     {
-        if ( ! OpenGraph::VERIFY_URLS ) {
+        if (! OpenGraph::VERIFY_URLS) {
             return $secureURL;
         }
 

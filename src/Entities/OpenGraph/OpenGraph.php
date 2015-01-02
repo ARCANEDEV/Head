@@ -129,7 +129,10 @@ class OpenGraph implements RenderableInterface
      */
     public function setType($type)
     {
-        if ( is_string($type) && in_array($type, self::supportedTypes(true), true) ) {
+        if (
+            is_string($type) and
+            in_array($type, self::supportedTypes(true), true)
+        ) {
             $this->type = $type;
         }
 
@@ -151,12 +154,14 @@ class OpenGraph implements RenderableInterface
      */
     public function setTitle($title)
     {
-        if ( is_string($title) ) {
+        if (is_string($title)) {
             $title = trim($title);
 
-            $this->title = (strlen($title) > 128)
-                ? substr($title, 0, 128)
-                : $title;
+            if (strlen($title) > 128) {
+                $title = substr($title, 0, 128);
+            }
+
+            $this->title = $title;
         }
 
         return $this;
@@ -171,18 +176,22 @@ class OpenGraph implements RenderableInterface
     }
 
     /**
-     * @param string $site_name - Site name
+     * Set Site name
+     *
+     * @param string $siteName
      *
      * @return OpenGraph
      */
-    public function setSiteName($site_name)
+    public function setSiteName($siteName)
     {
-        if ( is_string($site_name) && ! empty($site_name) ) {
-            $site_name = trim($site_name);
+        if (is_string($siteName) and ! empty($siteName)) {
+            $siteName = trim($siteName);
 
-            $this->site_name = (strlen( $site_name ) > 128)
-                ? substr($site_name, 0, 128)
-                : $site_name;
+            if (strlen($siteName) > 128) {
+                $siteName = substr($siteName, 0, 128);
+            }
+
+            $this->site_name = $siteName;
         }
 
         return $this;
@@ -203,12 +212,14 @@ class OpenGraph implements RenderableInterface
      */
     public function setDescription($description)
     {
-        if ( is_string($description) && !empty($description) ) {
+        if (is_string($description) and ! empty($description)) {
             $description = trim( $description );
 
-            $this->description = ( strlen( $description ) > 255 )
-                ? substr($description, 0, 255)
-                : $description;
+            if (strlen($description) > 255) {
+                $description = substr($description, 0, 255);
+            }
+
+            $this->description = $description;
         }
 
         return $this;
@@ -229,11 +240,13 @@ class OpenGraph implements RenderableInterface
      */
     public function setURL($url)
     {
-        if ( is_string( $url ) && !empty( $url ) ) {
+        if (is_string($url) and ! empty($url)) {
             $url = trim($url);
 
             if ( self::VERIFY_URLS ) {
-                $url = self::isValidUrl($url, ['text/html', 'application/xhtml+xml']);
+                $url = self::isValidUrl($url, [
+                    'text/html', 'application/xhtml+xml'
+                ]);
             }
 
             if ( ! empty( $url ) )
@@ -258,7 +271,7 @@ class OpenGraph implements RenderableInterface
      */
     public function setDeterminer($determiner)
     {
-        if ( in_array($determiner, ['a', 'an', 'auto', 'the'], true) ) {
+        if (in_array($determiner, ['a', 'an', 'auto', 'the'], true)) {
             $this->determiner = $determiner;
         }
 
@@ -279,7 +292,10 @@ class OpenGraph implements RenderableInterface
      */
     public function setLocale($locale)
     {
-        if ( is_string($locale) && in_array($locale, self::supportedLocales(true)) ) {
+        if (
+            is_string($locale) and
+            in_array($locale, self::supportedLocales(true))
+        ) {
             $this->locale = $locale;
         }
 
@@ -307,7 +323,7 @@ class OpenGraph implements RenderableInterface
     {
         $imageUrl = $image->getURL();
 
-        if ( ! empty($imageUrl) ) {
+        if (! empty($imageUrl)) {
             $image->removeURL();
 
             $this->addImageToCollection($imageUrl, $image);
@@ -324,7 +340,7 @@ class OpenGraph implements RenderableInterface
     {
         $value = [$imageUrl, [$image]];
 
-        if ( ! $this->imagesCount() > 0 ) {
+        if (! ($this->imagesCount() > 0)) {
             $this->images    = [$value];
         }
         else {
@@ -352,14 +368,14 @@ class OpenGraph implements RenderableInterface
     {
         $audio_url = $audio->getURL();
 
-        if ( empty($audio_url) ) {
+        if (empty($audio_url)) {
             return '';
         }
 
         $audio->removeURL();
         $value = [$audio_url, [$audio]];
 
-        if ( ! isset($this->audios) ) {
+        if (! isset($this->audios)) {
             $this->audios = [$value];
         }
         else {
@@ -390,14 +406,14 @@ class OpenGraph implements RenderableInterface
     {
         $video_url = $video->getURL();
 
-        if ( empty($video_url) ) {
+        if (empty($video_url)) {
             return $this;
         }
 
         $video->removeURL();
         $value = [$video_url, [$video]];
 
-        if ( ! isset( $this->videos ) ) {
+        if (! isset( $this->videos )) {
             $this->videos = [$value];
         }
         else {
@@ -439,6 +455,11 @@ class OpenGraph implements RenderableInterface
         return $this->setEnabled(false);
     }
 
+    /**
+     * Render OpenGraph
+     *
+     * @return string
+     */
     public function render()
     {
         return $this->isEnabled() ? $this->toHTML() : '';
@@ -453,7 +474,7 @@ class OpenGraph implements RenderableInterface
     {
         $attributes = get_object_vars($this);
 
-        $allowed = array_flip([
+        $allowed    = array_flip([
             'type', 'title', 'site_name', 'description', 'url', 'determiner', 'images', 'videos', 'audios'
         ]);
 
@@ -472,7 +493,7 @@ class OpenGraph implements RenderableInterface
      */
     public static function isValidUrl($url, array $acceptedMimes = [])
     {
-        if ( ! is_string($url) or empty($url) ) {
+        if (! is_string($url) or empty($url)) {
             return '';
         }
 
@@ -490,18 +511,21 @@ class OpenGraph implements RenderableInterface
 
         $url        = '';
 
-        if ( isset($urlParts['scheme']) and in_array($urlParts['scheme'], ['http', 'https'], true) ) {
+        if (
+            isset($urlParts['scheme']) and
+            in_array($urlParts['scheme'], ['http', 'https'], true)
+        ) {
             $url = "{$urlParts['scheme']}://{$urlParts['host']}{$urlParts['path']}";
 
-            if ( empty($urlParts['path']) ) {
+            if (empty($urlParts['path'])) {
                 $url .= '/';
             }
 
-            if ( ! empty($urlParts['query']) ) {
+            if (! empty($urlParts['query'])) {
                 $url .= '?' . $urlParts['query'];
             }
 
-            if ( ! empty($urlParts['fragment']) ) {
+            if (! empty($urlParts['fragment'])) {
                 $url .= '#' . $urlParts['fragment'];
             }
         }
@@ -523,7 +547,7 @@ class OpenGraph implements RenderableInterface
          */
         $url = self::parseUrl($url);
 
-        if ( ! empty($url) ) {
+        if (! empty($url)) {
             // test if URL exists
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_TIMEOUT, 5);
@@ -531,21 +555,24 @@ class OpenGraph implements RenderableInterface
             curl_setopt($ch, CURLOPT_NOBODY, true); // HEAD
             curl_setopt($ch, CURLOPT_USERAGENT, 'Open Graph protocol validator ' . self::VERSION . ' (+http://ogp.me/)');
 
-            if ( !empty($acceptedMimes) ) {
+            if (! empty($acceptedMimes)) {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: ' . implode(',', $acceptedMimes)]);
             }
 
             $response       = curl_exec($ch);
             $statusCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-            if ( $statusCode != 200 or empty($acceptedMimes) ) {
+            if ($statusCode != 200 or empty($acceptedMimes)) {
                 return '';
             }
 
-            if ( $statusCode == 200 and ! empty($acceptedMimes) ) {
+            if ($statusCode == 200 and ! empty($acceptedMimes)) {
                 $contentType    = explode(';', curl_getinfo($ch, CURLINFO_CONTENT_TYPE));
 
-                if ( empty($contentType) or ! in_array($contentType[0], $acceptedMimes) ) {
+                if (
+                    empty($contentType) or
+                    ! in_array($contentType[0], $acceptedMimes)
+                ) {
                     return '';
                 }
             }

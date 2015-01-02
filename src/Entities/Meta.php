@@ -1,9 +1,10 @@
 <?php namespace Arcanedev\Head\Entities;
 
+use Arcanedev\Head\Contracts\Entities\MetaInterface;
 use Arcanedev\Head\Exceptions\Exception;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
-class Meta extends AbstractMeta
+class Meta extends AbstractMeta implements MetaInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties

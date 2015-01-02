@@ -72,6 +72,10 @@ class OpenGraphTest extends TestCase
         $this->og->setTitle($title);
 
         $this->assertEquals($title, $this->og->getTitle());
+
+        $title = 'This is the longest Hello world in the entire world, it is composed with multiple words and there is no need to wrap this Hello world.';
+        $this->og->setTitle($title);
+        $this->assertEquals(128, strlen($this->og->getTitle()));
     }
 
     /**
@@ -83,6 +87,26 @@ class OpenGraphTest extends TestCase
         $this->og->setSiteName($siteName);
 
         $this->assertEquals($siteName, $this->og->getSiteName());
+
+        $siteName = 'This is the longest site name in the entire world, it is composed with multiple words and there is no need to wrap this site name.';
+        $this->og->setSiteName($siteName);
+        $this->assertEquals(128, strlen($this->og->getSiteName()));
+    }
+
+    /**
+     * @test
+     */
+    public function testCanSetAndGetDescription()
+    {
+        $description = 'Hello world description';
+        $this->og->setDescription($description);
+
+        $this->assertEquals($description, $this->og->getDescription());
+
+        $description = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi architecto asperiores assumenda at distinctio dolor dolorem error exercitationem facilis in inventore, modi nisi nostrum odit porro quos repellendus rerum veniam. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi architecto asperiores assumenda at distinctio dolor dolorem error exercitationem facilis in inventore, modi nisi nostrum odit porro quos repellendus rerum veniam.';
+        $this->og->setDescription($description);
+        $this->assertStringStartsWith('Lorem ipsum', $this->og->getDescription());
+        $this->assertEquals(255, strlen($this->og->getDescription()));
     }
 
     /**
@@ -121,11 +145,11 @@ class OpenGraphTest extends TestCase
     public function testCanAddImage()
     {
         $image = new ImageMedia();
-        $image->setURL('http://example.com/image-1.jpg')
-            ->setSecureURL('https://example.com/image-1.jpg')
-            ->setType('image/jpeg')
-            ->setWidth(400)
-            ->setHeight(300);
+        $image->setURL('http://example.com/image-1.jpg');
+        $image->setSecureURL('https://example.com/image-1.jpg');
+        $image->setType('image/jpeg');
+        $image->setWidth(400);
+        $image->setHeight(300);
 
         $this->og->addImage($image);
 
@@ -135,11 +159,11 @@ class OpenGraphTest extends TestCase
     public function testCanAddVideo()
     {
         $video = new VideoMedia();
-        $video->setURL('http://example.com/video.swf')
-            ->setSecureURL('https://example.com/video.swf')
-            ->setType($video->getTypeFromUrl())
-            ->setWidth(500)
-            ->setHeight(400);
+        $video->setURL('http://example.com/video.swf');
+        $video->setSecureURL('https://example.com/video.swf');
+        $video->setType($video->getTypeFromUrl());
+        $video->setWidth(500);
+        $video->setHeight(400);
 
         $this->og->addVideo($video);
 
@@ -152,9 +176,9 @@ class OpenGraphTest extends TestCase
     public function testCanAddAudio()
     {
         $audio = new AudioMedia;
-        $audio->setURL('http://example.com/audio.mp3')
-              ->setSecureURL('https://example.com/audio.mp3')
-              ->setType('audio/mpeg');
+        $audio->setURL('http://example.com/audio.mp3');
+        $audio->setSecureURL('https://example.com/audio.mp3');
+        $audio->setType('audio/mpeg');
 
         $this->og->addAudio($audio);
     }

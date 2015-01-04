@@ -170,11 +170,13 @@ class HeadTest extends TestCase
      */
     public function canSetAndGetKeywords()
     {
+        // Array Keywords
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
 
         $this->head->setKeywords($arrayKeywords);
         $this->assertEquals($arrayKeywords, $this->head->getKeywords());
 
+        // String Keywords
         $stringKeywords = implode(', ', $arrayKeywords);
         $keywordsTag    = '<meta name="keywords" content="' . $stringKeywords . '">';
 
@@ -258,7 +260,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanRender()
+    public function testCanRenderAll()
     {
         $title         = 'Hello world';
         $description   = 'Description of the hello world';
@@ -272,13 +274,87 @@ class HeadTest extends TestCase
             '<meta name="robots" content="noindex, nofollow">',
         ];
 
+        // SEO
         $this->head->setTitle($title);
         $this->head->setDescription($description);
         $this->head->setKeywords($arrayKeywords);
+        // METAS
         $this->head->addMeta('author', 'ARCANEDEV');
         $meta = Meta::make('robots', 'noindex, nofollow');
         $this->head->setMeta($meta);
 
+
         $this->assertEquals(implode(PHP_EOL, $tagsArray), $this->head->render());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanAddAndRenderStyles()
+    {
+        $this->head->addStyle('assets/css/style.css');
+        $this->head->addStyle('assets/css/bootstrap.min.css');
+
+        $styles = implode(PHP_EOL, [
+            '<link rel="stylesheet" src="assets/css/style.css">',
+            '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
+        ]);
+
+        $this->assertEquals($styles, $this->head->renderStylesTags());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanAddManyAndRenderStyles()
+    {
+        $this->head->addStyles([
+            'assets/css/style.css',
+            'assets/css/bootstrap.min.css',
+        ]);
+
+        $styles = implode(PHP_EOL, [
+            '<link rel="stylesheet" src="assets/css/style.css">',
+            '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
+        ]);
+
+        $this->assertEquals($styles, $this->head->renderStylesTags());
+        $this->assertEquals($styles, $this->head->styles());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanAddAndRenderScripts()
+    {
+        $this->head->addScript('assets/js/jquery.min.js');
+        $this->head->addScript('assets/js/bootstrap.min.js');
+
+        $scripts = implode(PHP_EOL, [
+            '<script src="assets/js/jquery.min.js"></script>',
+            '<script src="assets/js/bootstrap.min.js"></script>'
+        ]);
+
+        $this->assertEquals($scripts, $this->head->renderScriptsTags());
+        $this->assertEquals($scripts, $this->head->scripts());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanAddManyAndRenderScripts()
+    {
+        $this->head->addScripts([
+            'assets/js/jquery.min.js',
+            'assets/js/bootstrap.min.js'
+        ]);
+
+        $scripts = implode(PHP_EOL, [
+            '<script src="assets/js/jquery.min.js"></script>',
+            '<script src="assets/js/bootstrap.min.js"></script>'
+        ]);
+
+        $this->assertEquals($scripts, $this->head->renderScriptsTags());
+        $this->assertEquals($scripts, $this->head->scripts());
     }
 }

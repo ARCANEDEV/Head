@@ -49,7 +49,7 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
     protected $link		        = [];
 
     /** @var StylesheetCollection */
-    protected $stylesheets;
+    protected $styles;
 
     /** @var ScriptCollection */
     protected $scripts;
@@ -86,7 +86,7 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
         $this->description  = new Description;
         $this->keywords     = new Keywords;
         $this->metas        = new MetaCollection;
-        $this->stylesheets  = new StylesheetCollection;
+        $this->styles  = new StylesheetCollection;
         $this->scripts      = new ScriptCollection;
 
         $this->openGraph    = new OpenGraph;
@@ -370,6 +370,102 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
         return $this->metas->render();
     }
 
+    /**
+     * Add a Stylesheet
+     *
+     * @param string $source
+     *
+     * @return Head
+     */
+    public function addStyle($source)
+    {
+        $this->styles->add($source);
+
+        return $this;
+    }
+
+    /**
+     * Add a Stylesheet
+     *
+     * @param array $sources
+     *
+     * @return Head
+     */
+    public function addStyles(array $sources)
+    {
+        $this->styles->addMany($sources);
+
+        return $this;
+    }
+
+    /**
+     * Render Style tags
+     *
+     * @return String
+     */
+    public function styles()
+    {
+        return $this->renderStylesTags();
+    }
+
+    /**
+     * Render Style tags
+     *
+     * @return String
+     */
+    public function renderStylesTags()
+    {
+        return $this->styles->render();
+    }
+
+    /**
+     * Add a Javascript file
+     *
+     * @param string $source
+     *
+     * @return Head
+     */
+    public function addScript($source)
+    {
+        $this->scripts->add($source);
+
+        return $this;
+    }
+
+    /**
+     * Add many Javascript files
+     *
+     * @param array $sources
+     *
+     * @return Head
+     */
+    public function addScripts(array $sources)
+    {
+        $this->scripts->addMany($sources);
+
+        return $this;
+    }
+
+    /**
+     * Render Script Tags
+     *
+     * @return string
+     */
+    public function scripts()
+    {
+        return $this->renderScriptsTags();
+    }
+
+    /**
+     * Render Script Tags
+     *
+     * @return string
+     */
+    public function renderScriptsTags()
+    {
+        return $this->scripts->render();
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Facebook / OpenGraph Functions
      | ------------------------------------------------------------------------------------------------
@@ -415,9 +511,11 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
     /**
      * Render Head Tags
      *
+     * @param bool $scripts
+     *
      * @return string
      */
-    public function render()
+    public function render($scripts = false)
     {
         return implode(PHP_EOL, array_filter([
             $this->renderCharsetTag(),
@@ -426,6 +524,8 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
             $this->renderKeywordsTag(),
             $this->renderMetasTags(),
             $this->renderOpenGraphTags(),
+            $this->renderStylesTags(),
+            $scripts ? $this->renderScriptsTags() : '',
         ]));
     }
 

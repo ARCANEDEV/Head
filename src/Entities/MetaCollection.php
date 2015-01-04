@@ -114,7 +114,7 @@ class MetaCollection extends Collection
         });
 
         /** @var Collection $metas */
-        return implode(PHP_EOL, $metas);
+        return implode(PHP_EOL, $metas->toArray());
     }
 
     /* ------------------------------------------------------------------------------------------------

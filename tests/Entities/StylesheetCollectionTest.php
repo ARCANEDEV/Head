@@ -10,7 +10,7 @@ class StylesheetCollectionTest extends TestCase
      */
     const STYLESHEET_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\StylesheetCollection';
     /** @var StylesheetCollection */
-    private $stylesheetCollection;
+    private $styleCollection;
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -20,14 +20,16 @@ class StylesheetCollectionTest extends TestCase
     {
         parent::setUp();
 
-        $this->stylesheetCollection = new StylesheetCollection;
+        $this->styleCollection = new StylesheetCollection;
+
+        $this->assertCount(0, $this->styleCollection);
     }
 
     public function tearDown()
     {
         parent::tearDown();
 
-        unset($this->stylesheetCollection);
+        unset($this->styleCollection);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -41,29 +43,57 @@ class StylesheetCollectionTest extends TestCase
     {
         $this->assertInstanceOf(
             self::STYLESHEET_COLLECTION_CLASS,
-            $this->stylesheetCollection
+            $this->styleCollection
         );
-
-        $this->assertCount(0, $this->stylesheetCollection);
     }
 
     /**
      * @test
      */
-    public function testCanAddScript()
+    public function testCanAddStyle()
     {
-        $this->assertCount(0, $this->stylesheetCollection);
+        $this->styleCollection->add('assets/css/style.css');
+        $this->assertCount(1, $this->styleCollection);
 
-        $this->stylesheetCollection->add('assets/css/style.css');
+        $this->styleCollection->add('assets/css/bootstrap-min.css');
+        $this->assertCount(2, $this->styleCollection);
 
-        $this->assertCount(1, $this->stylesheetCollection);
+        $this->styleCollection->add('assets/css/style.css');
+        $this->assertCount(2, $this->styleCollection);
+    }
 
-        $this->stylesheetCollection->add('assets/css/bootstrap-min.css');
+    /**
+     * @test
+     */
+    public function testCanAddManyStyles()
+    {
+        $this->styleCollection->addMany([
+            'assets/css/style.css',
+            'assets/css/bootstrap-min.css',
+            'assets/css/style.css',
+        ]);
+        $this->assertCount(2, $this->styleCollection);
+    }
 
-        $this->assertCount(2, $this->stylesheetCollection);
+    /**
+     * @test
+     */
+    public function testCanRender()
+    {
+        $styles = [];
 
-        $this->stylesheetCollection->add('assets/css/style.css');
+        $this->styleCollection->add('assets/css/style.css');
+        $styles[] = '<link rel="stylesheet" src="assets/css/style.css">';
+        $this->assertEquals(
+            implode(PHP_EOL, $styles),
+            $this->styleCollection->render()
+        );
 
-        $this->assertCount(2, $this->stylesheetCollection);
+        $this->styleCollection->add('assets/css/bootstrap.min.css');
+        $styles[] = '<link rel="stylesheet" src="assets/css/bootstrap.min.css">';
+        $this->assertEquals(
+            implode(PHP_EOL, $styles),
+            $this->styleCollection->render()
+        );
     }
 }

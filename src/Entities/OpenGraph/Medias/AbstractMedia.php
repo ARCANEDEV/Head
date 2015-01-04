@@ -207,8 +207,8 @@ abstract class AbstractMedia implements ArrayableInterface
      */
     public function removeURL()
     {
-        if ( ! empty($this->url) ) {
-            unset($this->url);
+        if (! empty($this->url)) {
+            $this->url = '';
         }
     }
 

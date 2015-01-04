@@ -133,7 +133,7 @@ class Collection implements Countable, ArrayAccess, ArrayableInterface
      */
     public function each(Closure $callback)
     {
-        return array_map($callback, $this->items);
+        return new self(array_map($callback, $this->items));
     }
 
     /**

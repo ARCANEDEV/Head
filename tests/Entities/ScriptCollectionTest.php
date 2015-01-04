@@ -56,15 +56,50 @@ class ScriptCollectionTest extends TestCase
         $this->assertCount(0, $this->scriptCollection);
 
         $this->scriptCollection->add('assets/js/jquery-min.js');
-
         $this->assertCount(1, $this->scriptCollection);
 
         $this->scriptCollection->add('assets/js/bootstrap-min.js');
-
         $this->assertCount(2, $this->scriptCollection);
 
         $this->scriptCollection->add('assets/js/jquery-min.js');
+        $this->assertCount(2, $this->scriptCollection);
+    }
+
+    /**
+     * @test
+     */
+    public function testCanAddManyScripts()
+    {
+        $this->assertCount(0, $this->scriptCollection);
+
+        $this->scriptCollection->addMany([
+            'assets/js/jquery-min.js',
+            'assets/js/bootstrap-min.js',
+            'assets/js/jquery-min.js',    // Duplicated
+        ]);
 
         $this->assertCount(2, $this->scriptCollection);
+    }
+
+    /**
+     * @test
+     */
+    public function testCanRender()
+    {
+        $scripts = [];
+
+        $this->scriptCollection->add('assets/js/jquery-min.js');
+        $scripts[] = '<script src="assets/js/jquery-min.js"></script>';
+        $this->assertEquals(
+            implode(PHP_EOL, $scripts),
+            $this->scriptCollection->render()
+        );
+
+        $this->scriptCollection->add('assets/js/bootstrap-min.js');
+        $scripts[] = '<script src="assets/js/bootstrap-min.js"></script>';
+        $this->assertEquals(
+            implode(PHP_EOL, $scripts),
+            $this->scriptCollection->render()
+        );
     }
 }

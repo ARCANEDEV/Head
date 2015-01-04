@@ -2,11 +2,16 @@
 
 use Arcanedev\Head\Support\Collection;
 
-class ScriptCollection extends Collection
+use Arcanedev\Head\Contracts\RenderableInterface;
+
+class ScriptCollection extends Collection implements RenderableInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * @var array
      */
     protected $items;
 
@@ -41,5 +46,36 @@ class ScriptCollection extends Collection
         }
 
         return $this;
+    }
+
+    /**
+     * Add many Scripts
+     *
+     * @param array $sources
+     *
+     * @return ScriptCollection
+     */
+    public function addMany(array $sources)
+    {
+        array_map(function($source) {
+            $this->add($source);
+        }, $sources);
+
+        return $this;
+    }
+
+    /**
+     * Render all Scripts
+     *
+     * @return string
+     */
+    public function render()
+    {
+        $scripts = $this->each(function($script) {
+            /** @var Script $script */
+            return $script->render();
+        });
+
+        return implode(PHP_EOL, $scripts->toArray());
     }
 }

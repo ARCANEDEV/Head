@@ -642,7 +642,7 @@ class OpenGraph implements OpenGraphInterface, RenderableInterface
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_FAILONERROR, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
         curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

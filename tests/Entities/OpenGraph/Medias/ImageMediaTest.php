@@ -8,9 +8,10 @@ class ImageMediaTest extends VisualMediaTestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const OPENGRAPH_IMAGEMEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\ImageMedia';
     /** @var ImageMedia */
     protected $media;
+
+    const OG_IMAGEMEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\ImageMedia';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -39,7 +40,10 @@ class ImageMediaTest extends VisualMediaTestCase
      */
     public function testCanInstantiate()
     {
-        $this->assertInstanceOf(self::OPENGRAPH_IMAGEMEDIA_CLASS, $this->media);
+        $this->assertInstanceOf(
+            self::OG_IMAGEMEDIA_CLASS,
+            $this->media
+        );
         $this->assertVisualMediaInstance();
         $this->assertAbstractMediaInstance();
     }
@@ -49,7 +53,16 @@ class ImageMediaTest extends VisualMediaTestCase
      */
     public function testCanSetAndGetURL($url = '')
     {
-        parent::testCanSetAndGetURL('http://www.company.com/image.jpg');
+        $url = "http://www.company.com/image.jpg";
+
+        parent::testCanSetAndGetURL($url);
+
+        $this->assertEquals($url, $this->media->toString());
+
+        $this->media->removeURL();
+
+        $this->assertEquals('', $this->media->getURL());
+        $this->assertEquals('', $this->media->toString());
     }
 
     /**
@@ -57,7 +70,9 @@ class ImageMediaTest extends VisualMediaTestCase
      */
     public function testCanSetAndGetSecureURL($secureURL = '')
     {
-        parent::testCanSetAndGetSecureURL("https://www.company.com/image.jpg");
+        $secureURL = "https://www.company.com/image.jpg";
+
+        parent::testCanSetAndGetSecureURL($secureURL);
     }
 
     /**
@@ -65,7 +80,9 @@ class ImageMediaTest extends VisualMediaTestCase
      */
     public function testCanSetAndGetType($type = '')
     {
-        parent::testCanSetAndGetType('image/jpeg');
+        $type = 'image/jpeg';
+
+        parent::testCanSetAndGetType($type);
     }
 
     /**
@@ -95,5 +112,31 @@ class ImageMediaTest extends VisualMediaTestCase
         foreach ($extensions as $ext => $type) {
             $this->assertEquals($type, ImageMedia::extensionToMediaType($ext));
         }
+    }
+
+    /**
+     * @test
+     */
+    public function testCanConvertToArray()
+    {
+        $height    = 120;
+        $width     = 120;
+        $url       = "http://www.company.com/image.jpg";
+        $secureUrl = "https://www.company.com/image.jpg";
+        $type      = "image/jpeg";
+
+        $this->media->setURL($url)->setSecureURL($secureUrl)
+                    ->setHeight($height)->setWidth($width)
+                    ->setType($type);
+
+        $array = [
+            'height'    => $height,
+            'width'     => $width,
+            'url'       => $url,
+            'secureUrl' => $secureUrl,
+            'type'      => $type,
+        ];
+
+        $this->assertEquals($array, $this->media->toArray());
     }
 }

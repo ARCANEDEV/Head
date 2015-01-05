@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\Head;
 
 use Arcanedev\Head\Entities\Charset                as Charset;
+use Arcanedev\Head\Entities\Favicon;
 use Arcanedev\Head\Entities\Title                  as Title;
 use Arcanedev\Head\Entities\Description            as Description;
 use Arcanedev\Head\Entities\Keywords               as Keywords;
@@ -10,6 +11,7 @@ use Arcanedev\Head\Entities\StylesheetCollection   as StylesheetCollection;
 use Arcanedev\Head\Entities\ScriptCollection       as ScriptCollection;
 use Arcanedev\Head\Entities\OpenGraph\OpenGraph    as OpenGraph;
 
+use Arcanedev\Head\Entities\TwitterCard\TwitterCard;
 use Arcanedev\Head\Exceptions\InvalidTypeException as InvalidTypeException;
 
 use Arcanedev\Head\Contracts\HeadInterface         as HeadInterface;
@@ -39,14 +41,10 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
     private $metas;
 
     /** @var array */
-    private $config             = [];
+    private $config = [];
 
-    /** @var string */
-    private $publicFolderPath   = "";
-
+    /** @var Favicon */
     protected $favicon;
-
-    protected $link		        = [];
 
     /** @var StylesheetCollection */
     protected $styles;
@@ -54,10 +52,14 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
     /** @var ScriptCollection */
     protected $scripts;
 
-    protected $misc		    	= [];
-
     /** @var OpenGraph */
     protected $openGraph;
+
+    /** @var TwitterCard */
+    protected $twitterCard;
+
+    /** @var array */
+    protected $misc = [];
 
     /* ------------------------------------------------------------------------------------------------
      |  Traits
@@ -81,15 +83,17 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      */
     private function init()
     {
-        $this->charset      = new Charset;
-        $this->title        = new Title;
-        $this->description  = new Description;
-        $this->keywords     = new Keywords;
-        $this->metas        = new MetaCollection;
-        $this->styles  = new StylesheetCollection;
-        $this->scripts      = new ScriptCollection;
+        $this->charset     = new Charset;
+        $this->title       = new Title;
+        $this->description = new Description;
+        $this->keywords    = new Keywords;
+        $this->metas       = new MetaCollection;
+        $this->favicon     = new Favicon;
+        $this->styles      = new StylesheetCollection;
+        $this->scripts     = new ScriptCollection;
 
-        $this->openGraph    = new OpenGraph;
+        $this->openGraph   = new OpenGraph;
+        $this->twitterCard = new TwitterCard;
 
         $this->initVersion();
     }
@@ -199,15 +203,37 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
     }
 
     /**
+     * Get Site name
+     *
+     * @return string
+     */
+    public function getSiteName()
+    {
+        return $this->title->getSiteName();
+    }
+
+    /**
+     * Set Site name
+     *
+     * @param string $sitename
+     *
+     * @return Head
+     */
+    public function setSiteName($sitename)
+    {
+        $this->title->setSiteName($sitename);
+
+        return $this->updateTitleDependencies();
+    }
+
+    /**
      * Update Title Dependencies (OpenGraph & Twitter)
      *
      * @return Head
      */
     private function updateTitleDependencies()
     {
-        $title      = $this->title->get();
-        $siteName   = $this->title->getSiteName();
-        $this->openGraph->setTitle($title)->setSiteName($siteName);
+        $this->openGraph->update($this->title);
 
         return $this;
     }

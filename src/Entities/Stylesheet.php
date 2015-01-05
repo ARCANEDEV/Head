@@ -16,9 +16,8 @@ class Stylesheet
      */
     protected $src;
 
-    protected $type     = 'text/css';
-
-    private static $rel = 'stylesheet';
+    const TYPE = 'text/css';
+    const REL  = 'stylesheet';
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -70,7 +69,7 @@ class Stylesheet
 
     public function getType()
     {
-        return $this->type;
+        return self::TYPE;
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -89,7 +88,7 @@ class Stylesheet
             $type = ' type="' . $this->getType() . '"';
         }
 
-        return '<link rel="'. self::$rel .'"' . $type  . ' src="' . $this->getSrc() . '">';
+        return '<link rel="'. self::REL .'"' . $type  . ' src="' . $this->getSrc() . '">';
     }
 
     /* ------------------------------------------------------------------------------------------------

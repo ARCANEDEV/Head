@@ -71,14 +71,6 @@ class ScriptTest extends TestCase
     /**
      * @test
      */
-    public function testCanGetType()
-    {
-        $this->assertEquals('text/javascript', $this->script->getType());
-    }
-
-    /**
-     * @test
-     */
     public function testCanMakeScript()
     {
         $file = "jquery-min.js";

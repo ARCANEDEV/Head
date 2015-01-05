@@ -225,7 +225,7 @@ class Collection implements Countable, ArrayAccess, ArrayableInterface
      */
     protected function getArrayableItems($items)
     {
-        if ( $items instanceof Collection ) {
+        if ($items instanceof Collection) {
             $items = $items->all();
         }
 

@@ -10,7 +10,8 @@
             "email": "arcanedev.maroc@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+    },
     "require-dev": {
         "phpunit/phpunit": "~4.4",
         "phpunit/phpcov": "~2.0",
@@ -18,10 +19,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Arcanedev\\Head\\": "src/",
-            "Arcanedev\\Head\\Tests\\": "tests/"
+            "Arcanedev\\Head\\": "src/"
         },
         "files": ["src/helpers.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arcanedev\\Head\\Tests\\": "tests/"
+        }
     },
     "suggest": {
         "ext-mbstring": "To get encoding charset list."

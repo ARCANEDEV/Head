@@ -48,11 +48,9 @@ class DescriptionTest extends TestCase
         $this->assertEquals('', $this->description->get());
 
         $description = 'Hello world description';
+        $this->description->set($description);
 
-        $this->assertEquals(
-            $description,
-            $this->description->set($description)->get()
-        );
+        $this->assertEquals($description, $this->description->get());
     }
 
     /**

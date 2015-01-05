@@ -9,9 +9,10 @@ class HTMLVersionTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const HTML_VERSION_CLASS = 'Arcanedev\\Head\\Support\\HTMLVersion';
     /** @var HTMLVersion */
     private $htmlVersion;
+
+    const HTML_VERSION_CLASS = 'Arcanedev\\Head\\Support\\HTMLVersion';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -40,12 +41,13 @@ class HTMLVersionTest extends TestCase
      */
     public function testCanBeInstantiated()
     {
+        $this->htmlVersion = new HTMLVersion;
         $this->assertInstanceOf(self::HTML_VERSION_CLASS, $this->htmlVersion);
         $this->assertEquals('5', $this->htmlVersion->get());
 
-        $version = new HTMLVersion('4');
-        $this->assertInstanceOf(self::HTML_VERSION_CLASS, $version);
-        $this->assertEquals('4', $version->get());
+        $this->htmlVersion = new HTMLVersion('4');
+        $this->assertInstanceOf(self::HTML_VERSION_CLASS, $this->htmlVersion);
+        $this->assertEquals('4', $this->htmlVersion->get());
     }
 
     /**

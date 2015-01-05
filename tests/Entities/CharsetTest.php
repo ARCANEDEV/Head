@@ -8,6 +8,7 @@ class CharsetTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    const CHARSET_CLASS = 'Arcanedev\\Head\\Entities\\Charset';
     /** @var Charset */
     protected $charset;
 
@@ -37,7 +38,7 @@ class CharsetTest extends TestCase
      */
     public function testCanInstantiate()
     {
-        $this->assertInstanceOf('Arcanedev\\Head\\Entities\\Charset', $this->charset);
+        $this->assertInstanceOf(self::CHARSET_CLASS, $this->charset);
     }
 
     /**
@@ -46,8 +47,12 @@ class CharsetTest extends TestCase
     public function testCanSetAndGetCharset()
     {
         $this->assertEquals(self::FIRST_CHARSET, $this->charset->get());
-        $this->assertEquals(self::SECOND_CHARSET, $this->charset->set(self::SECOND_CHARSET)->get());
-        $this->assertEquals(self::FIRST_CHARSET, $this->charset->set('utf-8')->get());
+
+        $this->charset->set(self::SECOND_CHARSET);
+        $this->assertEquals(self::SECOND_CHARSET, $this->charset->get());
+
+        $this->charset->set(strtolower(self::FIRST_CHARSET));
+        $this->assertEquals(self::FIRST_CHARSET, $this->charset->get());
     }
 
     /**
@@ -67,13 +72,7 @@ class CharsetTest extends TestCase
         $this->assertTrue($this->charset->supported(self::SECOND_CHARSET));
         $this->assertTrue($this->charset->supported('utf-8'));
         $this->assertTrue($this->charset->supported('  UTF - 8  '));
-    }
 
-    /**
-     * @test
-     */
-    public function testIfCharsetIsNotSupported()
-    {
         $this->assertFalse($this->charset->supported('WTF-8'));
     }
 
@@ -95,7 +94,8 @@ class CharsetTest extends TestCase
         $this->charset->setVersion('4');
         $this->assertEquals('4', $this->charset->getVersion());
 
-        $this->assertEquals('5', $this->charset->version(5)->version());
+        $this->charset->version(5);
+        $this->assertEquals('5', $this->charset->version());
     }
 
     /**
@@ -136,20 +136,32 @@ class CharsetTest extends TestCase
         $this->assertEquals('<meta charset="UTF-8">', $this->charset->render());
 
         $this->charset->setVersion(4);
-        $this->assertEquals('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">', $this->charset->render());
+        $this->assertEquals(
+            '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">',
+            $this->charset->render()
+        );
 
         $this->charset->set('ISO-8859-15'); // Si vous savez ce que je veux dire
-        $this->assertEquals('<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">', $this->charset->render());
+        $this->assertEquals(
+            '<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">',
+            $this->charset->render()
+        );
 
         $this->charset->setVersion('5');
-        $this->assertEquals('<meta charset="ISO-8859-15">', $this->charset->render());
+        $this->assertEquals(
+            '<meta charset="ISO-8859-15">',
+            $this->charset->render()
+        );
     }
 
+    /**
+     * @test
+     */
     public function testHasDefaultCharsets()
     {
-        $method             = parent::getMethod('Charset', 'getDefaultCharsets');
+        $method          = parent::getMethod('Charset', 'getDefaultCharsets');
 
-        $defaultCharsets    = $method->invoke($this->charset);
+        $defaultCharsets = $method->invoke($this->charset);
 
         $this->assertNotEmpty($defaultCharsets);
     }

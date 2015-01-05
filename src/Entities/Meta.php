@@ -154,6 +154,26 @@ class Meta extends AbstractMeta implements MetaInterface
             : '';
     }
 
+    /**
+     * Get Viewport meta tag for responsive design
+     *
+     * @return string
+     */
+    public function responsive()
+    {
+        return '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+    }
+
+    /**
+     * Get IE Edge meta tag
+     *
+     * @return string
+     */
+    public function ieEdge()
+    {
+        return '<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">';
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Check Functions
      | ------------------------------------------------------------------------------------------------

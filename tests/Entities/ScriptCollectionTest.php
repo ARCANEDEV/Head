@@ -53,8 +53,6 @@ class ScriptCollectionTest extends TestCase
      */
     public function testCanAddScript()
     {
-        $this->assertCount(0, $this->scriptCollection);
-
         $this->scriptCollection->add('assets/js/jquery-min.js');
         $this->assertCount(1, $this->scriptCollection);
 
@@ -70,8 +68,6 @@ class ScriptCollectionTest extends TestCase
      */
     public function testCanAddManyScripts()
     {
-        $this->assertCount(0, $this->scriptCollection);
-
         $this->scriptCollection->addMany([
             'assets/js/jquery-min.js',
             'assets/js/bootstrap-min.js',
@@ -88,18 +84,40 @@ class ScriptCollectionTest extends TestCase
     {
         $scripts = [];
 
-        $this->scriptCollection->add('assets/js/jquery-min.js');
-        $scripts[] = '<script src="assets/js/jquery-min.js"></script>';
+        $script = 'assets/js/jquery-min.js';
+        $this->scriptCollection->add($script);
+        $scripts[] = $this->getTag($script);
+
+        $this->assertCount(1, $this->scriptCollection);
         $this->assertEquals(
             implode(PHP_EOL, $scripts),
             $this->scriptCollection->render()
         );
 
-        $this->scriptCollection->add('assets/js/bootstrap-min.js');
-        $scripts[] = '<script src="assets/js/bootstrap-min.js"></script>';
+        $script = 'assets/js/bootstrap-min.js';
+        $this->scriptCollection->add($script);
+        $scripts[] = $this->getTag($script);
+
+        $this->assertCount(2, $this->scriptCollection);
         $this->assertEquals(
             implode(PHP_EOL, $scripts),
             $this->scriptCollection->render()
         );
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get Script Tag
+     *
+     * @param string $src
+     *
+     * @return string
+     */
+    private function getTag($src)
+    {
+        return '<script src="' . $src . '"></script>';
     }
 }

@@ -10,9 +10,10 @@ class CollectionTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const COLLECTION_CLASS = 'Arcanedev\\Head\\Support\\Collection';
     /** @var Collection */
     private $collection;
+
+    const COLLECTION_CLASS = 'Arcanedev\\Head\\Support\\Collection';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -143,6 +144,8 @@ class CollectionTest extends TestCase
             'foo'   => 'bar',
             'bar'   => 'foo',
         ]);
+
+        $this->assertCount(2, $collection);
 
         $this->collection = new Collection($collection);
 

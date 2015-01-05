@@ -14,9 +14,21 @@ class Script
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Source Path
+     *
+     * @var string
+     */
     protected $src;
 
-    protected $type = 'text/javascript';
+    /**
+     * True if it's a CDN source
+     *
+     * @var bool
+     */
+    protected $cdn = false;
+
+    const TYPE     = 'text/javascript';
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -66,11 +78,6 @@ class Script
         return count($elts) > 0 ? end($elts) : '';
     }
 
-    public function getType()
-    {
-        return $this->type;
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Main Function
      | ------------------------------------------------------------------------------------------------
@@ -84,7 +91,7 @@ class Script
         $type = '';
 
         if (! $this->isHTML5()) {
-            $type = ' type="' . $this->getType() . '"';
+            $type = ' type="' . self::TYPE . '"';
         }
 
         return '<script' . $type  . ' src="' . $this->getSrc() . '"></script>';

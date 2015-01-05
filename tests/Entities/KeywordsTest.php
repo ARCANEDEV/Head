@@ -97,7 +97,10 @@ class KeywordsTest extends TestCase
 
         $this->keywords->set($this->getKeywordsArray());
 
-        $this->assertEquals($this->getKeywordsTag(), $this->keywords->render());
+        $this->assertEquals(
+            $this->getKeywordsTag(),
+            $this->keywords->render()
+        );
     }
 
     /* ------------------------------------------------------------------------------------------------

@@ -8,9 +8,10 @@ class StylesheetTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const STYLESHEET_CLASS = 'Arcanedev\\Head\\Entities\\Stylesheet';
     /** @var Stylesheet */
     private $stylesheet;
+
+    const STYLESHEET_CLASS = 'Arcanedev\\Head\\Entities\\Stylesheet';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

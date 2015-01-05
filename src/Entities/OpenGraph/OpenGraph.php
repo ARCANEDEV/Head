@@ -6,6 +6,7 @@ use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
 
 use Arcanedev\Head\Contracts\Entities\OpenGraphInterface;
 use Arcanedev\Head\Contracts\RenderableInterface;
+use Arcanedev\Head\Entities\Title;
 
 class OpenGraph implements OpenGraphInterface, RenderableInterface
 {
@@ -471,6 +472,14 @@ class OpenGraph implements OpenGraphInterface, RenderableInterface
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+    public function update(Title $title)
+    {
+        $this->setTitle($title->getTitle())
+             ->setSiteName($title->getSiteName());
+
+        return $this;
+    }
+
     /**
      * Enable OpenGraph
      *

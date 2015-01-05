@@ -9,9 +9,10 @@ class MetaTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const META_CLASS = 'Arcanedev\\Head\\Entities\\Meta';
     /** @var Meta */
     private $meta;
+
+    const META_CLASS = 'Arcanedev\\Head\\Entities\\Meta';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -54,9 +55,9 @@ class MetaTest extends TestCase
     public function testCanSetAndGet()
     {
         $meta = [
-            'name'      => 'author',
-            'content'   => 'ARCANEDEV',
-            'attributes'=> [],
+            'name'       => 'author',
+            'content'    => 'ARCANEDEV',
+            'attributes' => [],
         ];
         $this->meta->set($meta['name'], $meta['content']);
 
@@ -119,6 +120,28 @@ class MetaTest extends TestCase
         $this->assertEquals(
             '<meta name="' . $meta['name'] . '" content="' . $meta['content'] . '">',
             $this->meta->render()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testCanGetResponsiveTag()
+    {
+        $this->assertEquals(
+            '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+            $this->meta->responsive()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testCanGetIeEdgeTag()
+    {
+        $this->assertEquals(
+            '<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">',
+            $this->meta->ieEdge()
         );
     }
 }

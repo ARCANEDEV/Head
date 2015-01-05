@@ -8,9 +8,10 @@ class StylesheetCollectionTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const STYLESHEET_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\StylesheetCollection';
     /** @var StylesheetCollection */
     private $styleCollection;
+
+    const STYLESHEET_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\StylesheetCollection';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -70,8 +71,9 @@ class StylesheetCollectionTest extends TestCase
         $this->styleCollection->addMany([
             'assets/css/style.css',
             'assets/css/bootstrap-min.css',
-            'assets/css/style.css',
+            'assets/css/style.css', // Duplicated
         ]);
+
         $this->assertCount(2, $this->styleCollection);
     }
 
@@ -82,18 +84,40 @@ class StylesheetCollectionTest extends TestCase
     {
         $styles = [];
 
-        $this->styleCollection->add('assets/css/style.css');
-        $styles[] = '<link rel="stylesheet" src="assets/css/style.css">';
+        $style = 'assets/css/style.css';
+        $this->styleCollection->add($style);
+        $styles[] = $this->getTag($style);
+
+        $this->assertCount(1, $this->styleCollection);
         $this->assertEquals(
             implode(PHP_EOL, $styles),
             $this->styleCollection->render()
         );
 
-        $this->styleCollection->add('assets/css/bootstrap.min.css');
-        $styles[] = '<link rel="stylesheet" src="assets/css/bootstrap.min.css">';
+        $style = 'assets/css/bootstrap.min.css';
+        $this->styleCollection->add($style);
+        $styles[] = $this->getTag($style);
+
+        $this->assertCount(2, $this->styleCollection);
         $this->assertEquals(
             implode(PHP_EOL, $styles),
             $this->styleCollection->render()
         );
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get Style Tag
+     *
+     * @param string $src
+     *
+     * @return string
+     */
+    private function getTag($src)
+    {
+        return '<link rel="stylesheet" src="' . $src . '">';
     }
 }

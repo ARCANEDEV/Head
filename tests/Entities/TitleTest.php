@@ -8,9 +8,10 @@ class TitleTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const TITLE_CLASS = 'Arcanedev\\Head\\Entities\\Title';
     /** @var Title */
     protected $title;
+
+    const TITLE_CLASS = 'Arcanedev\\Head\\Entities\\Title';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -75,9 +76,11 @@ class TitleTest extends TestCase
      */
     public function testCanSetAndGetSiteName()
     {
-        $this->title->setSiteName('Company Name');
-        $this->assertEquals('Company Name', $this->title->siteName());
+        $siteName = 'Company Name';
+        $this->title->setSiteName($siteName);
+
         $this->assertFalse($this->title->isSiteNameEmpty());
+        $this->assertEquals($siteName, $this->title->siteName());
     }
 
     /**
@@ -155,7 +158,7 @@ class TitleTest extends TestCase
         $this->title->hideSiteName();
 
         $this->assertEquals(
-            '<title>My awesome title</title>',
+            "<title>$title</title>",
             $this->title->render()
         );
     }
@@ -193,9 +196,16 @@ class TitleTest extends TestCase
      */
     public function testCanRenderTitleSix()
     {
-        $this->title->set('My awesome title')->setSiteName('Company Name');
-        $this->title->setSeparator('');
+        $title     = 'My awesome title';
+        $siteName  = 'Company Name';
+        $separator = '';
+        $this->title->set($title)
+            ->setSiteName($siteName)
+            ->setSeparator($separator);
 
-        $this->assertEquals('<title>My awesome title Company Name</title>', $this->title->render());
+        $this->assertEquals(
+            "<title>$title $siteName</title>",
+            $this->title->render()
+        );
     }
 }

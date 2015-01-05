@@ -8,9 +8,10 @@ class MetaCollectionTest extends TestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const META_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\MetaCollection';
     /** @var MetaCollection */
     private $metaCollection;
+
+    const META_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\MetaCollection';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -52,7 +53,7 @@ class MetaCollectionTest extends TestCase
      */
     public function testCanAddManyMetasFromArray()
     {
-        $metas = [
+        $this->metaCollection = MetaCollection::make([
             [
                 'name'      => 'author',
                 'content'   => 'ARCANEDEV',
@@ -60,8 +61,7 @@ class MetaCollectionTest extends TestCase
                 'name'      => 'copyright',
                 'content'   => 'ARCANEDEV',
             ]
-        ];
-        $this->metaCollection = MetaCollection::make($metas);
+        ]);
 
         $this->assertCount(2, $this->metaCollection);
     }
@@ -74,16 +74,14 @@ class MetaCollectionTest extends TestCase
      */
     public function testMustThrowExceptionOnNameNotFound()
     {
-        $metas = [
+        MetaCollection::make([
             [
                 'name'      => 'author',
                 'content'   => 'ARCANEDEV',
             ],[
                 'content'   => 'ARCANEDEV',
             ]
-        ];
-
-        MetaCollection::make($metas);
+        ]);
     }
 
     /**
@@ -94,16 +92,14 @@ class MetaCollectionTest extends TestCase
      */
     public function testMustThrowExceptionOnContentNotFound()
     {
-        $metas = [
+        MetaCollection::make([
             [
                 'name'      => 'author',
             ],[
                 'name'      => 'copyright',
                 'content'   => 'ARCANEDEV',
             ]
-        ];
-
-        MetaCollection::make($metas);
+        ]);
     }
 
     public function testCanRender()

@@ -104,6 +104,18 @@ class HeadTest extends TestCase
     /**
      * @test
      */
+    public function canSetAndGetSiteName()
+    {
+        $siteName = 'Company name';
+
+        $this->head->setSiteName($siteName);
+
+        $this->assertEquals($siteName, $this->head->getSiteName());
+    }
+
+    /**
+     * @test
+     */
     public function canSetAndGetByTitleClass()
     {
         $title = new Title;

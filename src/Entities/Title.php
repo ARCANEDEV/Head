@@ -5,6 +5,8 @@ use Arcanedev\Head\Contracts\RenderableInterface     as RenderableInterface;
 
 use Arcanedev\Head\Exceptions\EmptyTitleException    as EmptyTitleException;
 use Arcanedev\Head\Exceptions\InvalidTypeException   as InvalidTypeException;
+use Arcanedev\Markup\Entities\Tag;
+use Arcanedev\Markup\Markup;
 
 class Title implements TitleInterface, RenderableInterface
 {
@@ -37,6 +39,11 @@ class Title implements TitleInterface, RenderableInterface
      */
     protected $separator       = '|';
 
+    /**
+     * @var Tag
+     */
+    private $tag;
+
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
@@ -45,6 +52,7 @@ class Title implements TitleInterface, RenderableInterface
     {
         $this->title    = '';
         $this->siteName = '';
+        $this->tag      = Markup::title();
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -271,7 +279,7 @@ class Title implements TitleInterface, RenderableInterface
         $this->renderSeparator($title);
         $this->getLast($title);
 
-        return '<title>' . implode(' ', $title) . '</title>';
+        return $this->tag->setText(implode(' ', $title));
     }
 
     /**

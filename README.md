@@ -18,13 +18,13 @@ Head Tags Manager
 You can install the package via [Composer](http://getcomposer.org/). Add this to your `composer.json`:
 
 ```json
-    {
-      "require": {
-        ...
-        "arcanedev/head": "~1.0"
-        ...
-      }
-    }
+{
+  "require": {
+    ...
+    "arcanedev/head": "~1.0"
+    ...
+  }
+}
 ```
     
 Then install via `composer install` or `composer update`.

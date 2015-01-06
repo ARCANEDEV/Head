@@ -9,13 +9,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Package Name
-     *
-     * @var string
-     */
-    protected $package = 'arcanedev/lara-head';
-
-    /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
@@ -33,7 +26,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->package($this->package, null, __DIR__);
+        $this->package('arcanedev/head', 'head', __DIR__);
     }
 
     /**
@@ -68,7 +61,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             /** @var \Illuminate\Config\Repository $config */
             $config  = $app['config'];
 
-            return new Head($config->get('lara-head::config'));
+            return new Head($config->get('head::config'));
         });
     }
 }

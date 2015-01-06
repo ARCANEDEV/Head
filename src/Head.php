@@ -1,23 +1,24 @@
 <?php namespace Arcanedev\Head;
 
-use Arcanedev\Head\Entities\Charset                as Charset;
-use Arcanedev\Head\Entities\Favicon;
-use Arcanedev\Head\Entities\Title                  as Title;
-use Arcanedev\Head\Entities\Description            as Description;
-use Arcanedev\Head\Entities\Keywords               as Keywords;
-use Arcanedev\Head\Entities\Meta                   as Meta;
-use Arcanedev\Head\Entities\MetaCollection         as MetaCollection;
-use Arcanedev\Head\Entities\StylesheetCollection   as StylesheetCollection;
-use Arcanedev\Head\Entities\ScriptCollection       as ScriptCollection;
-use Arcanedev\Head\Entities\OpenGraph\OpenGraph    as OpenGraph;
+use Arcanedev\Head\Entities\Charset                 as Charset;
+use Arcanedev\Head\Entities\Favicon                 as Favicon;
+use Arcanedev\Head\Entities\Title                   as Title;
+use Arcanedev\Head\Entities\Description             as Description;
+use Arcanedev\Head\Entities\Keywords                as Keywords;
+use Arcanedev\Head\Entities\Meta                    as Meta;
+use Arcanedev\Head\Entities\MetaCollection          as MetaCollection;
+use Arcanedev\Head\Entities\StylesheetCollection    as StylesheetCollection;
+use Arcanedev\Head\Entities\ScriptCollection        as ScriptCollection;
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph     as OpenGraph;
+use Arcanedev\Head\Entities\TwitterCard\TwitterCard as TwitterCard;
 
-use Arcanedev\Head\Entities\TwitterCard\TwitterCard;
-use Arcanedev\Head\Exceptions\InvalidTypeException as InvalidTypeException;
+use Arcanedev\Head\Exceptions\FileNotFoundException as FileNotFoundException;
+use Arcanedev\Head\Exceptions\InvalidTypeException  as InvalidTypeException;
 
-use Arcanedev\Head\Contracts\HeadInterface         as HeadInterface;
-use Arcanedev\Head\Contracts\RenderableInterface   as RenderableInterface;
-use Arcanedev\Head\Contracts\VersionableInterface  as VersionableInterface;
-use Arcanedev\Head\Traits\VersionableTrait         as VersionableTrait;
+use Arcanedev\Head\Contracts\HeadInterface          as HeadInterface;
+use Arcanedev\Head\Contracts\RenderableInterface    as RenderableInterface;
+use Arcanedev\Head\Contracts\VersionableInterface   as VersionableInterface;
+use Arcanedev\Head\Traits\VersionableTrait          as VersionableTrait;
 
 class Head implements HeadInterface, RenderableInterface, VersionableInterface
 {
@@ -25,6 +26,9 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /** @var array */
+    private $config = [];
+
     /** @var Charset */
     protected $charset;
 
@@ -39,9 +43,6 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
 
     /** @var MetaCollection */
     private $metas;
-
-    /** @var array */
-    private $config = [];
 
     /** @var Favicon */
     protected $favicon;
@@ -73,9 +74,11 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      */
     public function __construct(array $config = [])
     {
+        $this->setConfig($config);
+
         $this->init();
 
-        $this->loadConfig($config);
+        $this->loadEntities();
     }
 
     /**
@@ -99,13 +102,59 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
     }
 
     /**
-     * Load Configuration
+     * Set Configuration
      *
      * @param array $config
+     *
+     * @return Head
      */
-    private function loadConfig($config)
+    private function setConfig(array $config = [])
     {
+        if (empty($config)) {
+            $config = get_default_config();
+        }
+
         $this->config = $config;
+
+        return $this;
+    }
+
+    /**
+     * Set Configuration
+     *
+     * @param array $config
+     *
+     * @return Head
+     */
+    public function loadConfig(array $config)
+    {
+        $this->config = array_merge($this->config, $config);
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @throws FileNotFoundException
+     * @throws InvalidTypeException
+     *
+     * @return Head
+     */
+    public function configPath($path)
+    {
+        $config = get_config($path);
+
+        return $this->loadConfig($config);
+    }
+
+    private function loadEntities()
+    {
+        if (! is_array($this->config)) {
+            return;
+        }
+
+        $this->title->setConfig($this->config);
     }
 
     /* ------------------------------------------------------------------------------------------------

@@ -259,6 +259,29 @@ class Title implements TitleInterface, RenderableInterface
         return $this;
     }
 
+    /**
+     * @param array $config
+     *
+     * @return Title
+     */
+    public function setConfig(array $config)
+    {
+        if (! isset($config['title'])) {
+            return $this;
+        }
+
+        $config = $config['title'];
+
+        $this->setSeparator($config['separator']);
+
+        $config['first']
+            ? $this->siteNameLast()
+            : $this->siteNameFirst();
+
+        $this->setSiteName($config['site-name']['content']);
+        $this->setSiteNameVisibility($config['site-name']['enabled']);
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------

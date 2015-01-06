@@ -17,17 +17,38 @@ Head Tags Manager
 
 You can install the package via [Composer](http://getcomposer.org/). Add this to your `composer.json`:
 
+```json
     {
       "require": {
         ...
-        "arcanedev/head": "dev-master"
+        "arcanedev/head": "~1.0"
         ...
       }
     }
+```
     
-Then install via:
+Then install via `composer install` or `composer update`.
 
-    composer.phar install
+### Laravel Installation
+Once the package is installed, you can register the service provider in `app/config/app.php` in the `providers` array:
+
+```php
+'providers' => array(
+    ...
+    'Arcanedev\Head\Laravel\ServiceProvider',
+    ...
+)
+```
+
+And the facade in the `aliases` array:
+
+```php
+'aliases' => array(
+    ...
+    'Arcanedev\Head\Laravel\Facade',
+    ...
+)
+```
 
 ### TODOS:
 

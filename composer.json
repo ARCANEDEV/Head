@@ -1,7 +1,7 @@
 {
     "name": "arcanedev/head",
     "description": "Head Helper",
-    "keywords": ["title", "description", "charset", "meta", "style", "stylesheet", "script", "favicon", "google analytics"],
+    "keywords": ["title", "description", "charset", "meta", "style", "stylesheet", "script", "favicon", "google analytics", "laravel"],
     "homepage": "http://www.arcanedev.net",
     "license": "MIT",
     "authors": [

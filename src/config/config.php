@@ -15,7 +15,7 @@ return [
      |  tag if no other title is defined. You can also choose to automatically add the sitename at a
      |  defined title in the <title> tag for each page of your site. Define a separator to be displayed
      |  between the sitename and the title, and if the title should be displayed first, like
-	 |  <title>Title - Sitename</title>, or not (<title>Sitename - Title</title>).
+     |  <title>Title - Sitename</title>, or not (<title>Sitename - Title</title>).
      */
     'title' => [
         'first'         => true,
@@ -41,26 +41,26 @@ return [
      | ------------------------------------------------------------------------------------------------
      |  Define a default favicon if no other is defined. Set favicon's name and path relative to public
      |  path, without extension. For example, 'favicon' will render (if files exist):
-	 |
-	 |  <link rel="shortcut icon" href="http::mydomain.com/favicon.ico">
-	 |  <link rel="icon" href="http::mydomain.com/favicon.ico" type="image/x-icon">
-	 |  <link rel="icon" href="http::mydomain.com/favicon.png" type="image/png">
+     |
+     |  <link rel="shortcut icon" href="http::mydomain.com/favicon.ico">
+     |  <link rel="icon" href="http::mydomain.com/favicon.ico" type="image/x-icon">
+     |  <link rel="icon" href="http::mydomain.com/favicon.png" type="image/png">
      */
     'favicon' =>'',
 
     /* ------------------------------------------------------------------------------------------------
-	 |  Internet Explorer Compatibility
-	 | ------------------------------------------------------------------------------------------------
-	 |  Set to true to automatically display two commonly used utilities to force IE compatibility.
-	 |
-	 |  * ie_edge:
-	 |      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	 |
-	 |  * html5_shiv:
-	 |      <!--[if lt IE 9]>
-	 |          <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	 |      <![endif]-->
-	 */
+     |  Internet Explorer Compatibility
+     | ------------------------------------------------------------------------------------------------
+     |  Set to true to automatically display two commonly used utilities to force IE compatibility.
+     |
+     |  * ie_edge:
+     |      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+     |
+     |  * html5_shiv:
+     |      <!--[if lt IE 9]>
+     |          <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+     |      <![endif]-->
+     */
     'html'      => [
         'version'       => 5,
         'responsive'    => true,
@@ -68,12 +68,12 @@ return [
     ],
 
     /* ------------------------------------------------------------------------------------------------
-	 | Facebook's Open Graph
-	 | ------------------------------------------------------------------------------------------------
-	 |  Set to true to automatically display a bunch of meta tags for Facebook's Open Graph Protocol,
+     | Facebook's Open Graph
+     | ------------------------------------------------------------------------------------------------
+     |  Set to true to automatically display a bunch of meta tags for Facebook's Open Graph Protocol,
      |  and define default values. No blank tag will be displayed. 'Image' is file's name with extension
      |  and path relative to public path. No og:image will be displayed if file does not exist.
-	 */
+     */
     'facebook' => [
         'active'    => false,
         'page_id'   => '',

@@ -1,5 +1,7 @@
 <?php namespace Arcanedev\Head\Laravel;
 
+use Arcanedev\Head\Head;
+
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------
@@ -63,9 +65,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     private function registerServices()
     {
         $this->app->singleton('arcanedev.head', function($app) {
-            $configs = $app['config']->get('lara-head::config');
+            /** @var \Illuminate\Config\Repository $config */
+            $config  = $app['config'];
 
-            return new Head($configs);
+            return new Head($config->get('lara-head::config'));
         });
     }
 }

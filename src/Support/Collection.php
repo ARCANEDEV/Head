@@ -137,6 +137,16 @@ class Collection implements Countable, ArrayAccess, ArrayableInterface
     }
 
     /**
+     * Get Collection keys
+     *
+     * @return array
+     */
+    public function keys()
+    {
+        return array_keys($this->items);
+    }
+
+    /**
      * Get array items
      *
      * @return array

@@ -18,6 +18,7 @@ use Arcanedev\Head\Exceptions\InvalidTypeException  as InvalidTypeException;
 use Arcanedev\Head\Contracts\HeadInterface          as HeadInterface;
 use Arcanedev\Head\Contracts\RenderableInterface    as RenderableInterface;
 use Arcanedev\Head\Contracts\VersionableInterface   as VersionableInterface;
+use Arcanedev\Head\Support\Collection;
 use Arcanedev\Head\Traits\VersionableTrait          as VersionableTrait;
 
 class Head implements HeadInterface, RenderableInterface, VersionableInterface
@@ -26,7 +27,7 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /** @var array */
+    /** @var Collection */
     private $config = [];
 
     /** @var Charset */
@@ -74,7 +75,7 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      */
     public function __construct(array $config = [])
     {
-        $this->setConfig($config);
+        $this->loadConfig($config);
 
         $this->init();
 
@@ -101,6 +102,30 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
         $this->initVersion();
     }
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Config Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get Config
+     *
+     * @return Collection
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Get default Config
+     *
+     * @return array
+     */
+    public static function getDefaultConfig()
+    {
+        return include __DIR__ . '/config/config.php';
+    }
+
     /**
      * Set Configuration
      *
@@ -110,11 +135,8 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      */
     private function setConfig(array $config = [])
     {
-        if (empty($config)) {
-            $config = get_default_config();
-        }
-
-        $this->config = $config;
+        // TODO: Add check config method
+        $this->config = new Collection($config);
 
         return $this;
     }
@@ -128,9 +150,11 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      */
     public function loadConfig(array $config)
     {
-        $this->config = array_merge($this->config, $config);
+        $config = array_merge(
+            self::getDefaultConfig(), $config
+        );
 
-        return $this;
+        return $this->setConfig($config);
     }
 
     /**
@@ -143,18 +167,32 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      */
     public function configPath($path)
     {
-        $config = get_config($path);
+        $config = [];
+
+        if (! empty($path)) {
+            if (! file_exists($path)) {
+                throw new FileNotFoundException(
+                    "Configuration file not found [$path] !"
+                );
+            }
+
+            $config = include $path;
+
+            if (! is_array($config)) {
+                throw new InvalidTypeException("Configuration file", $config, "array");
+            }
+        }
 
         return $this->loadConfig($config);
     }
 
+
     private function loadEntities()
     {
-        if (! is_array($this->config)) {
-            return;
-        }
+        $this->setCharset($this->config->get('charset', Charset::DEFAULT_CHARSET));
+        $this->title->setConfig($this->config->get('title', []));
 
-        $this->title->setConfig($this->config);
+        return $this;
     }
 
     /* ------------------------------------------------------------------------------------------------

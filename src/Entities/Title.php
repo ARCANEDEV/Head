@@ -266,12 +266,7 @@ class Title implements TitleInterface, RenderableInterface
      */
     public function setConfig(array $config)
     {
-        if (! isset($config['title'])) {
-            return $this;
-        }
-
-        $config = $config['title'];
-
+        // TODO: Add check config method
         $this->setSeparator($config['separator']);
 
         $config['first']

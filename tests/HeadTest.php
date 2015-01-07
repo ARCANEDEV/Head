@@ -51,6 +51,67 @@ class HeadTest extends TestCase
     /**
      * @test
      */
+    public function testCanGetDefaultConfig()
+    {
+        $config     = $this->head->getConfig();
+
+        $this->assertConfig($config);
+        $this->assertEquals('UTF-8', $config['charset']);
+    }
+
+    /**
+     * @test
+     */
+    public function testCanSetAndGetConfigFromArray()
+    {
+        $this->head->loadConfig([
+            'charset' => 'ISO-8859-1',
+        ]);
+
+        $config = $this->head->getConfig();
+
+        $this->assertConfig($config);
+        $this->assertEquals('ISO-8859-1', $config->get('charset'));
+        $this->assertEquals('ISO-8859-1', $config['charset']);
+    }
+
+    /**
+     * @test
+     */
+    public function testCanSetAndGetConfigFromFile()
+    {
+        $this->head->configPath(__DIR__ . '/data/config-valid.php');
+
+        $config = $this->head->getConfig();
+
+        $this->assertConfig($config);
+        $this->assertEquals('ISO-8859-1', $config->get('charset'));
+        $this->assertEquals('ISO-8859-1', $config['charset']);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\FileNotFoundException
+     */
+    public function testMustThrowFileNotFoundExceptionOnConfigPath()
+    {
+        $this->head->configPath(__DIR__ . '/data/config-not-found.php');
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
+     */
+    public function testMustThrowInvalidTypeExceptionOnConfigPath()
+    {
+        $this->head->configPath(__DIR__ . '/data/config-invalid.php');
+    }
+
+    /**
+     * @test
+     */
     public function testCanSetAndGetCharset()
     {
         $this->assertEquals('UTF-8', $this->head->getCharset());
@@ -368,5 +429,32 @@ class HeadTest extends TestCase
 
         $this->assertEquals($scripts, $this->head->renderScriptsTags());
         $this->assertEquals($scripts, $this->head->scripts());
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * @param \Arcanedev\Head\Support\Collection $config
+     */
+    private function assertConfig($config)
+    {
+        $this->assertInstanceOf(
+            'Arcanedev\\Head\\Support\\Collection',
+            $config
+        );
+
+        $this->assertEquals([
+            'charset',
+            'title',
+            'description',
+            'favicon',
+            'html',
+            'facebook',
+            'twitter',
+            'assets',
+            'analytics'
+        ], $config->keys());
     }
 }

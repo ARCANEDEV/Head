@@ -21,7 +21,7 @@ You can install the package via [Composer](http://getcomposer.org/). Add this to
 {
   "require": {
     ...
-    "arcanedev/head": "~1.0"
+    "arcanedev/head": "~1.1"
     ...
   }
 }

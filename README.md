@@ -40,7 +40,7 @@ And the facade in the `aliases` array:
 ```php
 'aliases' => [
     ...
-    'Arcanedev\Head\Laravel\Facade',
+    'Head' => 'Arcanedev\Head\Laravel\Facade',
 ],
 ```
 

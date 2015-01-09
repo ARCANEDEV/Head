@@ -3,6 +3,7 @@
 use Arcanedev\Head\Contracts\Entities\MetaInterface;
 use Arcanedev\Head\Exceptions\Exception;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
+use Arcanedev\Markup\Markup;
 
 class Meta extends AbstractMeta implements MetaInterface
 {
@@ -150,7 +151,7 @@ class Meta extends AbstractMeta implements MetaInterface
     public function render()
     {
         return ! $this->isEmpty()
-            ? '<meta name="' . $this->name . '" content="' . $this->content . '">'
+            ? Markup::meta('name', $this->name, $this->content)->render()
             : '';
     }
 

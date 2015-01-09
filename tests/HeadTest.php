@@ -212,7 +212,10 @@ class HeadTest extends TestCase
         $this->head->setDescription($description);
 
         $this->assertEquals($description, $this->head->getDescription());
-        $this->assertEquals('<meta name="description" content="' . $description . '">', $this->head->renderDescriptionTag());
+        $this->assertEquals(
+            '<meta name="description" content="' . $description . '"/>',
+            $this->head->renderDescriptionTag()
+        );
     }
 
     /**
@@ -225,7 +228,10 @@ class HeadTest extends TestCase
         $this->head->setDescription($description);
 
         $this->assertEquals('Hello Description', $this->head->getDescription());
-        $this->assertEquals('<meta name="description" content="Hello Description">', $this->head->renderDescriptionTag());
+        $this->assertEquals(
+            '<meta name="description" content="Hello Description"/>',
+            $this->head->renderDescriptionTag()
+        );
     }
 
     /**
@@ -251,7 +257,7 @@ class HeadTest extends TestCase
 
         // String Keywords
         $stringKeywords = implode(', ', $arrayKeywords);
-        $keywordsTag    = '<meta name="keywords" content="' . $stringKeywords . '">';
+        $keywordsTag    = '<meta name="keywords" content="' . $stringKeywords . '"/>';
 
         $this->assertEquals($arrayKeywords, $this->head->setKeywords($stringKeywords)->getKeywords());
         $this->assertEquals($keywordsTag, $this->head->renderKeywordsTag());
@@ -267,7 +273,7 @@ class HeadTest extends TestCase
         $keywords = (new Keywords)->set($arrayKeywords);
 
         $this->head->setKeywords($keywords);
-        $keywordsTag = '<meta name="keywords" content="' . implode(', ', $arrayKeywords) . '">';
+        $keywordsTag = '<meta name="keywords" content="' . implode(', ', $arrayKeywords) . '"/>';
 
         $this->assertEquals($keywordsTag, $this->head->renderKeywordsTag());
     }
@@ -341,10 +347,10 @@ class HeadTest extends TestCase
         $tagsArray     = [
             '<meta charset="UTF-8">',
             '<title>' . $title . '</title>',
-            '<meta name="description" content="' . $description . '">',
-            '<meta name="keywords" content="' . implode(', ', $arrayKeywords) .'">',
-            '<meta name="author" content="ARCANEDEV">',
-            '<meta name="robots" content="noindex, nofollow">',
+            '<meta name="description" content="' . $description . '"/>',
+            '<meta name="keywords" content="' . implode(', ', $arrayKeywords) .'"/>',
+            '<meta name="author" content="ARCANEDEV"/>',
+            '<meta name="robots" content="noindex, nofollow"/>',
         ];
 
         // SEO

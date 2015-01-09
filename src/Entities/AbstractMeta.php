@@ -1,5 +1,7 @@
 <?php namespace Arcanedev\Head\Entities;
 
+use Arcanedev\Markup\Markup;
+
 abstract class AbstractMeta
 {
     /* ------------------------------------------------------------------------------------------------
@@ -25,7 +27,7 @@ abstract class AbstractMeta
     protected function renderMetaTag($name, $content)
     {
         return ! $this->isEmpty()
-            ? '<meta name="' . $name . '" content="' . $content . '">'
+            ? Markup::meta('name', $name, $content)->render()
             : '';
     }
 

@@ -74,7 +74,7 @@ class DescriptionTest extends TestCase
         $this->description->set($description);
 
         $this->assertEquals(
-            '<meta name="description" content="' . $description .'">',
+            '<meta name="description" content="' . $description .'"/>',
             $this->description->render()
         );
     }

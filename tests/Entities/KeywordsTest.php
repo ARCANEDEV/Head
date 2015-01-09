@@ -119,6 +119,6 @@ class KeywordsTest extends TestCase
 
     private function getKeywordsTag()
     {
-        return '<meta name="keywords" content="' . $this->getKeywordsString() . '">';
+        return '<meta name="keywords" content="' . $this->getKeywordsString() . '"/>';
     }
 }

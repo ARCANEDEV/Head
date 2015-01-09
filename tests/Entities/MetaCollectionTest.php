@@ -128,8 +128,8 @@ class MetaCollectionTest extends TestCase
     private function getRenderedMetas()
     {
         return implode(PHP_EOL, [
-            '<meta name="author" content="ARCANEDEV">',
-            '<meta name="copyright" content="ARCANEDEV">'
+            '<meta name="author" content="ARCANEDEV"/>',
+            '<meta name="copyright" content="ARCANEDEV"/>'
         ]);
     }
 }

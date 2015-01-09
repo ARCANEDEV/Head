@@ -118,7 +118,7 @@ class MetaTest extends TestCase
         $this->meta->set($meta['name'], $meta['content']);
 
         $this->assertEquals(
-            '<meta name="' . $meta['name'] . '" content="' . $meta['content'] . '">',
+            '<meta name="' . $meta['name'] . '" content="' . $meta['content'] . '"/>',
             $this->meta->render()
         );
     }

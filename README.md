@@ -1,9 +1,9 @@
-Head Tags Manager
+Head Tags Manager [![Packagist License](http://img.shields.io/packagist/l/ARCANEDEV/Head.svg?style=flat-square)](https://github.com/ARCANEDEV/Head/blob/master/LICENSE)
 ==============
 [![Travis Status](http://img.shields.io/travis/ARCANEDEV/Head.svg?style=flat-square)](https://travis-ci.org/ARCANEDEV/Head)
-[![Coverage Status](http://img.shields.io/coveralls/ARCANEDEV/Head.svg?style=flat-square)](https://coveralls.io/r/ARCANEDEV/Head?branch=master)
+[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/Head.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/Head/?branch=master)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ARCANEDEV/Head.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/Head/?branch=master)
 [![Github Release](http://img.shields.io/github/release/ARCANEDEV/Head.svg?style=flat-square)](https://github.com/ARCANEDEV/Head/releases)
-[![Packagist License](http://img.shields.io/packagist/l/ARCANEDEV/Head.svg?style=flat-square)](https://github.com/ARCANEDEV/Head/blob/master/LICENSE)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/arcanedev/head.svg?style=flat-square)](https://packagist.org/packages/arcanedev/head)
 [![Github Issues](http://img.shields.io/github/issues/ARCANEDEV/Head.svg?style=flat-square)](https://github.com/ARCANEDEV/Head/issues)
 
@@ -45,19 +45,21 @@ And the facade in the `aliases` array:
 ```
 
 ## USAGE
+
 Coming soon...
+
+## Contribution
+
+Any ideas are welcome. Feel free the submit any issues or pull requests.
 
 ## TODO
 
   - [ ] Documentation
   - [ ] Examples
-  - [x] More tests and code coverage (~99%)
-  - [x] Laravel support
+  - [x] More tests and code coverage
+  - [x] Laravel support (v4.2)
+  - [ ] Laravel support (v5.0)
   - [ ] Refactoring
-
-## Contribution
-
-Any ideas are welcome. Feel free the submit any issues or pull requests.
   
 ## License
 

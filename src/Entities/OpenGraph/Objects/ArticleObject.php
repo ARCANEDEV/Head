@@ -5,7 +5,7 @@ use DateTime;
 class ArticleObject extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Properties
+     |  Constants
      | ------------------------------------------------------------------------------------------------
      */
     /**
@@ -13,15 +13,19 @@ class ArticleObject extends AbstractObject
      *
      * @var string
      */
-    const PREFIX    = 'article';
+    const PREFIX = 'article';
 
     /**
      * prefix namespace
      *
      * @var string
      */
-    const NS        = 'http://ogp.me/ns/article#';
+    const NS     = 'http://ogp.me/ns/article#';
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * When the article was first published.
      * ISO 8601 formatted string.
@@ -98,12 +102,12 @@ class ArticleObject extends AbstractObject
      */
     public function setPublishedTime($pubdate)
     {
-        if ( $pubdate instanceof DateTime ) {
+        if ($pubdate instanceof DateTime) {
             $this->published_time = self::datetimeToIso8601($pubdate);
         }
 
         // At least YYYY-MM-DD
-        if ( is_string($pubdate) && strlen($pubdate) >= 10 ) {
+        if (is_string($pubdate) and strlen($pubdate) >= 10) {
             $this->published_time = $pubdate;
         }
 
@@ -134,7 +138,7 @@ class ArticleObject extends AbstractObject
         }
 
         // At least YYYY-MM-DD
-        if ( is_string($updated) && strlen($updated) >= 10 ) {
+        if ( is_string($updated) and strlen($updated) >= 10 ) {
             $this->modified_time = $updated;
         }
 
@@ -163,7 +167,7 @@ class ArticleObject extends AbstractObject
             $this->expiration_time = self::datetimeToIso8601($expires);
         }
 
-        if ( is_string($expires) && strlen($expires) >= 10 ) {
+        if ( is_string($expires) and strlen($expires) >= 10 ) {
             $this->expiration_time = $expires;
         }
 
@@ -189,7 +193,7 @@ class ArticleObject extends AbstractObject
      */
     public function addAuthor( $author_uri )
     {
-        if ( self::is_valid_url($author_uri) && ! in_array($author_uri, $this->author) ) {
+        if (self::isValidUrl($author_uri) and ! in_array($author_uri, $this->author)) {
             $this->author[] = $author_uri;
         }
 
@@ -213,7 +217,7 @@ class ArticleObject extends AbstractObject
      */
     public function setSection( $section )
     {
-        if ( is_string($section) && !empty($section) ) {
+        if (is_string($section) and ! empty($section)) {
             $this->section = $section;
         }
 
@@ -237,7 +241,7 @@ class ArticleObject extends AbstractObject
      * @return ArticleObject
      */
     public function addTag( $tag ) {
-        if ( is_string($tag) && !empty($tag) ) {
+        if (is_string($tag) and ! empty($tag)) {
             $this->tag[] = $tag;
         }
 

@@ -5,7 +5,7 @@ use DateTime;
 class BookObject extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Properties
+     |  Constants
      | ------------------------------------------------------------------------------------------------
      */
     /**
@@ -22,6 +22,10 @@ class BookObject extends AbstractObject
      */
     const NS        = 'http://ogp.me/ns/book#';
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * Book authors as an array of URIs.
      * The target URI is expected to have an Open Graph protocol type of 'profile'
@@ -86,7 +90,7 @@ class BookObject extends AbstractObject
      */
     public function addAuthor( $author_uri )
     {
-        if ( self::isValidUrl($author_uri) && ! in_array($author_uri, $this->author)) {
+        if (self::isValidUrl($author_uri) and ! in_array($author_uri, $this->author)) {
             $this->author[] = $author_uri;
         }
 
@@ -136,12 +140,12 @@ class BookObject extends AbstractObject
      */
     public function setReleaseDate( $release_date )
     {
-        if ( $release_date instanceof DateTime ) {
+        if ($release_date instanceof DateTime) {
             $this->release_date = self::datetimeToIso8601($release_date);
         }
 
         // at least YYYY-MM-DD
-        if ( is_string($release_date) && strlen($release_date) >= 10 ) {
+        if (is_string($release_date) and strlen($release_date) >= 10) {
             $this->release_date = $release_date;
         }
 
@@ -166,7 +170,11 @@ class BookObject extends AbstractObject
      */
     public function addTag( $tag )
     {
-        if ( is_string($tag) && !empty($tag) && !in_array($tag, $this->tag) ) {
+        if (
+            is_string($tag) and
+            ! empty($tag) and
+            ! in_array($tag, $this->tag)
+        ) {
             $this->tag[] = $tag;
         }
 
@@ -209,7 +217,7 @@ class BookObject extends AbstractObject
      */
     private function checkISBNVersion($isbn, $lenght)
     {
-        return strlen($isbn) === $lenght && is_numeric(substr($isbn, 0, $lenght - 1));
+        return strlen($isbn) === $lenght and is_numeric(substr($isbn, 0, $lenght - 1));
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -223,7 +231,7 @@ class BookObject extends AbstractObject
      */
     private function prepareISBN($isbn)
     {
-        if ( ! is_string($isbn) ) {
+        if ( ! is_string($isbn)) {
             return null;
         }
 
@@ -239,7 +247,7 @@ class BookObject extends AbstractObject
 
             $checkDigit = 11 - ($verifySum % 11);
 
-            if ( $checkDigit == $chars[9] or ($chars[9] == 'X' && $checkDigit == 10) ) {
+            if ( $checkDigit == $chars[9] or ($chars[9] == 'X' and $checkDigit == 10) ) {
                 return $isbn;
             }
         }

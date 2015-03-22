@@ -31,12 +31,11 @@ class AudioMedia extends AbstractMedia
      */
     public static function extensionToMediaType($extension)
     {
-        if ( ! parent::checkExtension($extension) ) {
+        if ( ! self::checkExtension($extension)) {
             return '';
         }
 
-        switch ($extension)
-        {
+        switch ($extension) {
             case 'swf':
                 return 'application/x-shockwave-flash';
 

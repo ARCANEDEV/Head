@@ -15,7 +15,7 @@ class Favicon implements Renderable
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    function __construct(array $config = [])
+    public function __construct(array $config = [])
     {
         $this->icon = '';
     }

@@ -110,7 +110,6 @@ class OpenGraph implements OpenGraphInterface, Renderable
      */
     public function __construct()
     {
-        // TODO: Implement __construct() method.
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -445,7 +444,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
      *
      * @param AudioMedia $audio
      *
-     * @return OpenGraph
+     * @return OpenGraph|string
      */
     public function addAudio(AudioMedia $audio)
     {
@@ -458,7 +457,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
         $audio->removeURL();
         $value = [$audio_url, [$audio]];
 
-        if (! isset($this->audios)) {
+        if ( ! isset($this->audios)) {
             $this->audios = [$value];
         }
         else {

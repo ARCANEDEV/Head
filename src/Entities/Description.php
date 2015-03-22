@@ -78,7 +78,7 @@ class Description extends AbstractMeta implements DescriptionInterface
     public function render()
     {
         return ! $this->isEmpty()
-            ? parent::renderMetaTag('description', $this->getSEODescription())
+            ? $this->renderMetaTag('description', $this->getSEODescription())
             : '';
     }
 

@@ -171,7 +171,7 @@ interface OpenGraphInterface
      *
      * @param AudioMedia $audio
      *
-     * @return OpenGraphInterface
+     * @return OpenGraphInterface|string
      */
     public function addAudio(AudioMedia $audio);
 

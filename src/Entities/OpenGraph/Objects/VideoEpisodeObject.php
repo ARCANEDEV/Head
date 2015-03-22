@@ -36,7 +36,7 @@ class VideoEpisodeObject extends VideoObject
      */
     public function setSeries( $url )
     {
-        if ( self::isValidUrl($url) ) {
+        if (self::isValidUrl($url)) {
             $this->series = $url;
         }
 

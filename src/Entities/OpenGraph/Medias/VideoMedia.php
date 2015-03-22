@@ -43,7 +43,7 @@ class VideoMedia extends VisualMedia
      */
     public static function extensionToMediaType($extension)
     {
-        if ( ! self::checkExtension($extension) )
+        if ( ! self::checkExtension($extension))
             return '';
 
         switch ($extension) {

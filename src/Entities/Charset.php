@@ -8,6 +8,12 @@ use Arcanedev\Head\Traits\VersionableTrait;
 class Charset extends AbstractMeta implements CharsetInterface, Versionable
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const DEFAULT_CHARSET       = 'UTF-8';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
@@ -20,8 +26,6 @@ class Charset extends AbstractMeta implements CharsetInterface, Versionable
      * @var array
      */
     protected static $supportedCharset = [];
-
-    const DEFAULT_CHARSET       = 'UTF-8';
 
     /* ------------------------------------------------------------------------------------------------
      |  Traits

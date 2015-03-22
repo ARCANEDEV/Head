@@ -3,7 +3,7 @@
 class ProfileObject extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Properties
+     |  Constants
      | ------------------------------------------------------------------------------------------------
      */
     /**
@@ -20,6 +20,10 @@ class ProfileObject extends AbstractObject
      */
     const NS        = 'http://ogp.me/ns/profile#';
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * A person's given name
      *
@@ -69,7 +73,7 @@ class ProfileObject extends AbstractObject
      */
     public function setFirstName( $first_name )
     {
-        if ( is_string($first_name) && !empty($first_name) ) {
+        if (is_string($first_name) and ! empty($first_name)) {
             $this->first_name = $first_name;
         }
 
@@ -95,7 +99,7 @@ class ProfileObject extends AbstractObject
      */
     public function setLastName( $last_name )
     {
-        if ( is_string($last_name) && !empty($last_name) ) {
+        if (is_string($last_name) and ! empty($last_name)) {
             $this->last_name = $last_name;
         }
 
@@ -121,7 +125,7 @@ class ProfileObject extends AbstractObject
      */
     public function setUsername( $username )
     {
-        if ( is_string($username) && !empty($username) ) {
+        if (is_string($username) and ! empty($username)) {
             $this->username = $username;
         }
 
@@ -147,7 +151,7 @@ class ProfileObject extends AbstractObject
      */
     public function setGender($gender)
     {
-        if ( is_string($gender) and in_array($gender, ['male', 'female']) ) {
+        if (is_string($gender) and in_array($gender, ['male', 'female'])) {
             $this->gender = $gender;
         }
 

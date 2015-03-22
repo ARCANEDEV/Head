@@ -29,7 +29,7 @@ class ImageMedia extends VisualMedia
      */
     public static function extensionToMediaType($extension)
     {
-        if (! parent::checkExtension($extension)) {
+        if ( ! self::checkExtension($extension)) {
             return null;
         }
 

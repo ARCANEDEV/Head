@@ -1,26 +1,10 @@
 <?php namespace Arcanedev\Head\Entities;
 
-use Arcanedev\Head\Support\Collection;
-
 use Arcanedev\Head\Contracts\Renderable;
+use Arcanedev\Head\Support\Collection;
 
 class StylesheetCollection extends Collection implements Renderable
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Properties
-     | ------------------------------------------------------------------------------------------------
-     */
-    protected $items;
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Constructor
-     | ------------------------------------------------------------------------------------------------
-     */
-    function __construct($items = [])
-    {
-        parent::__construct($items);
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------

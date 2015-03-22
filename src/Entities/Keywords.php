@@ -100,7 +100,7 @@ class Keywords extends AbstractMeta implements KeywordsInterface
     public function render()
     {
         return ! $this->isEmpty()
-            ? parent::renderMetaTag('keywords', $this->getSEOKeywords())
+            ? $this->renderMetaTag('keywords', $this->getSEOKeywords())
             : '';
     }
 

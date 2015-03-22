@@ -346,6 +346,8 @@ class FacadeTest extends LaravelTestCase
             '<meta name="keywords" content="' . implode(', ', $arrayKeywords) .'"/>',
             '<meta name="author" content="ARCANEDEV"/>',
             '<meta name="robots" content="noindex, nofollow"/>',
+            '<link href="' . base_url('favicon.ico') . '" rel="icon" type="image/x-icon"/>',
+            '<link href="' . base_url('favicon.png') . '" rel="icon" type="image/png"/>',
         ];
 
         // SEO

@@ -1,15 +1,20 @@
 <?php namespace Arcanedev\Head\Tests;
 
+use Arcanedev\Head\Entities\Charset;
+use Arcanedev\Head\Entities\Description;
+use Arcanedev\Head\Entities\Keywords;
 use Arcanedev\Head\Entities\Meta;
+use Arcanedev\Head\Entities\Title;
 use Arcanedev\Head\Head;
-
-use Arcanedev\Head\Entities\Charset     as Charset;
-use Arcanedev\Head\Entities\Title       as Title;
-use Arcanedev\Head\Entities\Description as Description;
-use Arcanedev\Head\Entities\Keywords    as Keywords;
 
 class HeadTest extends TestCase
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const HEAD_CLASS = 'Arcanedev\\Head\\Head';
+
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -42,16 +47,16 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanInstantiate()
+    public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf('Arcanedev\\Head\\Head', $this->head);
+        $this->assertInstanceOf(self::HEAD_CLASS, $this->head);
         $this->assertEquals('UTF-8', $this->head->getCharset());
     }
 
     /**
      * @test
      */
-    public function testCanGetDefaultConfig()
+    public function test_can_get_default_config()
     {
         $config     = $this->head->getConfig();
 
@@ -62,7 +67,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetConfigFromArray()
+    public function test_can_set_and_get_config_from_array()
     {
         $this->head->loadConfig([
             'charset' => 'ISO-8859-1',
@@ -78,7 +83,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetConfigFromFile()
+    public function test_can_set_and_get_config_from_file()
     {
         $this->head->configPath(__DIR__ . '/data/config-valid.php');
 
@@ -94,7 +99,7 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\FileNotFoundException
      */
-    public function testMustThrowFileNotFoundExceptionOnConfigPath()
+    public function test_must_throw_file_not_found_exception_on_config_path()
     {
         $this->head->configPath(__DIR__ . '/data/config-not-found.php');
     }
@@ -104,7 +109,7 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnConfigPath()
+    public function test_must_throw_invalid_type_exception_on_config_path()
     {
         $this->head->configPath(__DIR__ . '/data/config-invalid.php');
     }
@@ -112,7 +117,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetCharset()
+    public function test_can_set_and_get_charset()
     {
         $this->assertEquals('UTF-8', $this->head->getCharset());
         $this->assertEquals(
@@ -142,7 +147,7 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnCharset()
+    public function test_must_throw_invalid_type_exception_on_charset()
     {
         $this->head->setCharset(true);
     }
@@ -150,7 +155,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function canSetAndGetTitle()
+    public function test_can_set_and_get_title()
     {
         $title = 'Hello Title';
         $this->head->setTitle($title);
@@ -165,7 +170,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function canSetAndGetSiteName()
+    public function test_can_set_and_get_site_name()
     {
         $siteName = 'Company name';
 
@@ -177,7 +182,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function canSetAndGetByTitleClass()
+    public function test_can_set_and_get_by_title_class()
     {
         $title = new Title;
         $title->set('Hello Title')
@@ -198,7 +203,7 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnTitle()
+    public function test_must_throw_invalid_type_exception_on_title()
     {
         $this->head->setTitle(true);
     }
@@ -206,7 +211,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function canSetAndGetDescription()
+    public function test_can_set_and_get_description()
     {
         $description = 'Hello Description';
         $this->head->setDescription($description);
@@ -221,7 +226,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function canSetAndGetByDescriptionClass()
+    public function test_can_set_and_get_by_description_class()
     {
         $description = new Description;
         $description->set('Hello Description');
@@ -239,7 +244,7 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnDescription()
+    public function test_must_throw_invalid_type_exception_on_description()
     {
         $this->head->setDescription(true);
     }
@@ -247,7 +252,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function canSetAndGetKeywords()
+    public function test_can_set_and_get_keywords()
     {
         // Array Keywords
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
@@ -266,7 +271,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testSetAndGetByKeywordsClass()
+    public function test_set_and_get_by_keywords_class()
     {
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
 
@@ -283,7 +288,7 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnKeywords()
+    public function test_must_throw_invalid_type_exception_on_keywords()
     {
         $this->head->setKeywords(true);
     }
@@ -291,7 +296,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetTitleDescriptionKeywords()
+    public function test_can_set_and_get_title_description_keywords()
     {
         $title       = 'Hello Title';
         $description = 'Hello Description';
@@ -306,7 +311,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetMetas()
+    public function test_can_set_and_get_metas()
     {
         $this->assertEquals('', $this->head->renderMetasTags());
 
@@ -323,7 +328,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanEnableAndDisableOpenGraph()
+    public function test_can_enable_and_disable_open_graph()
     {
         $this->assertFalse($this->head->isOpenGraphEnabled());
 
@@ -339,7 +344,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderAll()
+    public function test_can_render_all()
     {
         $title         = 'Hello world';
         $description   = 'Description of the hello world';
@@ -369,7 +374,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanAddAndRenderStyles()
+    public function test_can_add_and_render_styles()
     {
         $this->head->addStyle('assets/css/style.css');
         $this->head->addStyle('assets/css/bootstrap.min.css');
@@ -385,7 +390,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanAddManyAndRenderStyles()
+    public function test_can_add_many_and_render_styles()
     {
         $this->head->addStyles([
             'assets/css/style.css',
@@ -404,7 +409,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanAddAndRenderScripts()
+    public function test_can_add_and_render_scripts()
     {
         $this->head->addScript('assets/js/jquery.min.js');
         $this->head->addScript('assets/js/bootstrap.min.js');
@@ -421,7 +426,7 @@ class HeadTest extends TestCase
     /**
      * @test
      */
-    public function testCanAddManyAndRenderScripts()
+    public function test_can_add_many_and_render_scripts()
     {
         $this->head->addScripts([
             'assets/js/jquery.min.js',

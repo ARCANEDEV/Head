@@ -5,13 +5,17 @@ use Arcanedev\Head\Entities\Script;
 class ScriptTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const SCRIPT_CLASS = 'Arcanedev\\Head\\Entities\\Script';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var Script */
     protected $script;
-
-    const SCRIPT_CLASS = 'Arcanedev\\Head\\Entities\\Script';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -38,7 +42,7 @@ class ScriptTest extends TestCase
     /**
      * @test
      */
-    public function testCanBeInstantiated()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(self::SCRIPT_CLASS, $this->script);
     }
@@ -46,7 +50,7 @@ class ScriptTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetSource()
+    public function test_can_set_and_get_source()
     {
         $src  = 'assets/js/jquery-min.js';
         $this->script->setSrc($src);
@@ -57,11 +61,11 @@ class ScriptTest extends TestCase
     /**
      * @test
      */
-    public function testCanGetFilenameFromSource()
+    public function test_can_get_filename_from_source()
     {
         $this->assertEquals('', $this->script->getFile());
 
-        $file = "jquery-min.js";
+        $file = 'jquery-min.js';
         $src  = "assets/js/$file";
         $this->script->setSrc($src);
 
@@ -71,9 +75,9 @@ class ScriptTest extends TestCase
     /**
      * @test
      */
-    public function testCanMakeScript()
+    public function test_can_make_script()
     {
-        $file = "jquery-min.js";
+        $file = 'jquery-min.js';
         $src  = "assets/js/$file";
         $this->script = Script::make($src);
 
@@ -85,7 +89,7 @@ class ScriptTest extends TestCase
     /**
      * @test
      */
-    public function testCanRender()
+    public function test_can_render()
     {
         $this->assertEquals('', $this->script->render());
 

@@ -5,10 +5,15 @@ use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
 class VideoMediaTest extends VisualMediaTestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const OG_VIDEO_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VideoMedia';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const OPENGRAPH_VIDEOMEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VideoMedia';
     /** @var VideoMedia */
     protected $media;
 
@@ -37,9 +42,9 @@ class VideoMediaTest extends VisualMediaTestCase
     /**
      * @test
      */
-    public function testCanInstantiate()
+    public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::OPENGRAPH_VIDEOMEDIA_CLASS, $this->media);
+        $this->assertInstanceOf(self::OG_VIDEO_MEDIA_CLASS, $this->media);
         $this->assertVisualMediaInstance();
         $this->assertAbstractMediaInstance();
     }
@@ -47,9 +52,9 @@ class VideoMediaTest extends VisualMediaTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetURL($url = '')
+    public function test_can_set_and_get_url()
     {
-        parent::testCanSetAndGetURL('http://www.company.com/video.mp4');
+        $this->assertCanSetAndGetURL('http://www.company.com/video.mp4');
 
         $this->assertEquals('video/mp4', $this->media->getTypeFromUrl());
     }
@@ -57,23 +62,23 @@ class VideoMediaTest extends VisualMediaTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetSecureURL($secureURL = '')
+    public function test_can_set_and_get_secure_url()
     {
-        parent::testCanSetAndGetSecureURL('https://www.company.com/video.mp4');
+        $this->assertCanSetAndGetSecureURL('https://www.company.com/video.mp4');
     }
 
     /**
      * @test
      */
-    public function testCanSetAndGetType($type = '')
+    public function test_can_set_and_get_type()
     {
-        parent::testCanSetAndGetType('application/x-shockwave-flash');
+        $this->assertCanSetAndGetType('application/x-shockwave-flash');
     }
 
     /**
      * @test
      */
-    public function assertCanSetAndGetWidthAndHeight()
+    public function assert_can_set_and_get_width_and_height()
     {
         parent::assertCanSetAndGetWidthAndHeight();
     }
@@ -81,7 +86,7 @@ class VideoMediaTest extends VisualMediaTestCase
     /**
      * @test
      */
-    public function testCanConvertExtensionToMediaType()
+    public function test_can_convert_extension_to_media_type()
     {
         $extensions = [
             'swf'   => 'application/x-shockwave-flash',

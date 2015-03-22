@@ -1,7 +1,6 @@
 <?php namespace Arcanedev\Head\Entities;
 
 use Arcanedev\Head\Contracts\Entities\DescriptionInterface;
-
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
 class Description extends AbstractMeta implements DescriptionInterface

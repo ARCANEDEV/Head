@@ -36,7 +36,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanGetDefaultCharset()
+    public function test_can_get_default_charset()
     {
         $this->assertEquals('UTF-8', Head::getCharset());
     }
@@ -44,7 +44,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanGetDefaultConfig()
+    public function test_can_get_default_config()
     {
         $config     = Head::getConfig();
 
@@ -55,7 +55,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetConfigFromArray()
+    public function test_can_set_and_get_config_from_array()
     {
         Head::loadConfig([
             'charset' => 'ISO-8859-1',
@@ -71,7 +71,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetConfigFromFile()
+    public function test_can_set_and_get_config_from_file()
     {
         $path = realpath(__DIR__ . '/../data/config-valid.php');
         Head::configPath($path);
@@ -88,7 +88,7 @@ class FacadeTest extends LaravelTestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\FileNotFoundException
      */
-    public function testMustThrowFileNotFoundExceptionOnConfigPath()
+    public function test_must_throw_file_not_found_exception_on_config_path()
     {
         Head::configPath(__DIR__ . '/data/config-not-found.php');
     }
@@ -98,7 +98,7 @@ class FacadeTest extends LaravelTestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnConfigPath()
+    public function test_must_throw_invalid_type_exception_on_config_path()
     {
         $path = realpath(__DIR__ . '/../data/config-invalid.php');
         Head::configPath($path);
@@ -107,7 +107,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetCharset()
+    public function test_can_set_and_get_charset()
     {
         $this->assertEquals('UTF-8', Head::getCharset());
         $this->assertEquals(
@@ -137,7 +137,7 @@ class FacadeTest extends LaravelTestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnCharset()
+    public function test_must_throw_invalid_type_exception_on_charset()
     {
         Head::setCharset(true);
     }
@@ -145,7 +145,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function canSetAndGetTitle()
+    public function test_can_set_and_get_title()
     {
         $title = 'Hello Title';
         Head::setTitle($title);
@@ -160,7 +160,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function canSetAndGetSiteName()
+    public function test_can_set_and_get_site_name()
     {
         $siteName = 'Company name';
 
@@ -172,7 +172,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function canSetAndGetByTitleClass()
+    public function test_can_set_and_get_by_title_class()
     {
         $title = new Title;
         $title->set('Hello Title')
@@ -193,7 +193,7 @@ class FacadeTest extends LaravelTestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnTitle()
+    public function test_must_throw_invalid_type_exception_on_title()
     {
         Head::setTitle(true);
     }
@@ -201,7 +201,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function canSetAndGetDescription()
+    public function test_can_set_and_get_description()
     {
         $description = 'Hello Description';
         Head::setDescription($description);
@@ -216,7 +216,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function canSetAndGetByDescriptionClass()
+    public function test_can_set_and_get_by_description_class()
     {
         $description = new Description;
         $description->set('Hello Description');
@@ -234,7 +234,7 @@ class FacadeTest extends LaravelTestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnDescription()
+    public function test_must_throw_invalid_type_exception_on_description()
     {
         Head::setDescription(true);
     }
@@ -242,7 +242,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function canSetAndGetKeywords()
+    public function test_can_set_and_get_keywords()
     {
         // Array Keywords
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
@@ -261,7 +261,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testSetAndGetByKeywordsClass()
+    public function test_set_and_get_by_keywords_class()
     {
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
 
@@ -278,7 +278,7 @@ class FacadeTest extends LaravelTestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnKeywords()
+    public function test_must_throw_invalid_type_exception_on_keywords()
     {
         Head::setKeywords(true);
     }
@@ -286,7 +286,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetTitleDescriptionKeywords()
+    public function test_can_set_and_get_title_description_keywords()
     {
         $title       = 'Hello Title';
         $description = 'Hello Description';
@@ -301,7 +301,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetMetas()
+    public function test_can_set_and_get_metas()
     {
         $this->assertEquals('', Head::renderMetasTags());
 
@@ -318,7 +318,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanEnableAndDisableOpenGraph()
+    public function test_can_enable_and_disable_open_graph()
     {
         $this->assertFalse(Head::isOpenGraphEnabled());
 
@@ -334,7 +334,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanRenderAll()
+    public function test_can_render_all()
     {
         $title         = 'Hello world';
         $description   = 'Description of the hello world';
@@ -364,7 +364,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanAddAndRenderStyles()
+    public function test_can_add_and_render_styles()
     {
         Head::addStyle('assets/css/style.css');
         Head::addStyle('assets/css/bootstrap.min.css');
@@ -380,7 +380,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanAddManyAndRenderStyles()
+    public function test_can_add_many_and_render_styles()
     {
         Head::addStyles([
             'assets/css/style.css',
@@ -399,7 +399,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanAddAndRenderScripts()
+    public function test_can_add_and_render_scripts()
     {
         Head::addScript('assets/js/jquery.min.js');
         Head::addScript('assets/js/bootstrap.min.js');
@@ -416,7 +416,7 @@ class FacadeTest extends LaravelTestCase
     /**
      * @test
      */
-    public function testCanAddManyAndRenderScripts()
+    public function test_can_add_many_and_render_scripts()
     {
         Head::addScripts([
             'assets/js/jquery.min.js',

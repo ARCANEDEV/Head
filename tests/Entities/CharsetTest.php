@@ -5,15 +5,19 @@ use Arcanedev\Head\Entities\Charset;
 class CharsetTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Properties
+     |  Constants
      | ------------------------------------------------------------------------------------------------
      */
     const CHARSET_CLASS = 'Arcanedev\\Head\\Entities\\Charset';
+    const UTF_CHARSET   = 'UTF-8';
+    const ISO_CHARSET   = 'ISO-8859-15';
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
     /** @var Charset */
     protected $charset;
-
-    const FIRST_CHARSET     = 'UTF-8';
-    const SECOND_CHARSET    = 'ISO-8859-15';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -36,7 +40,7 @@ class CharsetTest extends TestCase
     /**
      * @test
      */
-    public function testCanInstantiate()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(self::CHARSET_CLASS, $this->charset);
     }
@@ -44,21 +48,21 @@ class CharsetTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetCharset()
+    public function test_can_set_and_get_charset()
     {
-        $this->assertEquals(self::FIRST_CHARSET, $this->charset->get());
+        $this->assertEquals(self::UTF_CHARSET, $this->charset->get());
 
-        $this->charset->set(self::SECOND_CHARSET);
-        $this->assertEquals(self::SECOND_CHARSET, $this->charset->get());
+        $this->charset->set(self::ISO_CHARSET);
+        $this->assertEquals(self::ISO_CHARSET, $this->charset->get());
 
-        $this->charset->set(strtolower(self::FIRST_CHARSET));
-        $this->assertEquals(self::FIRST_CHARSET, $this->charset->get());
+        $this->charset->set(strtolower(self::UTF_CHARSET));
+        $this->assertEquals(self::UTF_CHARSET, $this->charset->get());
     }
 
     /**
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMostThrowInvalidCharset()
+    public function test_must_throw_invalid_charset()
     {
         $this->charset->set(true);
     }
@@ -66,10 +70,10 @@ class CharsetTest extends TestCase
     /**
      * @test
      */
-    public function testIfCharsetIsSupported()
+    public function test_is_supported_charset()
     {
-        $this->assertTrue($this->charset->supported(self::FIRST_CHARSET));
-        $this->assertTrue($this->charset->supported(self::SECOND_CHARSET));
+        $this->assertTrue($this->charset->supported(self::UTF_CHARSET));
+        $this->assertTrue($this->charset->supported(self::ISO_CHARSET));
         $this->assertTrue($this->charset->supported('utf-8'));
         $this->assertTrue($this->charset->supported('  UTF - 8  '));
 
@@ -79,7 +83,7 @@ class CharsetTest extends TestCase
     /**
      * @test
      */
-    public function testCanGetDefaultIfNotSupported()
+    public function test_can_get_default_if_not_supported()
     {
         $this->assertEquals('UTF-8', $this->charset->set('WTF-8')->get());
     }
@@ -87,7 +91,7 @@ class CharsetTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetHTMLVersion()
+    public function test_can_set_html_version()
     {
         $this->assertEquals('5', $this->charset->getVersion());
 
@@ -103,7 +107,7 @@ class CharsetTest extends TestCase
      *
      * @expectedException \Exception
      */
-    public function testMustThrowAnEmptyHTMLVersion()
+    public function test_must_throw_an_empty_html_version()
     {
         $this->charset->setVersion(' ');
     }
@@ -113,7 +117,7 @@ class CharsetTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidHTMLVersionException
      */
-    public function testMustThrowAnInvalidHTMLVersion()
+    public function test_must_throw_an_invalid_html_version()
     {
         $this->charset->setVersion('6');
     }
@@ -123,7 +127,7 @@ class CharsetTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowAnInvalidType()
+    public function test_must_throw_an_invalid_type()
     {
         $this->charset->setVersion(true);
     }
@@ -131,7 +135,7 @@ class CharsetTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderMetaTag()
+    public function test_can_render_meta_tag()
     {
         $this->assertEquals('<meta charset="UTF-8">', $this->charset->render());
 
@@ -157,7 +161,7 @@ class CharsetTest extends TestCase
     /**
      * @test
      */
-    public function testHasDefaultCharsets()
+    public function test_has_default_charsets()
     {
         $method          = parent::getMethod('Charset', 'getDefaultCharsets');
 

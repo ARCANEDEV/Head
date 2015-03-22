@@ -37,7 +37,7 @@ class MetaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderMetaTags()
+    public function test_can_render_meta_tags()
     {
         $prefix     = 'arc';
 
@@ -46,9 +46,9 @@ class MetaBuilderTest extends TestCase
             'alternative' => 'en_EN'
         ]);
 
-        $title       = "Hello World";
+        $title       = 'Hello World';
         $description = "$title Description";
-        $url         = "http://www.arcanedev.net";
+        $url         = 'http://www.site.com';
 
         $tags = [
             "<meta name=\"$prefix:title\" content=\"$title\">",

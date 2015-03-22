@@ -1,13 +1,10 @@
 <?php namespace Arcanedev\Head\Contracts;
 
-interface ArrayableInterface
+interface Renderable
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Function
+     |  Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @return array
-     */
-    public function toArray();
+    public function render();
 }

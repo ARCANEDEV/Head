@@ -1,13 +1,11 @@
 <?php namespace Arcanedev\Head\Entities;
 
 use Arcanedev\Head\Contracts\Entities\CharsetInterface;
-use Arcanedev\Head\Contracts\VersionableInterface;
-
+use Arcanedev\Head\Contracts\Versionable;
+use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Head\Traits\VersionableTrait;
 
-use Arcanedev\Head\Exceptions\InvalidTypeException;
-
-class Charset extends AbstractMeta implements CharsetInterface, VersionableInterface
+class Charset extends AbstractMeta implements CharsetInterface, Versionable
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties

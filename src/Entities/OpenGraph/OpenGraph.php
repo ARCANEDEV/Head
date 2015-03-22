@@ -5,10 +5,10 @@ use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
 
 use Arcanedev\Head\Contracts\Entities\OpenGraphInterface;
-use Arcanedev\Head\Contracts\RenderableInterface;
+use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Head\Entities\Title;
 
-class OpenGraph implements OpenGraphInterface, RenderableInterface
+class OpenGraph implements OpenGraphInterface, Renderable
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -648,20 +648,28 @@ class OpenGraph implements OpenGraphInterface, RenderableInterface
         }
 
         // test if URL exists
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_FAILONERROR, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-        curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_NOBODY, true); // HEAD
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Open Graph protocol validator ' . self::VERSION . ' (+http://ogp.me/)');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $ch      = curl_init();
+
+        $options = [
+            CURLOPT_URL            => $url,
+            CURLOPT_FAILONERROR    => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_TIMEOUT        => 15,
+            CURLOPT_FORBID_REUSE   => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_NOBODY         => true,
+            CURLOPT_USERAGENT      => 'Open Graph protocol validator ' . self::VERSION . ' (+http://ogp.me/)',
+            CURLOPT_RETURNTRANSFER => true,
+        ];
 
         if (! empty($acceptedMimes)) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: ' . implode(',', $acceptedMimes)]);
+            $options[CURLOPT_HTTPHEADER] = [
+                'Accept: ' . implode(',', $acceptedMimes)
+            ];
         }
+
+        curl_setopt_array($ch, $options);
 
         $response       = curl_exec($ch);
         $statusCode     = curl_getinfo($ch, CURLINFO_HTTP_CODE);

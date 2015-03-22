@@ -1,14 +1,13 @@
 <?php namespace Arcanedev\Head\Entities;
 
-use Arcanedev\Head\Contracts\Entities\TitleInterface as TitleInterface;
-use Arcanedev\Head\Contracts\RenderableInterface     as RenderableInterface;
-
-use Arcanedev\Head\Exceptions\EmptyTitleException    as EmptyTitleException;
-use Arcanedev\Head\Exceptions\InvalidTypeException   as InvalidTypeException;
+use Arcanedev\Head\Contracts\Entities\TitleInterface;
+use Arcanedev\Head\Contracts\Renderable;
+use Arcanedev\Head\Exceptions\EmptyTitleException;
+use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Markup\Entities\Tag;
 use Arcanedev\Markup\Markup;
 
-class Title implements TitleInterface, RenderableInterface
+class Title implements TitleInterface, Renderable
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties

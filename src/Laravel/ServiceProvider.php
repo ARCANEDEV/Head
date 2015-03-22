@@ -26,7 +26,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->package('arcanedev/head', 'head', __DIR__ . '/..');
+        $this->package('arcanedev/head', 'head', __DIR__ . '/../..');
     }
 
     /**

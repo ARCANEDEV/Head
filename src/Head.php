@@ -1,28 +1,33 @@
 <?php namespace Arcanedev\Head;
 
-use Arcanedev\Head\Entities\Charset                 as Charset;
-use Arcanedev\Head\Entities\Favicon                 as Favicon;
-use Arcanedev\Head\Entities\Title                   as Title;
-use Arcanedev\Head\Entities\Description             as Description;
-use Arcanedev\Head\Entities\Keywords                as Keywords;
-use Arcanedev\Head\Entities\Meta                    as Meta;
-use Arcanedev\Head\Entities\MetaCollection          as MetaCollection;
-use Arcanedev\Head\Entities\StylesheetCollection    as StylesheetCollection;
-use Arcanedev\Head\Entities\ScriptCollection        as ScriptCollection;
-use Arcanedev\Head\Entities\OpenGraph\OpenGraph     as OpenGraph;
-use Arcanedev\Head\Entities\TwitterCard\TwitterCard as TwitterCard;
-
-use Arcanedev\Head\Exceptions\FileNotFoundException as FileNotFoundException;
-use Arcanedev\Head\Exceptions\InvalidTypeException  as InvalidTypeException;
-
-use Arcanedev\Head\Contracts\HeadInterface          as HeadInterface;
-use Arcanedev\Head\Contracts\RenderableInterface    as RenderableInterface;
-use Arcanedev\Head\Contracts\VersionableInterface   as VersionableInterface;
+use Arcanedev\Head\Contracts\Arrayable;
+use Arcanedev\Head\Contracts\HeadInterface;
+use Arcanedev\Head\Contracts\Renderable;
+use Arcanedev\Head\Contracts\Versionable;
+use Arcanedev\Head\Entities\Charset;
+use Arcanedev\Head\Entities\Description;
+use Arcanedev\Head\Entities\Favicon;
+use Arcanedev\Head\Entities\Keywords;
+use Arcanedev\Head\Entities\Meta;
+use Arcanedev\Head\Entities\MetaCollection;
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
+use Arcanedev\Head\Entities\ScriptCollection;
+use Arcanedev\Head\Entities\StylesheetCollection;
+use Arcanedev\Head\Entities\Title;
+use Arcanedev\Head\Entities\TwitterCard\TwitterCard;
+use Arcanedev\Head\Exceptions\FileNotFoundException;
+use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Head\Support\Collection;
-use Arcanedev\Head\Traits\VersionableTrait          as VersionableTrait;
+use Arcanedev\Head\Traits\VersionableTrait;
 
-class Head implements HeadInterface, RenderableInterface, VersionableInterface
+class Head implements HeadInterface, Renderable, Arrayable, Versionable
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Traits
+     | ------------------------------------------------------------------------------------------------
+     */
+    use VersionableTrait;
+
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -62,12 +67,6 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
 
     /** @var array */
     protected $misc = [];
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Traits
-     | ------------------------------------------------------------------------------------------------
-     */
-    use VersionableTrait;
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -123,7 +122,7 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      */
     public static function getDefaultConfig()
     {
-        return include __DIR__ . '/config/config.php';
+        return include __DIR__ . '/../config/config.php';
     }
 
     /**
@@ -630,7 +629,19 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
      */
     public function render($scripts = false)
     {
-        return implode(PHP_EOL, array_filter([
+        return implode(PHP_EOL, $this->toArray($scripts));
+    }
+
+    /**
+     * Get Head Tags array
+     *
+     * @param bool $scripts
+     *
+     * @return string
+     */
+    public function toArray($scripts = false)
+    {
+        return array_filter([
             $this->renderCharsetTag(),
             $this->renderTitleTag(),
             $this->renderDescriptionTag(),
@@ -639,7 +650,7 @@ class Head implements HeadInterface, RenderableInterface, VersionableInterface
             $this->renderOpenGraphTags(),
             $this->renderStylesTags(),
             $scripts ? $this->renderScriptsTags() : '',
-        ]));
+        ]);
     }
 
     /* ------------------------------------------------------------------------------------------------

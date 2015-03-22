@@ -6,10 +6,15 @@ use Arcanedev\Head\Tests\Entities\TestCase;
 class TwitterCardTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Properties
+     |  Constants
      | ------------------------------------------------------------------------------------------------
      */
     const TWITTER_CARD_CLASS = 'Arcanedev\\Head\\Entities\\TwitterCard\\TwitterCard';
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
     /** @var TwitterCard */
     private $twitterCard;
 
@@ -38,7 +43,7 @@ class TwitterCardTest extends TestCase
     /**
      * @test
      */
-    public function testCanBeInstantiated()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(self::TWITTER_CARD_CLASS, $this->twitterCard);
     }

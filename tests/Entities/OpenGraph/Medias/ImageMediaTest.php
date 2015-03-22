@@ -5,13 +5,17 @@ use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 class ImageMediaTest extends VisualMediaTestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const OG_IMAGE_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\ImageMedia';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var ImageMedia */
     protected $media;
-
-    const OG_IMAGEMEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\ImageMedia';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -38,10 +42,10 @@ class ImageMediaTest extends VisualMediaTestCase
     /**
      * @test
      */
-    public function testCanInstantiate()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(
-            self::OG_IMAGEMEDIA_CLASS,
+            self::OG_IMAGE_MEDIA_CLASS,
             $this->media
         );
         $this->assertVisualMediaInstance();
@@ -51,11 +55,11 @@ class ImageMediaTest extends VisualMediaTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetURL($url = '')
+    public function test_can_set_and_get_url()
     {
-        $url = "http://www.company.com/image.jpg";
+        $url = 'http://www.company.com/image.jpg';
 
-        parent::testCanSetAndGetURL($url);
+        $this->assertCanSetAndGetURL($url);
 
         $this->assertEquals($url, $this->media->toString());
 
@@ -68,35 +72,31 @@ class ImageMediaTest extends VisualMediaTestCase
     /**
      * @test
      */
-    public function testCanSetAndGetSecureURL($secureURL = '')
+    public function test_can_set_and_get_secure_url()
     {
-        $secureURL = "https://www.company.com/image.jpg";
-
-        parent::testCanSetAndGetSecureURL($secureURL);
+        $this->assertCanSetAndGetSecureURL('https://www.company.com/image.jpg');
     }
 
     /**
      * @test
      */
-    public function testCanSetAndGetType($type = '')
+    public function test_can_set_and_get_type()
     {
-        $type = 'image/jpeg';
-
-        parent::testCanSetAndGetType($type);
+        $this->assertCanSetAndGetType('image/jpeg');
     }
 
     /**
      * @test
      */
-    public function assertCanSetAndGetWidthAndHeight()
+    public function test_can_set_and_get_width_and_height()
     {
-        parent::assertCanSetAndGetWidthAndHeight();
+        $this->assertCanSetAndGetWidthAndHeight();
     }
 
     /**
      * @test
      */
-    public function testCanConvertExtensionToMediaType()
+    public function test_can_convert_extension_to_media_type()
     {
         $extensions = [
             'jpeg'  => 'image/jpeg',
@@ -117,13 +117,13 @@ class ImageMediaTest extends VisualMediaTestCase
     /**
      * @test
      */
-    public function testCanConvertToArray()
+    public function test_can_convert_to_array()
     {
         $height    = 120;
         $width     = 120;
-        $url       = "http://www.company.com/image.jpg";
-        $secureUrl = "https://www.company.com/image.jpg";
-        $type      = "image/jpeg";
+        $url       = 'http://www.company.com/image.jpg';
+        $secureUrl = 'https://www.company.com/image.jpg';
+        $type      = 'image/jpeg';
 
         $this->media->setURL($url)->setSecureURL($secureUrl)
                     ->setHeight($height)->setWidth($width)

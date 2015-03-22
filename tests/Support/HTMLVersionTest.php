@@ -6,13 +6,17 @@ use Arcanedev\Head\Tests\TestCase;
 class HTMLVersionTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const HTML_VERSION_CLASS = 'Arcanedev\\Head\\Support\\HTMLVersion';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var HTMLVersion */
     private $htmlVersion;
-
-    const HTML_VERSION_CLASS = 'Arcanedev\\Head\\Support\\HTMLVersion';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -39,7 +43,7 @@ class HTMLVersionTest extends TestCase
     /**
      * @test
      */
-    public function testCanBeInstantiated()
+    public function test_can_be_instantiated()
     {
         $this->htmlVersion = new HTMLVersion;
         $this->assertInstanceOf(self::HTML_VERSION_CLASS, $this->htmlVersion);
@@ -53,7 +57,7 @@ class HTMLVersionTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetVersion()
+    public function test_can_set_and_get_version()
     {
         $this->assertEquals('4', $this->htmlVersion->set('4')->get());
         $this->assertEquals('5', $this->htmlVersion->set('5')->get());
@@ -65,7 +69,7 @@ class HTMLVersionTest extends TestCase
     /**
      * @test
      */
-    public function testCanCheckVersion()
+    public function test_can_check_version()
     {
         $this->htmlVersion->set('5');
         $this->assertTrue($this->htmlVersion->isHTML5());
@@ -79,7 +83,7 @@ class HTMLVersionTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\Exception
      */
-    public function testMustThrowExceptionOnEmptyVersion()
+    public function test_must_throw_exception_on_empty_version()
     {
         $this->htmlVersion->set('');
     }
@@ -89,7 +93,7 @@ class HTMLVersionTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeException()
+    public function test_must_throw_invalid_type_exception()
     {
         $this->htmlVersion->set(true);
     }
@@ -99,7 +103,7 @@ class HTMLVersionTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidHTMLVersionException
      */
-    public function testMustThrowInvalidHTMLVersionException()
+    public function test_must_throw_invalid_html_version_exception()
     {
         $this->htmlVersion->set('1');
     }

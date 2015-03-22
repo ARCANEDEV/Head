@@ -1,18 +1,21 @@
 <?php namespace Arcanedev\Head\Tests\Entities;
 
-
 use Arcanedev\Head\Entities\Meta;
 
 class MetaTest extends TestCase
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const META_CLASS = 'Arcanedev\\Head\\Entities\\Meta';
+
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var Meta */
     private $meta;
-
-    const META_CLASS = 'Arcanedev\\Head\\Entities\\Meta';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -39,7 +42,7 @@ class MetaTest extends TestCase
     /**
      * @test
      */
-    public function testCanBeInstantiated()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(self::META_CLASS, $this->meta);
         $this->assertTrue($this->meta->isEmpty());
@@ -52,7 +55,7 @@ class MetaTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGet()
+    public function test_can_set_and_get()
     {
         $meta = [
             'name'       => 'author',
@@ -70,7 +73,7 @@ class MetaTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\Exception
      */
-    public function testMustThrowExceptionOnEmptyName()
+    public function test_must_throw_exception_on_empty_name()
     {
         Meta::make('', 'content');
     }
@@ -80,7 +83,7 @@ class MetaTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnName()
+    public function test_must_throw_invalid_type_exception_on_name()
     {
         Meta::make(true, 'content');
     }
@@ -90,7 +93,7 @@ class MetaTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\Exception
      */
-    public function testMustThrowExceptionOnEmptyContent()
+    public function test_must_throw_exception_on_empty_content()
     {
         Meta::make('name', '');
     }
@@ -100,7 +103,7 @@ class MetaTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeExceptionOnContent()
+    public function test_must_throw_invalid_type_exception_on_content()
     {
         Meta::make('name', true);
     }
@@ -108,7 +111,7 @@ class MetaTest extends TestCase
     /**
      * @test
      */
-    public function testCanRender()
+    public function test_can_render()
     {
         $meta = [
             'name'      => 'author',
@@ -126,7 +129,7 @@ class MetaTest extends TestCase
     /**
      * @test
      */
-    public function testCanGetResponsiveTag()
+    public function test_can_get_responsive_tag()
     {
         $this->assertEquals(
             '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
@@ -137,7 +140,7 @@ class MetaTest extends TestCase
     /**
      * @test
      */
-    public function testCanGetIeEdgeTag()
+    public function test_can_get_ie_edge_tag()
     {
         $this->assertEquals(
             '<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">',

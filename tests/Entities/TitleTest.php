@@ -5,13 +5,17 @@ use Arcanedev\Head\Entities\Title;
 class TitleTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const TITLE_CLASS = 'Arcanedev\\Head\\Entities\\Title';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var Title */
     protected $title;
-
-    const TITLE_CLASS = 'Arcanedev\\Head\\Entities\\Title';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -34,7 +38,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanInstantiate()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(self::TITLE_CLASS, $this->title);
 
@@ -44,7 +48,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetTitle()
+    public function test_can_set_and_get_title()
     {
         $this->title->set('My awesome title');
         $this->assertEquals('My awesome title', $this->title->get());
@@ -56,7 +60,7 @@ class TitleTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\EmptyTitleException
      */
-    public function testMustThrowEmptyTitleException()
+    public function test_must_throw_empty_title_exception()
     {
         $this->title->set('');
     }
@@ -66,7 +70,7 @@ class TitleTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeException()
+    public function test_must_throw_invalid_type_exception()
     {
         $this->title->set(true);
     }
@@ -74,7 +78,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetSiteName()
+    public function test_can_set_and_get_site_name()
     {
         $siteName = 'Company Name';
         $this->title->setSiteName($siteName);
@@ -86,7 +90,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanToggleSiteNameVisibility()
+    public function test_can_toggle_site_name_visibility()
     {
         $this->assertTrue($this->title->isSiteNameVisible());
         $this->assertFalse($this->title->isSiteNameHidden());
@@ -103,7 +107,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetSeparator()
+    public function test_can_set_and_get_separator()
     {
         $this->title->separator(' -');
         $this->assertEquals('-', $this->title->separator());
@@ -121,7 +125,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderTitle()
+    public function test_can_render_title()
     {
         $title = 'Hello world';
 
@@ -134,7 +138,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderTitleWithSiteName()
+    public function test_can_render_title_with_siteName()
     {
         $title    = 'My awesome title';
         $siteName = 'Site Name';
@@ -149,7 +153,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderTitleWithoutSiteName()
+    public function test_can_render_title_without_site_name()
     {
         $title    = 'My awesome title';
         $siteName = 'Site Name';
@@ -166,9 +170,8 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderTitleWithOrder()
+    public function test_can_render_title_with_order()
     {
-
         $title    = 'My awesome title';
         $siteName = 'Site Name';
         $this->title->set($title)->setSiteName($siteName);
@@ -194,7 +197,7 @@ class TitleTest extends TestCase
     /**
      * @test
      */
-    public function testCanRenderTitleSix()
+    public function test_can_render_title_six()
     {
         $title     = 'My awesome title';
         $siteName  = 'Company Name';

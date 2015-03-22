@@ -5,6 +5,12 @@ use Arcanedev\Head\Entities\OpenGraph\Medias\VisualMedia;
 abstract class VisualMediaTestCase extends AbstractMediaTestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const OG_VISUAL_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VisualMedia';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
@@ -29,20 +35,14 @@ abstract class VisualMediaTestCase extends AbstractMediaTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function assertVisualMediaInstance()
+    protected function assertVisualMediaInstance()
     {
         if ( $this->isMediaNotNull() ) {
-            $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VisualMedia', $this->media);
+            $this->assertInstanceOf(self::OG_VISUAL_MEDIA_CLASS, $this->media);
         }
     }
 
-    /**
-     * @test
-     */
-    public function assertCanSetAndGetWidthAndHeight()
+    protected function assertCanSetAndGetWidthAndHeight()
     {
         if ( $this->isMediaNotNull() ) {
             $width  = 300;

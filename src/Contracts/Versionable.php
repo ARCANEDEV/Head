@@ -1,10 +1,12 @@
 <?php namespace Arcanedev\Head\Contracts;
 
-interface RenderableInterface
+interface Versionable
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Functions
+     |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
      */
-    public function render();
+    public function getVersion();
+
+    public function setVersion($version);
 }

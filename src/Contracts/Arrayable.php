@@ -1,12 +1,13 @@
 <?php namespace Arcanedev\Head\Contracts;
 
-interface VersionableInterface
+interface Arrayable
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Getters & Setters
+     |  Function
      | ------------------------------------------------------------------------------------------------
      */
-    public function getVersion();
-
-    public function setVersion($version);
+    /**
+     * @return array
+     */
+    public function toArray();
 }

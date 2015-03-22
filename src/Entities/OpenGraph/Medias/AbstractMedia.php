@@ -1,10 +1,9 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Medias;
 
-use Arcanedev\Head\Contracts\ArrayableInterface;
-
+use Arcanedev\Head\Contracts\Arrayable;
 use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 
-abstract class AbstractMedia implements ArrayableInterface
+abstract class AbstractMedia implements Arrayable
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -48,7 +47,7 @@ abstract class AbstractMedia implements ArrayableInterface
      *
      * @param string $url - resource location
      *
-     * @return AbstractMedia
+     * @return self
      */
     public function setURL($url)
     {
@@ -78,7 +77,7 @@ abstract class AbstractMedia implements ArrayableInterface
      *
      * @param string $url - resource location
      *
-     * @return AbstractMedia
+     * @return self
      */
     public function setSecureURL($url)
     {
@@ -110,7 +109,7 @@ abstract class AbstractMedia implements ArrayableInterface
      *
      * @param string $type Internet media type
      *
-     * @return AbstractMedia
+     * @return self
      */
     public function setType( $type )
     {

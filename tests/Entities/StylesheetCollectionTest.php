@@ -5,13 +5,17 @@ use Arcanedev\Head\Entities\StylesheetCollection;
 class StylesheetCollectionTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const STYLESHEET_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\StylesheetCollection';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var StylesheetCollection */
     private $styleCollection;
-
-    const STYLESHEET_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\StylesheetCollection';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -40,7 +44,7 @@ class StylesheetCollectionTest extends TestCase
     /**
      * @test
      */
-    public function testCanBeInstantiated()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(
             self::STYLESHEET_COLLECTION_CLASS,
@@ -51,7 +55,7 @@ class StylesheetCollectionTest extends TestCase
     /**
      * @test
      */
-    public function testCanAddStyle()
+    public function test_can_add_style()
     {
         $this->styleCollection->add('assets/css/style.css');
         $this->assertCount(1, $this->styleCollection);
@@ -66,12 +70,25 @@ class StylesheetCollectionTest extends TestCase
     /**
      * @test
      */
-    public function testCanAddManyStyles()
+    public function test_can_add_many_styles()
     {
         $this->styleCollection->addMany([
             'assets/css/style.css',
-            'assets/css/bootstrap-min.css',
+            'assets/css/bootstrap.min.css',
             'assets/css/style.css', // Duplicated
+        ]);
+
+        $this->assertCount(2, $this->styleCollection);
+    }
+
+    public function test_can_ignore_duplicated_styles()
+    {
+        $this->styleCollection->add('assets/css/bootstrap.min.css');
+        $this->styleCollection->add('assets/css/style.css');
+
+        $this->styleCollection->addMany([
+            'assets/css/bootstrap.min.css',
+            'assets/css/style.css',
         ]);
 
         $this->assertCount(2, $this->styleCollection);
@@ -80,7 +97,7 @@ class StylesheetCollectionTest extends TestCase
     /**
      * @test
      */
-    public function testCanRender()
+    public function test_can_render()
     {
         $styles = [];
 

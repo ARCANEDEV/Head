@@ -1,10 +1,9 @@
 <?php namespace Arcanedev\Head\Entities;
 
+use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Head\Support\Collection;
 
-use Arcanedev\Head\Contracts\RenderableInterface;
-
-class ScriptCollection extends Collection implements RenderableInterface
+class ScriptCollection extends Collection implements Renderable
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties

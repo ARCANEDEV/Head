@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\Head\Support;
 
-use Arcanedev\Head\Contracts\ArrayableInterface;
+use Arcanedev\Head\Contracts\Arrayable;
 
 abstract class AbstractMetaBuilder
 {
@@ -72,7 +72,7 @@ abstract class AbstractMetaBuilder
     protected static function generatePropertyMeta(&$output, $prefix, $content, $property)
     {
         if (is_object($content) or is_array($content)) {
-            if (is_object($content) and $content instanceof ArrayableInterface) {
+            if (is_object($content) and $content instanceof Arrayable) {
                 $content = $content->toArray();
             }
 

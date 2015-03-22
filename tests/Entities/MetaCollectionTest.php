@@ -5,13 +5,17 @@ use Arcanedev\Head\Entities\MetaCollection;
 class MetaCollectionTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const META_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\MetaCollection';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var MetaCollection */
     private $metaCollection;
-
-    const META_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\MetaCollection';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -38,7 +42,7 @@ class MetaCollectionTest extends TestCase
     /**
      * @test
      */
-    public function testCanBeInstantiated()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(
             self::META_COLLECTION_CLASS,
@@ -51,7 +55,7 @@ class MetaCollectionTest extends TestCase
     /**
      * @test
      */
-    public function testCanAddManyMetasFromArray()
+    public function test_can_add_many_metas_from_array()
     {
         $this->metaCollection = MetaCollection::make([
             [
@@ -72,7 +76,7 @@ class MetaCollectionTest extends TestCase
      * @expectedException \Arcanedev\Head\Exceptions\Exception
      * @expectedExceptionMessage The meta [name] attribute not found !
      */
-    public function testMustThrowExceptionOnNameNotFound()
+    public function test_must_throw_exception_on_name_not_found()
     {
         MetaCollection::make([
             [
@@ -90,7 +94,7 @@ class MetaCollectionTest extends TestCase
      * @expectedException \Arcanedev\Head\Exceptions\Exception
      * @expectedExceptionMessage The meta [content] attribute not found !
      */
-    public function testMustThrowExceptionOnContentNotFound()
+    public function test_must_throw_exception_on_content_not_found()
     {
         MetaCollection::make([
             [
@@ -102,7 +106,10 @@ class MetaCollectionTest extends TestCase
         ]);
     }
 
-    public function testCanRender()
+    /**
+     * @test
+     */
+    public function test_can_render()
     {
         $metas = [
             [

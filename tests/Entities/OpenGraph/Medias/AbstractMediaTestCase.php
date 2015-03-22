@@ -1,11 +1,16 @@
 <?php namespace Arcanedev\Head\Tests\Entities\OpenGraph\Medias;
 
-use Arcanedev\Head\Tests\Entities\TestCase;
-
 use Arcanedev\Head\Entities\OpenGraph\Medias\AbstractMedia;
+use Arcanedev\Head\Tests\Entities\TestCase;
 
 abstract class AbstractMediaTestCase extends TestCase
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const OG_ABSTRACT_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\AbstractMedia';
+
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -31,40 +36,28 @@ abstract class AbstractMediaTestCase extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function assertAbstractMediaInstance()
+    protected function assertAbstractMediaInstance()
     {
         if ( $this->isMediaNotNull() ) {
-            $this->assertInstanceOf('Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\AbstractMedia', $this->media);
+            $this->assertInstanceOf(self::OG_ABSTRACT_MEDIA_CLASS, $this->media);
         }
     }
 
-    /**
-     * @test
-     */
-    public function testCanSetAndGetURL($url)
+    protected function assertCanSetAndGetURL($url)
     {
         if ( $this->isMediaNotNull() ) {
             $this->assertEquals($url, $this->media->setURL($url)->getURL());
         }
     }
 
-    /**
-     * @test
-     */
-    public function testCanSetAndGetSecureURL($secureURL = '')
+    protected function assertCanSetAndGetSecureURL($secureURL)
     {
         if ( $this->isMediaNotNull() ) {
             $this->assertEquals($secureURL, $this->media->setSecureURL($secureURL)->getSecureURL());
         }
     }
 
-    /**
-     * @test
-     */
-    public function testCanSetAndGetType($type = '')
+    protected function assertCanSetAndGetType($type = '')
     {
         if ( $this->isMediaNotNull() ) {
             $this->assertEquals($type, $this->media->setType($type)->getType());

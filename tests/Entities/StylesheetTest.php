@@ -5,13 +5,17 @@ use Arcanedev\Head\Entities\Stylesheet;
 class StylesheetTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const STYLESHEET_CLASS = 'Arcanedev\\Head\\Entities\\Stylesheet';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var Stylesheet */
     private $stylesheet;
-
-    const STYLESHEET_CLASS = 'Arcanedev\\Head\\Entities\\Stylesheet';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -38,7 +42,7 @@ class StylesheetTest extends TestCase
     /**
      * @test
      */
-    public function testCanBeInstantiated()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(self::STYLESHEET_CLASS, $this->stylesheet);
     }
@@ -46,7 +50,7 @@ class StylesheetTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetSource()
+    public function test_can_set_and_get_source()
     {
         $src  = 'assets/css/style.css';
         $this->stylesheet->setSrc($src);
@@ -57,11 +61,11 @@ class StylesheetTest extends TestCase
     /**
      * @test
      */
-    public function testCanGetFilenameFromSource()
+    public function test_can_get_filename_from_source()
     {
         $this->assertEquals('', $this->stylesheet->getFile());
 
-        $file = "style.css";
+        $file = 'style.css';
         $src  = "assets/css/$file";
         $this->stylesheet->setSrc($src);
 
@@ -71,7 +75,7 @@ class StylesheetTest extends TestCase
     /**
      * @test
      */
-    public function testCanGetType()
+    public function test_can_get_type()
     {
         $this->assertEquals('text/css', $this->stylesheet->getType());
     }
@@ -79,7 +83,7 @@ class StylesheetTest extends TestCase
     /**
      * @test
      */
-    public function testCanMakeStylesheet()
+    public function test_can_make_stylesheet()
     {
         $file = "style.css";
         $src  = "assets/css/$file";
@@ -93,7 +97,7 @@ class StylesheetTest extends TestCase
     /**
      * @test
      */
-    public function testCanRender()
+    public function test_can_render()
     {
         $this->assertEquals('', $this->stylesheet->render());
 

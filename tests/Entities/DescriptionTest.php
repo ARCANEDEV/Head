@@ -5,13 +5,17 @@ use Arcanedev\Head\Entities\Description;
 class DescriptionTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const DESCRIPTION_CLASS = 'Arcanedev\\Head\\Entities\\Description';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var Description */
     protected $description;
-
-    const DESCRIPTION_CLASS = 'Arcanedev\\Head\\Entities\\Description';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -34,7 +38,7 @@ class DescriptionTest extends TestCase
     /**
      * @test
      */
-    public function testCanInstantiate()
+    public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(self::DESCRIPTION_CLASS, $this->description);
         $this->assertTrue($this->description->isEmpty());
@@ -43,7 +47,7 @@ class DescriptionTest extends TestCase
     /**
      * @test
      */
-    public function testCanSetAndGetDescription()
+    public function test_can_set_and_get_description()
     {
         $this->assertEquals('', $this->description->get());
 
@@ -58,7 +62,7 @@ class DescriptionTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function testMustThrowInvalidTypeException()
+    public function test_must_throw_invalid_type_exception()
     {
         $this->description->set(true);
     }
@@ -66,7 +70,7 @@ class DescriptionTest extends TestCase
     /**
      * @test
      */
-    public function testCanRender()
+    public function test_can_render()
     {
         $this->assertEquals('', $this->description->render());
 

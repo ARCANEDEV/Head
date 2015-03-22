@@ -8,7 +8,7 @@ class MetaBuilderStub extends AbstractMetaBuilder
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    protected static $prefix = 'arc';
+    protected static $prefix   = 'arc';
 
     protected static $metaName = 'name';
 }

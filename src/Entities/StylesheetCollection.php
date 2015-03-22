@@ -2,9 +2,9 @@
 
 use Arcanedev\Head\Support\Collection;
 
-use Arcanedev\Head\Contracts\RenderableInterface;
+use Arcanedev\Head\Contracts\Renderable;
 
-class StylesheetCollection extends Collection implements RenderableInterface
+class StylesheetCollection extends Collection implements Renderable
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties

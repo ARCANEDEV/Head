@@ -190,6 +190,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     {
         $this->setCharset($this->config->get('charset', Charset::DEFAULT_CHARSET));
         $this->title->setConfig($this->config->get('title', []));
+        $this->favicon->setConfig($this->config->get('favicon', ''));
 
         return $this;
     }
@@ -578,6 +579,11 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
         return $this->scripts->render();
     }
 
+    private function renderFavicon()
+    {
+        return $this->favicon->render();
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Facebook / OpenGraph Functions
      | ------------------------------------------------------------------------------------------------
@@ -650,6 +656,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
             $this->renderOpenGraphTags(),
             $this->renderStylesTags(),
             $scripts ? $this->renderScriptsTags() : '',
+            $this->renderFavicon(),
         ]);
     }
 

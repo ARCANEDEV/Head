@@ -46,7 +46,7 @@ return [
      |  <link rel="icon" href="http::mydomain.com/favicon.ico" type="image/x-icon">
      |  <link rel="icon" href="http::mydomain.com/favicon.png" type="image/png">
      */
-    'favicon' =>'',
+    'favicon' => 'favicon',
 
     /* ------------------------------------------------------------------------------------------------
      |  Internet Explorer Compatibility

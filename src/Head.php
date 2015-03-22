@@ -269,6 +269,8 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
     /**
+     * Set Title
+     *
      * @param Title|string $title
      *
      * @throws InvalidTypeException
@@ -346,7 +348,9 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
     /**
-     * @param Description|string $description
+     * Set description
+     *
+     * @param  Description|string $description
      *
      * @throws InvalidTypeException
      *

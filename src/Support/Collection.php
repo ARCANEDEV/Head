@@ -80,8 +80,8 @@ class Collection implements Countable, ArrayAccess, Arrayable
     /**
      * Put an item in the collection by key.
      *
-     * @param mixed $key
-     * @param mixed $value
+     * @param  string $key
+     * @param  mixed $value
      *
      * @return Collection
      */
@@ -107,7 +107,7 @@ class Collection implements Countable, ArrayAccess, Arrayable
     /**
      * Check if has an item by Key
      *
-     * @param mixed $key
+     * @param  string $key
      *
      * @return bool
      */
@@ -119,8 +119,7 @@ class Collection implements Countable, ArrayAccess, Arrayable
     /**
      * Remove an item from the collection by key.
      *
-     * @param  mixed  $key
-     * @return void
+     * @param string $key
      */
     public function forget($key)
     {

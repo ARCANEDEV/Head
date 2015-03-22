@@ -1,9 +1,10 @@
 <?php namespace Arcanedev\Head\Support;
 
+use Arcanedev\Head\Contracts\Arrayable;
+use Arcanedev\Head\Entities\Meta;
+use ArrayAccess;
 use Closure;
 use Countable;
-use ArrayAccess;
-use Arcanedev\Head\Contracts\Arrayable;
 
 class Collection implements Countable, ArrayAccess, Arrayable
 {
@@ -45,7 +46,9 @@ class Collection implements Countable, ArrayAccess, Arrayable
     }
 
     /**
-     * @param mixed      $key
+     * Get one item
+     *
+     * @param string     $key
      * @param mixed|null $default
      *
      * @return mixed
@@ -90,7 +93,7 @@ class Collection implements Countable, ArrayAccess, Arrayable
     /**
      * Push an item
      *
-     * @param mixed $value
+     * @param  Meta|mixed $value
      *
      * @return Collection
      */

@@ -475,14 +475,14 @@ class Title implements TitleInterface, Renderable
     /**
      * Check if the value is a string value
      *
-     * @param string $name
-     * @param mixed  $value
+     * @param  string $name
+     * @param  string $value
      *
      * @throws InvalidTypeException
      */
     private function checkIsString($name, $value)
     {
-        if ( ! is_string($value) ) {
+        if ( ! is_string($value)) {
             throw new InvalidTypeException($name, $value);
         }
     }

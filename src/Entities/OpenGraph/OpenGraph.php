@@ -602,8 +602,8 @@ class OpenGraph implements OpenGraphInterface, Renderable
      * Cleans a URL string, then checks to see if a given URL is addressable,
      * returns a 200 OK response, and matches the accepted Internet media types (if provided).
      *
-     * @param string $url
-     * @param array  $acceptedMimes
+     * @param  string   $url
+     * @param  string[] $acceptedMimes
      *
      * @return string - cleaned URL string, or empty string on failure.
      */
@@ -629,8 +629,8 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * CURL Parsed URL
      *
-     * @param       $url
-     * @param array $acceptedMimes
+     * @param  string $url
+     * @param  array  $acceptedMimes
      *
      * @return string
      */

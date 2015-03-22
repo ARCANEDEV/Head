@@ -29,8 +29,8 @@ abstract class AbstractMetaBuilder
     /**
      * Build Open Graph protocol HTML markup based on an array
      *
-     * @param array  $attributes     - associative array of OGP properties and values
-     * @param string $prefix - optional prefix to prepend to all properties
+     * @param  array  $attributes - associative array of OGP properties and values
+     * @param  string $prefix     - optional prefix to prepend to all properties
      *
      * @return string
      */
@@ -90,9 +90,9 @@ abstract class AbstractMetaBuilder
     /**
      * Render Meta Tag
      *
-     * @param string $prefix
-     * @param string $property
-     * @param string $content
+     * @param  string $prefix
+     * @param  string $property
+     * @param  string $content
      *
      * @return string
      */
@@ -107,8 +107,8 @@ abstract class AbstractMetaBuilder
     /**
      * Get Meta Property
      *
-     * @param string $prefix
-     * @param string $property
+     * @param  string $prefix
+     * @param  string $property
      *
      * @return string
      */
@@ -126,7 +126,7 @@ abstract class AbstractMetaBuilder
     /**
      * Get Meta Content
      *
-     * @param $content
+     * @param  string $content
      *
      * @return string
      */

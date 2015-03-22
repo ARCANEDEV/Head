@@ -19,15 +19,16 @@ abstract class AbstractMeta
     abstract public function render();
 
     /**
-     * @param string $name
-     * @param string $content
+     * @param  string $name
+     * @param  string $content
+     * @param  array  $attributes
      *
      * @return string
      */
-    protected function renderMetaTag($name, $content)
+    protected function renderMetaTag($name, $content, array $attributes = [])
     {
         return ! $this->isEmpty()
-            ? Markup::meta('name', $name, $content)->render()
+            ? Markup::meta('name', $name, $content, $attributes)->render()
             : '';
     }
 

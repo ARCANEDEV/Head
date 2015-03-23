@@ -25,14 +25,17 @@ if ( ! function_exists('base_url')) {
      * @return string
      */
     function base_url($path = '') {
-        if ( ! isset($_SERVER['HTTP_HOST'])) {
+
+        $host = filter_input(INPUT_SERVER, 'HTTP_HOST');
+        if ( ! isset($host)) {
             return $path;
         }
 
-        $protocol = isset($_SERVER['HTTPS'])
-            ? (($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http")
+        $protocol = filter_input(INPUT_SERVER, 'HTTPS');
+        $protocol = isset($protocol)
+            ? (($protocol and $protocol != "off") ? "https" : "http")
             : 'http';
 
-        return rtrim($protocol . "://" . $_SERVER['HTTP_HOST'], '/') . '/' . $path;
+        return rtrim($protocol . "://" . $host, '/') . '/' . $path;
     }
 }

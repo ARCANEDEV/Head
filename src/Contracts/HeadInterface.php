@@ -1,5 +1,7 @@
 <?php namespace Arcanedev\Head\Contracts;
 
+use Arcanedev\Head\Contracts\Entities\CharsetInterface;
+use Arcanedev\Head\Contracts\Entities\MetaInterface;
 use Arcanedev\Head\Entities\Meta;
 
 use Arcanedev\Head\Contracts\Entities\DescriptionInterface;
@@ -7,6 +9,8 @@ use Arcanedev\Head\Contracts\Entities\KeywordsInterface;
 use Arcanedev\Head\Contracts\Entities\MetaCollectionInterface;
 use Arcanedev\Head\Contracts\Entities\TitleInterface;
 
+use Arcanedev\Head\Entities\MetaCollection;
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
 interface HeadInterface
@@ -18,14 +22,14 @@ interface HeadInterface
     /**
      * Get Charset
      *
-     * @return string
+     * @return CharsetInterface
      */
     public function charset();
 
     /**
      * Set Charset
      *
-     * @param KeywordsInterface|string $charset
+     * @param CharsetInterface|string $charset
      *
      * @return HeadInterface
      */
@@ -97,7 +101,7 @@ interface HeadInterface
     /**
      * Get Meta Collection
      *
-     * @return MetaCollectionInterface
+     * @return MetaCollection
      */
     public function metas();
 
@@ -115,16 +119,23 @@ interface HeadInterface
     /**
      * Set Meta
      *
-     * @param Meta $meta
+     * @param MetaInterface $meta
      *
      * @return HeadInterface
      */
-    public function setMeta(Meta $meta);
+    public function setMeta(MetaInterface $meta);
 
     /* ------------------------------------------------------------------------------------------------
      |  Facebook / OpenGraph Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Get OpenGraph
+     *
+     * @return OpenGraph
+     */
+    public function openGraph();
+
     /**
      * Enable OpenGraph
      *
@@ -138,13 +149,6 @@ interface HeadInterface
      * @return HeadInterface
      */
     public function noFacebook();
-
-    /**
-     * Render OpenGraph Tags
-     *
-     * @return string
-     */
-    public function openGraph();
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

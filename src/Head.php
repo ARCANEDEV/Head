@@ -213,7 +213,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set Charset
      *
-     * @param Keywords|string $charset
+     * @param Charset|string $charset
      *
      * @return Head
      */

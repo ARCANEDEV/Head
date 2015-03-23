@@ -176,7 +176,7 @@ class Charset extends AbstractMeta implements CharsetInterface, Versionable
      */
     private function check(&$charset)
     {
-        if (! is_string($charset)) {
+        if ( ! is_string($charset)) {
             throw new InvalidTypeException('charset', $charset);
         }
 

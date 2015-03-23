@@ -105,7 +105,7 @@ class Description extends AbstractMeta implements DescriptionInterface
      */
     private function check(&$description)
     {
-        if (! is_string($description)) {
+        if ( ! is_string($description)) {
             throw new InvalidTypeException('description', $description, 'string');
         }
 

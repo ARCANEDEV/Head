@@ -191,9 +191,9 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set SEO Tags
      *
-     * @param string       $title
-     * @param string       $description
-     * @param array|string $keywords
+     * @param  Title|string          $title
+     * @param  Description|string    $description
+     * @param  Keywords|array|string $keywords
      *
      * @throws InvalidTypeException
      *
@@ -340,7 +340,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set Keywords
      *
-     * @param Keywords|string $keywords
+     * @param Keywords|array|string $keywords
      *
      * @throws InvalidTypeException
      *

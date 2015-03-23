@@ -34,9 +34,9 @@ interface HeadInterface
     /**
      * Set SEO Tags
      *
-     * @param string       $title
-     * @param string       $description
-     * @param array|string $keywords
+     * @param  TitleInterface|string          $title
+     * @param  DescriptionInterface|string    $description
+     * @param  KeywordsInterface|array|string $keywords
      *
      * @throws InvalidTypeException
      *

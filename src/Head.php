@@ -20,6 +20,7 @@ use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Head\Support\Collection;
 use Arcanedev\Head\Traits\VersionableTrait;
 
+// TODO: update HeadInterface
 class Head implements HeadInterface, Renderable, Arrayable, Versionable
 {
     /* ------------------------------------------------------------------------------------------------
@@ -202,11 +203,11 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Get Charset
      *
-     * @return string
+     * @return Charset
      */
-    public function getCharset()
+    public function charset()
     {
-        return $this->charset->get();
+        return $this->charset;
     }
 
     /**
@@ -218,26 +219,14 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function setCharset($charset)
     {
-        $this->checkCharset($charset);
-
         if ($charset instanceof Charset) {
             $this->charset = $charset;
         }
-        elseif (is_string($charset)) {
+        else {
             $this->charset->set($charset);
         }
 
         return $this;
-    }
-
-    /**
-     * Render Charset Tag
-     *
-     * @return string
-     */
-    public function renderCharsetTag()
-    {
-        return $this->charset->render();
     }
 
     /**
@@ -261,6 +250,16 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Get the Title
      *
+     * @return Title
+     */
+    public function title()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Get the Title
+     *
      * @return string
      */
     public function getTitle()
@@ -279,13 +278,11 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function setTitle($title)
     {
-        $this->checkTitle($title);
-
-        if ( is_string($title) ) {
-            $this->title->set($title);
-        }
-        elseif ( $title instanceof Title ) {
+        if ($title instanceof Title) {
             $this->title = $title;
+        }
+        else {
+            $this->title->set($title);
         }
 
         return $this->updateTitleDependencies();
@@ -328,23 +325,13 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
     /**
-     * Get Title Tag
-     *
-     * @return string
-     */
-    public function renderTitleTag()
-    {
-        return $this->title->render();
-    }
-
-    /**
      * Get the description
      *
-     * @return string
+     * @return Description
      */
-    public function getDescription()
+    public function description()
     {
-        return $this->description->get();
+        return $this->description;
     }
 
     /**
@@ -358,13 +345,11 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function setDescription($description)
     {
-        $this->checkDescription($description);
-
-        if ( is_string($description) ) {
-            $this->description->set($description);
-        }
-        elseif ( $description instanceof Description ) {
+        if ($description instanceof Description) {
             $this->description = $description;
+        }
+        else {
+            $this->description->set($description);
         }
 
         return $this->updateDescriptionDependencies();
@@ -377,30 +362,20 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     private function updateDescriptionDependencies()
     {
-        $description = $this->getDescription();
+        $description = $this->description()->get();
         $this->openGraph->setDescription($description);
 
         return $this;
     }
 
     /**
-     * Render Description tag
+     * Get Keywords
      *
-     * @return string
+     * @return Keywords
      */
-    public function renderDescriptionTag()
+    public function keywords()
     {
-        return $this->description->render();
-    }
-
-    /**
-     * Get Keywords tags
-     *
-     * @return array
-     */
-    public function getKeywords()
-    {
-        return $this->keywords->get();
+        return $this->keywords;
     }
 
     /**
@@ -414,27 +389,14 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function setKeywords($keywords)
     {
-        $this->checkKeywords($keywords);
-
-        if ( is_string($keywords) or is_array($keywords) ) {
+        if ($keywords instanceof Keywords) {
+            $this->keywords = $keywords;
+        }
+        else {
             $this->keywords->set($keywords);
         }
 
-        if ( $keywords instanceof Keywords ) {
-            $this->keywords = $keywords;
-        }
-
         return $this;
-    }
-
-    /**
-     * Render Keywords
-     *
-     * @return string
-     */
-    public function renderKeywordsTag()
-    {
-        return $this->keywords->render();
     }
 
     /**
@@ -442,7 +404,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      *
      * @return MetaCollection
      */
-    public function getMetas()
+    public function metas()
     {
         return $this->metas;
     }
@@ -478,13 +440,13 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
     /**
-     * Render Metas tags
+     * Render Style tags
      *
      * @return String
      */
-    public function renderMetasTags()
+    public function styles()
     {
-        return $this->metas->render();
+        return $this->styles->render();
     }
 
     /**
@@ -516,23 +478,13 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
     /**
-     * Render Style tags
+     * Render Script Tags
      *
-     * @return String
+     * @return string
      */
-    public function styles()
+    public function scripts()
     {
-        return $this->renderStylesTags();
-    }
-
-    /**
-     * Render Style tags
-     *
-     * @return String
-     */
-    public function renderStylesTags()
-    {
-        return $this->styles->render();
+        return $this->scripts->render();
     }
 
     /**
@@ -563,35 +515,20 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
         return $this;
     }
 
-    /**
-     * Render Script Tags
-     *
-     * @return string
-     */
-    public function scripts()
-    {
-        return $this->renderScriptsTags();
-    }
-
-    /**
-     * Render Script Tags
-     *
-     * @return string
-     */
-    public function renderScriptsTags()
-    {
-        return $this->scripts->render();
-    }
-
-    private function renderFavicon()
-    {
-        return $this->favicon->render();
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Facebook / OpenGraph Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Get OpenGraph
+     *
+     * @return OpenGraph
+     */
+    public function openGraph()
+    {
+        return $this->openGraph;
+    }
+
     /**
      * Enable OpenGraph
      *
@@ -614,16 +551,6 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
         $this->openGraph->disable();
 
         return $this;
-    }
-
-    /**
-     * Render OpenGraph Tags
-     *
-     * @return string
-     */
-    public function renderOpenGraphTags()
-    {
-        return $this->openGraph->render();
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -652,15 +579,15 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     public function toArray($scripts = false)
     {
         return array_filter([
-            $this->renderCharsetTag(),
-            $this->renderTitleTag(),
-            $this->renderDescriptionTag(),
-            $this->renderKeywordsTag(),
-            $this->renderMetasTags(),
-            $this->renderOpenGraphTags(),
-            $this->renderStylesTags(),
-            $scripts ? $this->renderScriptsTags() : '',
-            $this->renderFavicon(),
+            $this->charset->render(),
+            $this->title->render(),
+            $this->description->render(),
+            $this->keywords->render(),
+            $this->metas->render(),
+            $this->openGraph->render(),
+            $this->styles->render(),
+            $scripts ? $this->scripts->render() : '',
+            $this->favicon->render(),
         ]);
     }
 
@@ -676,70 +603,5 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     public function isOpenGraphEnabled()
     {
         return $this->openGraph->isEnabled();
-    }
-
-    /**
-     * @param Charset|string $charset
-     *
-     * @throws InvalidTypeException
-     */
-    private function checkCharset($charset)
-    {
-        if (
-            ! is_string($charset) and
-            ! ($charset instanceof Charset)
-        ) {
-            throw new InvalidTypeException('charset', $charset, 'string or Charset Object !');
-        }
-    }
-
-    /**
-     * Check title
-     *
-     * @param  Title|string $title
-     *
-     * @throws InvalidTypeException
-     */
-    private function checkTitle($title)
-    {
-        if (
-            ! is_string($title) and
-            ! ($title instanceof Title)
-        ) {
-            throw new InvalidTypeException('title', $title, 'string or Title Object');
-        }
-    }
-
-    /**
-     * Check description
-     *
-     * @param  Description|string $description
-     *
-     * @throws InvalidTypeException
-     */
-    private function checkDescription($description)
-    {
-        if (
-            ! is_string($description) and
-            ! ($description instanceof Description)
-        ) {
-            throw new InvalidTypeException('description', $description, 'string or Description Object');
-        }
-    }
-
-    /**
-     * @param $keywords
-     *
-     * @throws InvalidTypeException
-     */
-    private function checkKeywords($keywords)
-    {
-        if (
-            ! is_string($keywords) and
-            ! is_array($keywords) and
-            ! ($keywords instanceof Keywords)
-        ) {
-            throw new InvalidTypeException('keywords', $keywords, 'string, array or Keywords Object');
-        }
     }
 }

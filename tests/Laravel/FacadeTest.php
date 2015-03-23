@@ -33,17 +33,13 @@ class FacadeTest extends LaravelTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_default_charset()
     {
-        $this->assertEquals('UTF-8', Head::getCharset());
+        $this->assertEquals('UTF-8', Head::charset()->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_default_config()
     {
         $config     = Head::getConfig();
@@ -52,9 +48,7 @@ class FacadeTest extends LaravelTestCase
         $this->assertEquals('UTF-8', $config['charset']);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_config_from_array()
     {
         Head::loadConfig([
@@ -68,9 +62,7 @@ class FacadeTest extends LaravelTestCase
         $this->assertEquals('ISO-8859-1', $config['charset']);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_config_from_file()
     {
         $path = realpath(__DIR__ . '/../data/config-valid.php');
@@ -104,31 +96,29 @@ class FacadeTest extends LaravelTestCase
         Head::configPath($path);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_charset()
     {
-        $this->assertEquals('UTF-8', Head::getCharset());
+        $this->assertEquals('UTF-8', Head::charset()->get());
         $this->assertEquals(
             '<meta charset="UTF-8">',
-            Head::renderCharsetTag()
+            Head::charset()->render()
         );
 
         Head::setCharset('ISO-8859-1');
 
-        $this->assertEquals('ISO-8859-1', Head::getCharset());
+        $this->assertEquals('ISO-8859-1', Head::charset()->get());
         $this->assertEquals(
             '<meta charset="ISO-8859-1">',
-            Head::renderCharsetTag()
+            Head::charset()->render()
         );
 
         Head::setCharset(Charset::make('UTF-8'));
 
-        $this->assertEquals('UTF-8', Head::getCharset());
+        $this->assertEquals('UTF-8', Head::charset()->get());
         $this->assertEquals(
             '<meta charset="UTF-8">',
-            Head::renderCharsetTag()
+            Head::charset()->render()
         );
     }
 
@@ -142,24 +132,20 @@ class FacadeTest extends LaravelTestCase
         Head::setCharset(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_title()
     {
         $title = 'Hello Title';
         Head::setTitle($title);
 
-        $this->assertEquals($title, Head::getTitle());
+        $this->assertEquals($title, Head::title()->get());
         $this->assertEquals(
             '<title>Hello Title</title>',
-            Head::renderTitleTag()
+            Head::title()->render()
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_site_name()
     {
         $siteName = 'Company name';
@@ -169,9 +155,7 @@ class FacadeTest extends LaravelTestCase
         $this->assertEquals($siteName, Head::getSiteName());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_by_title_class()
     {
         $title = new Title;
@@ -181,10 +165,10 @@ class FacadeTest extends LaravelTestCase
 
         Head::setTitle($title);
 
-        $this->assertEquals('Hello Title', Head::getTitle());
+        $this->assertEquals('Hello Title', Head::title()->get());
         $this->assertEquals(
             '<title>Hello Title || Company Name</title>',
-            Head::renderTitleTag()
+            Head::title()->render()
         );
     }
 
@@ -198,34 +182,30 @@ class FacadeTest extends LaravelTestCase
         Head::setTitle(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_description()
     {
         $description = 'Hello Description';
         Head::setDescription($description);
 
-        $this->assertEquals($description, Head::getDescription());
+        $this->assertEquals($description, Head::description()->get());
         $this->assertEquals(
             '<meta name="description" content="' . $description . '"/>',
-            Head::renderDescriptionTag()
+            Head::description()->render()
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_by_description_class()
     {
         $description = new Description;
         $description->set('Hello Description');
         Head::setDescription($description);
 
-        $this->assertEquals('Hello Description', Head::getDescription());
+        $this->assertEquals('Hello Description', Head::description()->get());
         $this->assertEquals(
             '<meta name="description" content="Hello Description"/>',
-            Head::renderDescriptionTag()
+            Head::description()->render()
         );
     }
 
@@ -239,28 +219,25 @@ class FacadeTest extends LaravelTestCase
         Head::setDescription(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_keywords()
     {
         // Array Keywords
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
 
         Head::setKeywords($arrayKeywords);
-        $this->assertEquals($arrayKeywords, Head::getKeywords());
+        $this->assertEquals($arrayKeywords, Head::keywords()->get());
 
         // String Keywords
         $stringKeywords = implode(', ', $arrayKeywords);
         $keywordsTag    = '<meta name="keywords" content="' . $stringKeywords . '"/>';
 
-        $this->assertEquals($arrayKeywords, Head::setKeywords($stringKeywords)->getKeywords());
-        $this->assertEquals($keywordsTag, Head::renderKeywordsTag());
+        Head::setKeywords($stringKeywords);
+        $this->assertEquals($arrayKeywords, Head::keywords()->get());
+        $this->assertEquals($keywordsTag, Head::keywords()->render());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_set_and_get_by_keywords_class()
     {
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
@@ -270,7 +247,7 @@ class FacadeTest extends LaravelTestCase
         Head::setKeywords($keywords);
         $keywordsTag = '<meta name="keywords" content="' . implode(', ', $arrayKeywords) . '"/>';
 
-        $this->assertEquals($keywordsTag, Head::renderKeywordsTag());
+        $this->assertEquals($keywordsTag, Head::keywords()->render());
     }
 
     /**
@@ -283,9 +260,7 @@ class FacadeTest extends LaravelTestCase
         Head::setKeywords(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_title_description_keywords()
     {
         $title       = 'Hello Title';
@@ -293,31 +268,26 @@ class FacadeTest extends LaravelTestCase
         $keywords    = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
         Head::set($title, $description, $keywords);
 
-        $this->assertEquals($title,       Head::getTitle());
-        $this->assertEquals($description, Head::getDescription());
-        $this->assertEquals($keywords,    Head::getKeywords());
+        $this->assertEquals($title,       Head::title()->get());
+        $this->assertEquals($description, Head::description()->get());
+        $this->assertEquals($keywords,    Head::keywords()->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_metas()
     {
-        $this->assertEquals('', Head::renderMetasTags());
+        $this->assertEquals('', Head::metas()->render());
 
         Head::addMeta('author', 'ARCANEDEV');
 
-        $this->assertCount(1, Head::getMetas());
+        $this->assertCount(1, Head::metas());
 
-        $meta = Meta::make('robots', 'noindex, nofollow');
-        Head::setMeta($meta);
+        Head::setMeta(Meta::make('robots', 'noindex, nofollow'));
 
-        $this->assertCount(2, Head::getMetas());
+        $this->assertCount(2, Head::metas());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_enable_and_disable_open_graph()
     {
         $this->assertFalse(Head::isOpenGraphEnabled());
@@ -331,9 +301,7 @@ class FacadeTest extends LaravelTestCase
         $this->assertFalse(Head::isOpenGraphEnabled());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render_all()
     {
         $title         = 'Hello world';
@@ -363,9 +331,7 @@ class FacadeTest extends LaravelTestCase
         $this->assertEquals(implode(PHP_EOL, $tagsArray), Head::render());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_and_render_styles()
     {
         Head::addStyle('assets/css/style.css');
@@ -376,12 +342,10 @@ class FacadeTest extends LaravelTestCase
             '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
         ]);
 
-        $this->assertEquals($styles, Head::renderStylesTags());
+        $this->assertEquals($styles, Head::styles());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_many_and_render_styles()
     {
         Head::addStyles([
@@ -394,13 +358,10 @@ class FacadeTest extends LaravelTestCase
             '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
         ]);
 
-        $this->assertEquals($styles, Head::renderStylesTags());
         $this->assertEquals($styles, Head::styles());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_and_render_scripts()
     {
         Head::addScript('assets/js/jquery.min.js');
@@ -411,13 +372,10 @@ class FacadeTest extends LaravelTestCase
             '<script src="assets/js/bootstrap.min.js"></script>'
         ]);
 
-        $this->assertEquals($scripts, Head::renderScriptsTags());
         $this->assertEquals($scripts, Head::scripts());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_many_and_render_scripts()
     {
         Head::addScripts([
@@ -430,7 +388,6 @@ class FacadeTest extends LaravelTestCase
             '<script src="assets/js/bootstrap.min.js"></script>'
         ]);
 
-        $this->assertEquals($scripts, Head::renderScriptsTags());
         $this->assertEquals($scripts, Head::scripts());
     }
 

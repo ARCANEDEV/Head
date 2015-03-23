@@ -50,7 +50,7 @@ class HeadTest extends TestCase
     public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(self::HEAD_CLASS, $this->head);
-        $this->assertEquals('UTF-8', $this->head->getCharset());
+        $this->assertEquals('UTF-8', $this->head->charset()->get());
     }
 
     /**
@@ -119,26 +119,26 @@ class HeadTest extends TestCase
      */
     public function test_can_set_and_get_charset()
     {
-        $this->assertEquals('UTF-8', $this->head->getCharset());
+        $this->assertEquals('UTF-8', $this->head->charset()->get());
         $this->assertEquals(
             '<meta charset="UTF-8">',
-            $this->head->renderCharsetTag()
+            $this->head->charset()->render()
         );
 
         $this->head->setCharset('ISO-8859-1');
 
-        $this->assertEquals('ISO-8859-1', $this->head->getCharset());
+        $this->assertEquals('ISO-8859-1', $this->head->charset()->get());
         $this->assertEquals(
             '<meta charset="ISO-8859-1">',
-            $this->head->renderCharsetTag()
+            $this->head->charset()->render()
         );
 
         $this->head->setCharset(Charset::make('UTF-8'));
 
-        $this->assertEquals('UTF-8', $this->head->getCharset());
+        $this->assertEquals('UTF-8', $this->head->charset()->get());
         $this->assertEquals(
             '<meta charset="UTF-8">',
-            $this->head->renderCharsetTag()
+            $this->head->charset()->render()
         );
     }
 
@@ -163,7 +163,7 @@ class HeadTest extends TestCase
         $this->assertEquals($title, $this->head->getTitle());
         $this->assertEquals(
             '<title>Hello Title</title>',
-            $this->head->renderTitleTag()
+            $this->head->title()->render()
         );
     }
 
@@ -194,7 +194,7 @@ class HeadTest extends TestCase
         $this->assertEquals('Hello Title', $this->head->getTitle());
         $this->assertEquals(
             '<title>Hello Title || Company Name</title>',
-            $this->head->renderTitleTag()
+            $this->head->title()->render()
         );
     }
 
@@ -216,10 +216,10 @@ class HeadTest extends TestCase
         $description = 'Hello Description';
         $this->head->setDescription($description);
 
-        $this->assertEquals($description, $this->head->getDescription());
+        $this->assertEquals($description, $this->head->description()->get());
         $this->assertEquals(
             '<meta name="description" content="' . $description . '"/>',
-            $this->head->renderDescriptionTag()
+            $this->head->description()->render()
         );
     }
 
@@ -232,10 +232,10 @@ class HeadTest extends TestCase
         $description->set('Hello Description');
         $this->head->setDescription($description);
 
-        $this->assertEquals('Hello Description', $this->head->getDescription());
+        $this->assertEquals('Hello Description', $this->head->description()->get());
         $this->assertEquals(
             '<meta name="description" content="Hello Description"/>',
-            $this->head->renderDescriptionTag()
+            $this->head->description()->render()
         );
     }
 
@@ -258,14 +258,15 @@ class HeadTest extends TestCase
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
 
         $this->head->setKeywords($arrayKeywords);
-        $this->assertEquals($arrayKeywords, $this->head->getKeywords());
+        $this->assertEquals($arrayKeywords, $this->head->keywords()->get());
 
         // String Keywords
         $stringKeywords = implode(', ', $arrayKeywords);
         $keywordsTag    = '<meta name="keywords" content="' . $stringKeywords . '"/>';
 
-        $this->assertEquals($arrayKeywords, $this->head->setKeywords($stringKeywords)->getKeywords());
-        $this->assertEquals($keywordsTag, $this->head->renderKeywordsTag());
+        $this->head->setKeywords($stringKeywords);
+        $this->assertEquals($arrayKeywords, $this->head->keywords()->get());
+        $this->assertEquals($keywordsTag, $this->head->keywords()->render());
     }
 
     /**
@@ -280,7 +281,7 @@ class HeadTest extends TestCase
         $this->head->setKeywords($keywords);
         $keywordsTag = '<meta name="keywords" content="' . implode(', ', $arrayKeywords) . '"/>';
 
-        $this->assertEquals($keywordsTag, $this->head->renderKeywordsTag());
+        $this->assertEquals($keywordsTag, $this->head->keywords()->render());
     }
 
     /**
@@ -304,8 +305,8 @@ class HeadTest extends TestCase
         $this->head->set($title, $description, $keywords);
 
         $this->assertEquals($title,       $this->head->getTitle());
-        $this->assertEquals($description, $this->head->getDescription());
-        $this->assertEquals($keywords,    $this->head->getKeywords());
+        $this->assertEquals($description, $this->head->description()->get());
+        $this->assertEquals($keywords,    $this->head->keywords()->get());
     }
 
     /**
@@ -313,16 +314,16 @@ class HeadTest extends TestCase
      */
     public function test_can_set_and_get_metas()
     {
-        $this->assertEquals('', $this->head->renderMetasTags());
+        $this->assertEquals('', $this->head->metas()->render());
 
         $this->head->addMeta('author', 'ARCANEDEV');
 
-        $this->assertCount(1, $this->head->getMetas());
+        $this->assertCount(1, $this->head->metas());
 
         $meta = Meta::make('robots', 'noindex, nofollow');
         $this->head->setMeta($meta);
 
-        $this->assertCount(2, $this->head->getMetas());
+        $this->assertCount(2, $this->head->metas());
     }
 
     /**
@@ -386,7 +387,7 @@ class HeadTest extends TestCase
             '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
         ]);
 
-        $this->assertEquals($styles, $this->head->renderStylesTags());
+        $this->assertEquals($styles, $this->head->styles());
     }
 
     /**
@@ -404,7 +405,6 @@ class HeadTest extends TestCase
             '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
         ]);
 
-        $this->assertEquals($styles, $this->head->renderStylesTags());
         $this->assertEquals($styles, $this->head->styles());
     }
 
@@ -421,7 +421,6 @@ class HeadTest extends TestCase
             '<script src="assets/js/bootstrap.min.js"></script>'
         ]);
 
-        $this->assertEquals($scripts, $this->head->renderScriptsTags());
         $this->assertEquals($scripts, $this->head->scripts());
     }
 
@@ -440,7 +439,6 @@ class HeadTest extends TestCase
             '<script src="assets/js/bootstrap.min.js"></script>'
         ]);
 
-        $this->assertEquals($scripts, $this->head->renderScriptsTags());
         $this->assertEquals($scripts, $this->head->scripts());
     }
 

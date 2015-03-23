@@ -20,7 +20,7 @@ interface HeadInterface
      *
      * @return string
      */
-    public function getCharset();
+    public function charset();
 
     /**
      * Set Charset
@@ -30,13 +30,6 @@ interface HeadInterface
      * @return HeadInterface
      */
     public function setCharset($charset);
-
-    /**
-     * Render Charset Tag
-     *
-     * @return string
-     */
-    public function renderCharsetTag();
 
     /**
      * Set SEO Tags
@@ -68,18 +61,11 @@ interface HeadInterface
     public function setTitle($title);
 
     /**
-     * Get Title Tag
-     *
-     * @return string
-     */
-    public function renderTitleTag();
-
-    /**
      * Get the description
      *
-     * @return string
+     * @return DescriptionInterface
      */
-    public function getDescription();
+    public function description();
 
     /**
      * @param DescriptionInterface|string $description
@@ -91,18 +77,11 @@ interface HeadInterface
     public function setDescription($description);
 
     /**
-     * Render Description tag
+     * Get Keywords
      *
-     * @return string
+     * @return KeywordsInterface
      */
-    public function renderDescriptionTag();
-
-    /**
-     * Get Keywords tags
-     *
-     * @return array
-     */
-    public function getKeywords();
+    public function keywords();
 
     /**
      * Set Keywords
@@ -116,18 +95,11 @@ interface HeadInterface
     public function setKeywords($keywords);
 
     /**
-     * Render Keywords
-     *
-     * @return string
-     */
-    public function renderKeywordsTag();
-
-    /**
      * Get Meta Collection
      *
      * @return MetaCollectionInterface
      */
-    public function getMetas();
+    public function metas();
 
     /**
      * Add Meta
@@ -148,13 +120,6 @@ interface HeadInterface
      * @return HeadInterface
      */
     public function setMeta(Meta $meta);
-
-    /**
-     * Render Metas tags
-     *
-     * @return String
-     */
-    public function renderMetasTags();
 
     /* ------------------------------------------------------------------------------------------------
      |  Facebook / OpenGraph Functions
@@ -179,7 +144,7 @@ interface HeadInterface
      *
      * @return string
      */
-    public function renderOpenGraphTags();
+    public function openGraph();
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

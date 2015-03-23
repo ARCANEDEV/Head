@@ -17,8 +17,8 @@ use Arcanedev\Head\Entities\Title;
 use Arcanedev\Head\Entities\TwitterCard\TwitterCard;
 use Arcanedev\Head\Exceptions\FileNotFoundException;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
-use Arcanedev\Head\Support\Collection;
 use Arcanedev\Head\Traits\VersionableTrait;
+use Arcanedev\Head\Utilities\Config;
 
 // TODO: update HeadInterface
 class Head implements HeadInterface, Renderable, Arrayable, Versionable
@@ -33,7 +33,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /** @var Collection */
+    /** @var Config */
     private $config = [];
 
     /** @var Charset */
@@ -75,7 +75,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function __construct(array $config = [])
     {
-        $this->loadConfig($config);
+        $this->setConfig($config);
 
         $this->init();
 
@@ -109,7 +109,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Get Config
      *
-     * @return Collection
+     * @return Config
      */
     public function getConfig()
     {
@@ -117,44 +117,17 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
     /**
-     * Get default Config
-     *
-     * @return array
-     */
-    public static function getDefaultConfig()
-    {
-        return include __DIR__ . '/../config/config.php';
-    }
-
-    /**
      * Set Configuration
      *
      * @param array $config
      *
      * @return Head
      */
-    private function setConfig(array $config = [])
+    public function setConfig(array $config = [])
     {
-        // TODO: Add check config method
-        $this->config = new Collection($config);
+        $this->config = new Config($config);
 
         return $this;
-    }
-
-    /**
-     * Set Configuration
-     *
-     * @param array $config
-     *
-     * @return Head
-     */
-    public function loadConfig(array $config)
-    {
-        $config = array_merge(
-            self::getDefaultConfig(), $config
-        );
-
-        return $this->setConfig($config);
     }
 
     /**
@@ -167,23 +140,9 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function configPath($path)
     {
-        $config = [];
+        $this->config = $this->config->path($path);
 
-        if (! empty($path)) {
-            if (! file_exists($path)) {
-                throw new FileNotFoundException(
-                    "Configuration file not found [$path] !"
-                );
-            }
-
-            $config = include $path;
-
-            if (! is_array($config)) {
-                throw new InvalidTypeException("Configuration file", $config, "array");
-            }
-        }
-
-        return $this->loadConfig($config);
+        return $this;
     }
 
 

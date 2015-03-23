@@ -51,7 +51,7 @@ class FacadeTest extends LaravelTestCase
     /** @test */
     public function test_can_set_and_get_config_from_array()
     {
-        Head::loadConfig([
+        Head::setConfig([
             'charset' => 'ISO-8859-1',
         ]);
 

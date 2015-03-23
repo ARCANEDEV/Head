@@ -69,7 +69,7 @@ class HeadTest extends TestCase
      */
     public function test_can_set_and_get_config_from_array()
     {
-        $this->head->loadConfig([
+        $this->head->setConfig([
             'charset' => 'ISO-8859-1',
         ]);
 

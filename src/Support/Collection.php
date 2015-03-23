@@ -22,7 +22,7 @@ class Collection implements Countable, ArrayAccess, Arrayable
     /**
      * @param Collection|array $items
      */
-    function __construct($items = [])
+    public function __construct($items = [])
     {
         $items = ! is_null($items)
             ? $this->getArrayableItems($items)

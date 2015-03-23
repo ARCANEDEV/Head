@@ -1,14 +1,10 @@
 <?php namespace Arcanedev\Head\Contracts;
 
 use Arcanedev\Head\Contracts\Entities\CharsetInterface;
-use Arcanedev\Head\Contracts\Entities\MetaInterface;
-use Arcanedev\Head\Entities\Meta;
-
 use Arcanedev\Head\Contracts\Entities\DescriptionInterface;
 use Arcanedev\Head\Contracts\Entities\KeywordsInterface;
-use Arcanedev\Head\Contracts\Entities\MetaCollectionInterface;
 use Arcanedev\Head\Contracts\Entities\TitleInterface;
-
+use Arcanedev\Head\Entities\Meta;
 use Arcanedev\Head\Entities\MetaCollection;
 use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
@@ -119,11 +115,11 @@ interface HeadInterface
     /**
      * Set Meta
      *
-     * @param MetaInterface $meta
+     * @param Meta $meta
      *
      * @return HeadInterface
      */
-    public function setMeta(MetaInterface $meta);
+    public function setMeta(Meta $meta);
 
     /* ------------------------------------------------------------------------------------------------
      |  Facebook / OpenGraph Functions

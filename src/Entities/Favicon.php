@@ -82,27 +82,29 @@ class Favicon implements Renderable
 
     public function toArray()
     {
+        if ($this->isEmpty()) {
+            return [];
+        }
+
         $tags = [];
 
-        if ( ! $this->isEmpty()) {
-            // Check if .ico file exists
-            // if ($this->isFaviconExists('ico')) {
-            $tags[] = [
-                'href' => $this->getIconPath(),
-                'rel'  => 'icon',
-                'type' => 'image/x-icon'
-            ];
-            // }
+        // Check if .ico file exists
+        //if ($this->isFaviconExists('ico')) {
+        $tags[] = [
+            'href' => $this->getIconPath(),
+            'rel'  => 'icon',
+            'type' => 'image/x-icon'
+        ];
+        //}
 
-            // Check if .png file exists
-            // if ($this->isFaviconExists('png')) {
-            $tags[] = [
-                'href' => $this->getImagePath(),
-                'rel'  => 'icon',
-                'type' => 'image/png'
-            ];
-            // }
-        }
+        // Check if .png file exists
+        // if ($this->isFaviconExists('png')) {
+        $tags[] = [
+            'href' => $this->getImagePath(),
+            'rel'  => 'icon',
+            'type' => 'image/png'
+        ];
+        // }
 
         $tags = array_map(function($attributes) {
             return Markup::make('link', $attributes)->render();

@@ -32,6 +32,15 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function boot()
     {
+        $basePath  = __DIR__ . '/../..';
+
+        $this->publishes([
+            $basePath . '/config/config.php' => config_path('head.php'),
+        ]);
+
+        $this->mergeConfigFrom(
+            $basePath . '/config/config.php', 'head'
+        );
     }
 
     /**
@@ -41,12 +50,6 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function register()
     {
-        $basePath  = __DIR__ . '/../..';
-
-        $this->mergeConfigFrom(
-            $basePath . '/config/config.php', 'head'
-        );
-
         $this->registerServices();
         $this->registerFacades();
     }

@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\MetaCollection;
 
+/**
+ * Class MetaCollectionTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class MetaCollectionTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const META_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\MetaCollection';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -39,22 +37,14 @@ class MetaCollectionTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(
-            self::META_COLLECTION_CLASS,
-            $this->metaCollection
-        );
-
+        $this->assertInstanceOf(MetaCollection::class, $this->metaCollection);
         $this->assertCount(0, $this->metaCollection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_many_metas_from_array()
     {
         $this->metaCollection = MetaCollection::make([
@@ -106,9 +96,7 @@ class MetaCollectionTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render()
     {
         $metas = [

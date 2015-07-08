@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Tests\TestCase as BaseTestCase;
 
+/**
+ * Class TestCase
+ * @package Arcanedev\Head\Tests\Entities
+ */
 abstract class TestCase extends BaseTestCase
 {
     /* ------------------------------------------------------------------------------------------------

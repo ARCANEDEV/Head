@@ -1,8 +1,14 @@
 <?php namespace Arcanedev\Head\Laravel;
 
 use Arcanedev\Head\Head;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+/**
+ * Class ServiceProvider
+ * @package Arcanedev\Head\Laravel
+ */
+class ServiceProvider extends IlluminateServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -26,7 +32,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->package('arcanedev/head', 'head', __DIR__ . '/../..');
     }
 
     /**
@@ -36,7 +41,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
+        $basePath  = __DIR__ . '/../..';
+
+        $this->mergeConfigFrom(
+            $basePath . '/config/config.php', 'head'
+        );
+
         $this->registerServices();
+        $this->registerFacades();
     }
 
     /**
@@ -52,7 +64,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Package Functions
+     |  Other Functions
      | ------------------------------------------------------------------------------------------------
      */
     private function registerServices()
@@ -61,7 +73,13 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             /** @var \Illuminate\Config\Repository $config */
             $config  = $app['config'];
 
-            return new Head($config->get('head::config'));
+            return new Head($config->get('head'));
         });
+    }
+
+    private function registerFacades()
+    {
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Head', Facade::class);
     }
 }

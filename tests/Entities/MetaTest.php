@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\Meta;
 
+/**
+ * Class MetaTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class MetaTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const META_CLASS = 'Arcanedev\\Head\\Entities\\Meta';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -39,22 +37,22 @@ class MetaTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::META_CLASS, $this->meta);
+        $this->assertInstanceOf(Meta::class, $this->meta);
         $this->assertTrue($this->meta->isEmpty());
+    }
 
+    /** @test */
+    public function it_can_make()
+    {
         $this->meta = Meta::make('author', 'ARCANEDEV');
-        $this->assertInstanceOf(self::META_CLASS, $this->meta);
+        $this->assertInstanceOf(Meta::class, $this->meta);
         $this->assertFalse($this->meta->isEmpty());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get()
     {
         $meta = [
@@ -108,9 +106,7 @@ class MetaTest extends TestCase
         Meta::make('name', true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render()
     {
         $meta = [
@@ -126,9 +122,7 @@ class MetaTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_responsive_tag()
     {
         $this->assertEquals(
@@ -137,9 +131,7 @@ class MetaTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_ie_edge_tag()
     {
         $this->assertEquals(

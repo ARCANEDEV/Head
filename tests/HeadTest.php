@@ -7,14 +7,12 @@ use Arcanedev\Head\Entities\Meta;
 use Arcanedev\Head\Entities\Title;
 use Arcanedev\Head\Head;
 
+/**
+ * Class HeadTest
+ * @package Arcanedev\Head\Tests
+ */
 class HeadTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const HEAD_CLASS = 'Arcanedev\\Head\\Head';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -44,18 +42,14 @@ class HeadTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::HEAD_CLASS, $this->head);
+        $this->assertInstanceOf(\Arcanedev\Head\Head::class, $this->head);
         $this->assertEquals('UTF-8', $this->head->charset()->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_default_config()
     {
         $config     = $this->head->getConfig();
@@ -64,9 +58,7 @@ class HeadTest extends TestCase
         $this->assertEquals('UTF-8', $config['charset']);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_config_from_array()
     {
         $this->head->setConfig([
@@ -80,9 +72,7 @@ class HeadTest extends TestCase
         $this->assertEquals('ISO-8859-1', $config['charset']);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_config_from_file()
     {
         $this->head->configPath(__DIR__ . '/data/config-valid.php');
@@ -114,9 +104,7 @@ class HeadTest extends TestCase
         $this->head->configPath(__DIR__ . '/data/config-invalid.php');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_charset()
     {
         $this->assertEquals('UTF-8', $this->head->charset()->get());
@@ -152,9 +140,7 @@ class HeadTest extends TestCase
         $this->head->setCharset(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_title()
     {
         $title = 'Hello Title';
@@ -167,9 +153,7 @@ class HeadTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_site_name()
     {
         $siteName = 'Company name';
@@ -179,9 +163,7 @@ class HeadTest extends TestCase
         $this->assertEquals($siteName, $this->head->getSiteName());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_by_title_class()
     {
         $title = new Title;
@@ -208,9 +190,7 @@ class HeadTest extends TestCase
         $this->head->setTitle(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_description()
     {
         $description = 'Hello Description';
@@ -223,9 +203,7 @@ class HeadTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_by_description_class()
     {
         $description = new Description;
@@ -249,9 +227,7 @@ class HeadTest extends TestCase
         $this->head->setDescription(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_keywords()
     {
         // Array Keywords
@@ -269,9 +245,7 @@ class HeadTest extends TestCase
         $this->assertEquals($keywordsTag, $this->head->keywords()->render());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_set_and_get_by_keywords_class()
     {
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
@@ -294,9 +268,7 @@ class HeadTest extends TestCase
         $this->head->setKeywords(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_title_description_keywords()
     {
         $title       = 'Hello Title';
@@ -309,9 +281,7 @@ class HeadTest extends TestCase
         $this->assertEquals($keywords,    $this->head->keywords()->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_metas()
     {
         $this->assertEquals('', $this->head->metas()->render());
@@ -326,9 +296,7 @@ class HeadTest extends TestCase
         $this->assertCount(2, $this->head->metas());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_enable_and_disable_open_graph()
     {
         $this->assertFalse($this->head->isOpenGraphEnabled());
@@ -342,9 +310,7 @@ class HeadTest extends TestCase
         $this->assertFalse($this->head->isOpenGraphEnabled());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render_all()
     {
         $title         = 'Hello world';
@@ -374,9 +340,7 @@ class HeadTest extends TestCase
         $this->assertEquals(implode(PHP_EOL, $tagsArray), $this->head->render());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_and_render_styles()
     {
         $this->head->addStyle('assets/css/style.css');
@@ -390,9 +354,7 @@ class HeadTest extends TestCase
         $this->assertEquals($styles, $this->head->styles());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_many_and_render_styles()
     {
         $this->head->addStyles([
@@ -408,9 +370,7 @@ class HeadTest extends TestCase
         $this->assertEquals($styles, $this->head->styles());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_and_render_scripts()
     {
         $this->head->addScript('assets/js/jquery.min.js');
@@ -424,9 +384,7 @@ class HeadTest extends TestCase
         $this->assertEquals($scripts, $this->head->scripts());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_many_and_render_scripts()
     {
         $this->head->addScripts([

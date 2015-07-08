@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\Script;
 
+/**
+ * Class ScriptTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class ScriptTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const SCRIPT_CLASS = 'Arcanedev\\Head\\Entities\\Script';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -39,17 +37,13 @@ class ScriptTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::SCRIPT_CLASS, $this->script);
+        $this->assertInstanceOf(Script::class, $this->script);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_source()
     {
         $src  = 'assets/js/jquery-min.js';
@@ -58,9 +52,7 @@ class ScriptTest extends TestCase
         $this->assertEquals($src, $this->script->getSrc());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_filename_from_source()
     {
         $this->assertEquals('', $this->script->getFile());
@@ -72,23 +64,19 @@ class ScriptTest extends TestCase
         $this->assertEquals($file, $this->script->getFile());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_make_script()
     {
         $file = 'jquery-min.js';
         $src  = "assets/js/$file";
         $this->script = Script::make($src);
 
-        $this->assertInstanceOf(self::SCRIPT_CLASS, $this->script);
+        $this->assertInstanceOf(Script::class, $this->script);
         $this->assertEquals($src, $this->script->getSrc());
         $this->assertEquals($file, $this->script->getFile());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render()
     {
         $this->assertEquals('', $this->script->render());

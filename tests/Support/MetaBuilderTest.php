@@ -3,6 +3,10 @@
 use Arcanedev\Head\Support\Collection;
 use Arcanedev\Head\Tests\TestCase;
 
+/**
+ * Class MetaBuilderTest
+ * @package Arcanedev\Head\Tests\Support
+ */
 class MetaBuilderTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------

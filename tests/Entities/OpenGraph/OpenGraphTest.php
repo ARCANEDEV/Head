@@ -1,20 +1,17 @@
 <?php namespace Arcanedev\Head\Tests\Entities\OpenGraph;
 
-use Arcanedev\Head\Tests\Entities\TestCase;
-
-use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use Arcanedev\Head\Entities\OpenGraph\Medias\AudioMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
+use Arcanedev\Head\Tests\Entities\TestCase;
 
+/**
+ * Class OpenGraphTest
+ * @package Arcanedev\Head\Tests\Entities\OpenGraph
+ */
 class OpenGraphTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const OG_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\OpenGraph';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -44,12 +41,10 @@ class OpenGraphTest extends TestCase
      |  Test Function
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::OG_CLASS, $this->og);
+        $this->assertInstanceOf(OpenGraph::class, $this->og);
         // TODO: Add Countable to collections
         $this->assertFalse($this->og->isEnabled());
         $this->assertEquals(0, count($this->og->getImages()));
@@ -57,9 +52,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(0, count($this->og->getAudios()));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_type()
     {
         $type = 'website';
@@ -68,9 +61,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals($type, $this->og->getType());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_title()
     {
         $title = 'Hello World';
@@ -83,9 +74,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(128, strlen($this->og->getTitle()));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_site_name()
     {
         $siteName = 'Company Name';
@@ -98,9 +87,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(128, strlen($this->og->getSiteName()));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_description()
     {
         $description = 'Hello world description';
@@ -114,9 +101,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(255, strlen($this->og->getDescription()));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_url()
     {
         $this->og->setURL('');
@@ -131,9 +116,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals($url, $this->og->getURL());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_determiner()
     {
         $determiner = 'the';
@@ -142,9 +125,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals($determiner, $this->og->getDeterminer());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_locale()
     {
         $locale = 'fr_FR';
@@ -153,9 +134,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals($locale, $this->og->getLocale());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_enable_and_disable_open_graph()
     {
         $this->assertFalse($this->og->isEnabled());
@@ -167,9 +146,7 @@ class OpenGraphTest extends TestCase
         $this->assertFalse($this->og->isEnabled());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_image()
     {
         $this->assertEquals(0, $this->og->imagesCount());
@@ -195,9 +172,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(2, $this->og->imagesCount());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_video()
     {
         $this->assertEquals(0, $this->og->videosCount());
@@ -223,9 +198,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(2, $this->og->videosCount());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_not_add_video_without_url()
     {
         $this->assertEquals(0, $this->og->videosCount());
@@ -236,9 +209,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(0, $this->og->videosCount());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_audios()
     {
         $this->assertEquals(0, $this->og->audiosCount());
@@ -260,9 +231,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(2, $this->og->audiosCount());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_not_add_audio_without_url()
     {
         $this->assertEquals(0, $this->og->audiosCount());
@@ -273,9 +242,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals(0, $this->og->audiosCount());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render()
     {
         $this->og->enable();
@@ -308,9 +275,7 @@ class OpenGraphTest extends TestCase
         ]), $this->og->render());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_validate_url()
     {
         $this->assertEmpty(OpenGraph::isValidUrl(''));
@@ -322,9 +287,7 @@ class OpenGraphTest extends TestCase
         $this->assertEquals($url, OpenGraph::isValidUrl($url));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_supported_types()
     {
         $this->assertEquals(8,  count(OpenGraph::supportedTypes()));

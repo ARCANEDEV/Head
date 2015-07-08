@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\ScriptCollection;
 
+/**
+ * Class ScriptCollectionTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class ScriptCollectionTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const SCRIPT_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\ScriptCollection';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -39,22 +37,14 @@ class ScriptCollectionTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(
-            self::SCRIPT_COLLECTION_CLASS,
-            $this->scriptCollection
-        );
-
+        $this->assertInstanceOf(ScriptCollection::class, $this->scriptCollection);
         $this->assertCount(0, $this->scriptCollection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_script()
     {
         $this->scriptCollection->add('assets/js/jquery-min.js');
@@ -67,9 +57,7 @@ class ScriptCollectionTest extends TestCase
         $this->assertCount(2, $this->scriptCollection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_many_scripts()
     {
         $this->scriptCollection->addMany([
@@ -81,9 +69,7 @@ class ScriptCollectionTest extends TestCase
         $this->assertCount(2, $this->scriptCollection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render()
     {
         $scripts = [];

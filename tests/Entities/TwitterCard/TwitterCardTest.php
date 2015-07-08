@@ -3,14 +3,12 @@
 use Arcanedev\Head\Entities\TwitterCard\TwitterCard;
 use Arcanedev\Head\Tests\Entities\TestCase;
 
+/**
+ * Class TwitterCardTest
+ * @package Arcanedev\Head\Tests\Entities\TwitterCard
+ */
 class TwitterCardTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const TWITTER_CARD_CLASS = 'Arcanedev\\Head\\Entities\\TwitterCard\\TwitterCard';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -40,11 +38,9 @@ class TwitterCardTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::TWITTER_CARD_CLASS, $this->twitterCard);
+        $this->assertInstanceOf(TwitterCard::class, $this->twitterCard);
     }
 }

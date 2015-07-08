@@ -1,17 +1,13 @@
 <?php namespace Arcanedev\Head\Tests\Entities;
 
-namespace Arcanedev\Head\Tests\Entities;
-
 use Arcanedev\Head\Entities\Favicon;
 
+/**
+ * Class FaviconTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class FaviconTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const FAVICON_CLASS = 'Arcanedev\\Head\\Entities\\Favicon';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -44,7 +40,7 @@ class FaviconTest extends TestCase
     /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::FAVICON_CLASS, $this->favicon);
+        $this->assertInstanceOf(Favicon::class, $this->favicon);
     }
 
     /** @test */

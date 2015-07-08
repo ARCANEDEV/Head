@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\OpenGraph\Medias\AudioMedia;
 
+/**
+ * Class AudioMediaTest
+ * @package Arcanedev\Head\Tests\Entities\OpenGraph\Medias
+ */
 class AudioMediaTest extends AbstractMediaTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const OG_AUDIO_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\AudioMedia';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -39,39 +37,32 @@ class AudioMediaTest extends AbstractMediaTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::OG_AUDIO_MEDIA_CLASS, $this->media);
+        $this->assertInstanceOf(AudioMedia::class, $this->media);
         $this->assertAbstractMediaInstance();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_url()
     {
         $this->assertCanSetAndGetURL('http://www.company.com/audio.mp3');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_secure_url()
     {
         $this->assertCanSetAndGetSecureURL('https://www.company.com/audio.mp3');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_type()
     {
         $this->assertCanSetAndGetType('audio/mpeg');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_convert_extension_to_media_type()
     {
         $extensions = [

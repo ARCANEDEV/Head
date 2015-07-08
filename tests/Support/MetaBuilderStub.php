@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Support\AbstractMetaBuilder;
 
+/**
+ * Class MetaBuilderStub
+ * @package Arcanedev\Head\Tests\Support
+ */
 class MetaBuilderStub extends AbstractMetaBuilder
 {
     /* ------------------------------------------------------------------------------------------------

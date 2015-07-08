@@ -3,6 +3,10 @@
 use Arcanedev\Head\Laravel\ServiceProvider;
 use Arcanedev\Head\Tests\LaravelTestCase;
 
+/**
+ * Class ServiceProviderTest
+ * @package Arcanedev\Head\Tests\Laravel
+ */
 class ServiceProviderTest extends LaravelTestCase
 {
     /* ------------------------------------------------------------------------------------------------
@@ -34,9 +38,7 @@ class ServiceProviderTest extends LaravelTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_what_it_provides()
     {
         // This is for 100% code converge

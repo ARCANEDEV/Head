@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\StylesheetCollection;
 
+/**
+ * Class StylesheetCollectionTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class StylesheetCollectionTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const STYLESHEET_COLLECTION_CLASS = 'Arcanedev\\Head\\Entities\\StylesheetCollection';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -41,20 +39,16 @@ class StylesheetCollectionTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
         $this->assertInstanceOf(
-            self::STYLESHEET_COLLECTION_CLASS,
+            StylesheetCollection::class,
             $this->styleCollection
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_style()
     {
         $this->styleCollection->add('assets/css/style.css');
@@ -67,9 +61,7 @@ class StylesheetCollectionTest extends TestCase
         $this->assertCount(2, $this->styleCollection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_many_styles()
     {
         $this->styleCollection->addMany([
@@ -94,9 +86,7 @@ class StylesheetCollectionTest extends TestCase
         $this->assertCount(2, $this->styleCollection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render()
     {
         $styles = [];

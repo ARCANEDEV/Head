@@ -3,14 +3,12 @@
 use Arcanedev\Head\Support\HTMLVersion;
 use Arcanedev\Head\Tests\TestCase;
 
+/**
+ * Class HTMLVersionTest
+ * @package Arcanedev\Head\Tests\Support
+ */
 class HTMLVersionTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const HTML_VERSION_CLASS = 'Arcanedev\\Head\\Support\\HTMLVersion';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -40,23 +38,19 @@ class HTMLVersionTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
         $this->htmlVersion = new HTMLVersion;
-        $this->assertInstanceOf(self::HTML_VERSION_CLASS, $this->htmlVersion);
+        $this->assertInstanceOf(HTMLVersion::class, $this->htmlVersion);
         $this->assertEquals('5', $this->htmlVersion->get());
 
         $this->htmlVersion = new HTMLVersion('4');
-        $this->assertInstanceOf(self::HTML_VERSION_CLASS, $this->htmlVersion);
+        $this->assertInstanceOf(HTMLVersion::class, $this->htmlVersion);
         $this->assertEquals('4', $this->htmlVersion->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_version()
     {
         $this->assertEquals('4', $this->htmlVersion->set('4')->get());
@@ -66,9 +60,7 @@ class HTMLVersionTest extends TestCase
         $this->assertEquals('5', $this->htmlVersion->set(5)->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_check_version()
     {
         $this->htmlVersion->set('5');

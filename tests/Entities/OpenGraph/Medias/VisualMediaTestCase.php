@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\OpenGraph\Medias\VisualMedia;
 
+/**
+ * Class VisualMediaTestCase
+ * @package Arcanedev\Head\Tests\Entities\OpenGraph\Medias
+ */
 abstract class VisualMediaTestCase extends AbstractMediaTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const OG_VISUAL_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VisualMedia';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -38,7 +36,7 @@ abstract class VisualMediaTestCase extends AbstractMediaTestCase
     protected function assertVisualMediaInstance()
     {
         if ( $this->isMediaNotNull() ) {
-            $this->assertInstanceOf(self::OG_VISUAL_MEDIA_CLASS, $this->media);
+            $this->assertInstanceOf(VisualMedia::class, $this->media);
         }
     }
 

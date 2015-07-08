@@ -47,7 +47,7 @@ class Title implements TitleInterface, Renderable
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    function __construct(array $config = [])
+    public function __construct(array $config = [])
     {
         $this->title    = '';
         $this->siteName = '';

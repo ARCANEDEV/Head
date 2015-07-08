@@ -20,7 +20,12 @@ use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Head\Traits\VersionableTrait;
 use Arcanedev\Head\Utilities\Config;
 
-// TODO: update HeadInterface
+/**
+ * Class Head
+ * @package Arcanedev\Head
+ *
+ * @TODO: update HeadInterface
+ */
 class Head implements HeadInterface, Renderable, Arrayable, Versionable
 {
     /* ------------------------------------------------------------------------------------------------
@@ -76,9 +81,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     public function __construct(array $config = [])
     {
         $this->setConfig($config);
-
         $this->init();
-
         $this->loadEntities();
     }
 

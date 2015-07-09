@@ -51,10 +51,10 @@ class Title implements TitleInterface, Renderable
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    public function __construct(array $config = [])
+    public function __construct($title = '', $siteName = '')
     {
-        $this->title    = '';
-        $this->siteName = '';
+        $this->title    = $title;
+        $this->siteName = $siteName;
         $this->tag      = Markup::title();
     }
 
@@ -112,9 +112,8 @@ class Title implements TitleInterface, Renderable
     public function siteName($siteName = '')
     {
         $this->checkIsString('site name', $siteName);
-        $siteName = trim($siteName);
 
-        return empty($siteName)
+        return empty($siteName = trim($siteName))
             ? $this->getSitename()
             : $this->setSiteName($siteName);
     }
@@ -131,7 +130,6 @@ class Title implements TitleInterface, Renderable
     public function setSiteName($siteName)
     {
         $this->checkIsString('site name', $siteName);
-
         $this->siteName = trim($siteName);
 
         return $this;
@@ -228,9 +226,7 @@ class Title implements TitleInterface, Renderable
     {
         $this->checkIsString('separator', $separator);
 
-        $separator = trim($separator);
-
-        return empty($separator)
+        return empty($separator = trim($separator))
             ? $this->getSeparator()
             : $this->setSeparator($separator);
     }
@@ -257,7 +253,6 @@ class Title implements TitleInterface, Renderable
     public function setSeparator($separator = '|')
     {
         $this->checkIsString('separator', $separator);
-
         $this->separator = trim($separator);
 
         return $this;

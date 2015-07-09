@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Objects;
 
+use Arcanedev\Head\Entities\OpenGraph\OGMetaBuilder;
 use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use DateTime;
 use DateTimeZone;
@@ -38,7 +39,7 @@ class AbstractObject
      */
     public function toHTML()
     {
-        return rtrim(OpenGraph::buildHTML(get_object_vars($this), static::PREFIX), PHP_EOL);
+        return rtrim(OGMetaBuilder::html(get_object_vars($this), static::PREFIX), PHP_EOL);
     }
 
     /**

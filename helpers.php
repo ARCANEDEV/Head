@@ -12,6 +12,8 @@ if ( ! function_exists('_')) {
      * @return string
      */
     function _($text, $domain = '') {
+        unset($domain);
+
         return $text;
     }
 }

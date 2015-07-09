@@ -45,7 +45,7 @@ class HeadTest extends TestCase
     /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(\Arcanedev\Head\Head::class, $this->head);
+        $this->assertInstanceOf(Head::class, $this->head);
         $this->assertEquals('UTF-8', $this->head->charset()->get());
     }
 

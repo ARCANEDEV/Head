@@ -3,9 +3,9 @@ Head Tags Manager [![Packagist License](http://img.shields.io/packagist/l/ARCANE
 [![Travis Status](http://img.shields.io/travis/ARCANEDEV/Head.svg?style=flat-square)](https://travis-ci.org/ARCANEDEV/Head)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/Head.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/Head/?branch=master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ARCANEDEV/Head.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/Head/?branch=master)
-[![Github Release](http://img.shields.io/github/release/ARCANEDEV/Head.svg?style=flat-square)](https://github.com/ARCANEDEV/Head/releases)
-[![Packagist Downloads](https://img.shields.io/packagist/dt/arcanedev/head.svg?style=flat-square)](https://packagist.org/packages/arcanedev/head)
 [![Github Issues](http://img.shields.io/github/issues/ARCANEDEV/Head.svg?style=flat-square)](https://github.com/ARCANEDEV/Head/issues)
+[![Packagist Release](https://img.shields.io/packagist/v/ARCANEDEV/Head.svg?style=flat-square)](https://packagist.org/packages/arcanedev/head)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/arcanedev/head.svg?style=flat-square)](https://packagist.org/packages/arcanedev/head)
 
 *By [ARCANEDEV&copy;](http://www.arcanedev.net/)*
 
@@ -19,7 +19,7 @@ You can install the package via [Composer](http://getcomposer.org/). Add this to
 ```json
 {
     "require": {
-        "arcanedev/head": "~1.1"
+        "arcanedev/head": "~2.0"
     }
 }
 ```
@@ -59,7 +59,8 @@ Any ideas are welcome. Feel free the submit any issues or pull requests.
   - [x] More tests and code coverage
   - [x] Laravel support (v4.2)
   - [ ] Laravel support (v5.0)
-  - [ ] Refactoring
+  - [x] Laravel support (v5.1)
+
   
 ## License
 

@@ -4,6 +4,10 @@ use Arcanedev\Head\Entities\OpenGraph\Medias\AudioMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
 
+/**
+ * Interface OpenGraphInterface
+ * @package Arcanedev\Head\Contracts\Entities
+ */
 interface OpenGraphInterface
 {
     /* ------------------------------------------------------------------------------------------------

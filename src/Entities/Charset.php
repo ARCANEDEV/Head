@@ -5,13 +5,23 @@ use Arcanedev\Head\Contracts\Versionable;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Head\Traits\VersionableTrait;
 
+/**
+ * Class Charset
+ * @package Arcanedev\Head\Entities
+ */
 class Charset extends AbstractMeta implements CharsetInterface, Versionable
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Traits
+     | ------------------------------------------------------------------------------------------------
+     */
+    use VersionableTrait;
+
     /* ------------------------------------------------------------------------------------------------
      |  Constants
      | ------------------------------------------------------------------------------------------------
      */
-    const DEFAULT_CHARSET       = 'UTF-8';
+    const DEFAULT_CHARSET   = 'UTF-8';
 
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -20,18 +30,12 @@ class Charset extends AbstractMeta implements CharsetInterface, Versionable
     /**
      * @var string
      */
-    protected $charset          = "";
+    protected $charset      = '';
 
     /**
      * @var array
      */
     protected static $supportedCharset = [];
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Traits
-     | ------------------------------------------------------------------------------------------------
-     */
-    use VersionableTrait;
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -68,9 +72,7 @@ class Charset extends AbstractMeta implements CharsetInterface, Versionable
      */
     public function getCharset()
     {
-        return $this->isEmpty()
-            ? $this->getDefault()
-            : $this->charset;
+        return $this->isEmpty() ? $this->getDefault() : $this->charset;
     }
 
     /**
@@ -78,7 +80,7 @@ class Charset extends AbstractMeta implements CharsetInterface, Versionable
      *
      * @param string $charset
      *
-     * @return Charset
+     * @return self
      */
     public function set($charset)
     {
@@ -88,16 +90,15 @@ class Charset extends AbstractMeta implements CharsetInterface, Versionable
     /**
      * Set Charset
      *
-     * @param string $charset
+     * @param  string $charset
      *
      * @throws InvalidTypeException
      *
-     * @return Charset
+     * @return self
      */
     public function setCharset($charset)
     {
         $this->check($charset);
-
         $this->charset  = $charset;
 
         return $this;
@@ -130,7 +131,7 @@ class Charset extends AbstractMeta implements CharsetInterface, Versionable
     /**
      * Make a charset
      *
-     * @param string $charset
+     * @param  string $charset
      *
      * @return Charset
      */
@@ -188,7 +189,7 @@ class Charset extends AbstractMeta implements CharsetInterface, Versionable
     /**
      * Check if charset is supported
      *
-     * @param string $charset
+     * @param  string $charset
      *
      * @return bool
      */

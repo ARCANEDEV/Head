@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Medias;
 
+/**
+ * Class AudioMedia
+ * @package Arcanedev\Head\Entities\OpenGraph\Medias
+ */
 class AudioMedia extends AbstractMedia
 {
     /* ------------------------------------------------------------------------------------------------
@@ -13,7 +17,7 @@ class AudioMedia extends AbstractMedia
      */
     protected function checkType($type)
     {
-        return $type === 'application/x-shockwave-flash' or
+        return $type === 'application/x-shockwave-flash' ||
                substr_compare($type, 'audio/', 0, 6) === 0;
     }
 

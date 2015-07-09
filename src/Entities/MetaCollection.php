@@ -3,27 +3,20 @@
 use Arcanedev\Head\Exceptions\Exception;
 use Arcanedev\Head\Support\Collection;
 
+/**
+ * Class MetaCollection
+ * @package Arcanedev\Head\Entities
+ */
 class MetaCollection extends Collection
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Properties
+     |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-    protected $items = [];
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Constructors
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function __construct(array $items = [])
-    {
-        parent::__construct($items);
-    }
-
     /**
      * Make Meta Collection
      *
-     * @param array $items
+     * @param  array $items
      *
      * @return MetaCollection
      */
@@ -32,21 +25,17 @@ class MetaCollection extends Collection
         return (new self)->addMany($items);
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
     /**
      * Add many metas
      *
-     * @param array $metas
+     * @param  array $metas
      *
      * @return MetaCollection
      */
     public function addMany(array $metas)
     {
         foreach ($metas as $meta) {
-            $this->addMetaArray($meta);
+            $this->addMetaOne($meta);
         }
 
         return $this;
@@ -57,13 +46,12 @@ class MetaCollection extends Collection
      *
      * @throws Exception
      *
-     * @return $this
+     * @return self
      */
-    public function addMetaArray(array $meta)
+    public function addMetaOne(array $meta)
     {
         $name       = $this->getAttribute('name', $meta);
         $content    = $this->getAttribute('content', $meta);
-
         $attributes = array_key_exists('attributes', $meta)
             ? $meta['attributes']
             : [];
@@ -76,9 +64,9 @@ class MetaCollection extends Collection
     /**
      * Add a meta to collection
      *
-     * @param string $name
-     * @param string $content
-     * @param array  $attributes
+     * @param  string $name
+     * @param  string $content
+     * @param  array  $attributes
      *
      * @return MetaCollection
      */
@@ -104,16 +92,14 @@ class MetaCollection extends Collection
     /**
      * Render all metas tag
      *
-     * @return String
+     * @return string
      */
     public function render()
     {
-        $metas = $this->each(function($meta) {
-            /** @var Meta $meta */
+        $metas = $this->each(function(Meta $meta) {
             return $meta->render();
         });
 
-        /** @var Collection $metas */
         return implode(PHP_EOL, $metas->toArray());
     }
 
@@ -122,8 +108,10 @@ class MetaCollection extends Collection
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @param string $key
-     * @param array  $meta
+     * Get attribute
+     *
+     * @param  string $key
+     * @param  array  $meta
      *
      * @throws Exception
      *
@@ -131,12 +119,10 @@ class MetaCollection extends Collection
      */
     private function getAttribute($key, array $meta)
     {
-        if (! array_key_exists($key, $meta)) {
-            throw new Exception("The meta [$key] attribute not found !");
+        if ( ! isset($meta[$key])) {
+            throw new Exception("The meta [{$key}] attribute not found !");
         }
 
-        $value = $meta[$key];
-
-        return $value;
+        return $meta[$key];
     }
 }

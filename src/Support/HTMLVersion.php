@@ -4,6 +4,10 @@ use Arcanedev\Head\Exceptions\Exception;
 use Arcanedev\Head\Exceptions\InvalidHTMLVersionException;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Class HTMLVersion
+ * @package Arcanedev\Head\Support
+ */
 class HTMLVersion
 {
     /* ------------------------------------------------------------------------------------------------

@@ -5,6 +5,10 @@ use Arcanedev\Head\Exceptions\Exception;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Markup\Markup;
 
+/**
+ * Class Meta
+ * @package Arcanedev\Head\Entities
+ */
 class Meta extends AbstractMeta implements MetaInterface
 {
     /* ------------------------------------------------------------------------------------------------
@@ -26,20 +30,6 @@ class Meta extends AbstractMeta implements MetaInterface
      */
     public function __construct()
     {
-    }
-
-    /**
-     * Make a Meta
-     *
-     * @param string $name
-     * @param string $content
-     * @param array  $attributes
-     *
-     * @return Meta
-     */
-    public static function make($name, $content, $attributes = [])
-    {
-        return (new self())->set($name, $content, $attributes);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -144,15 +134,30 @@ class Meta extends AbstractMeta implements MetaInterface
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Make a Meta
+     *
+     * @param  string $name
+     * @param  string $content
+     * @param  array  $attributes
+     *
+     * @return Meta
+     */
+    public static function make($name, $content, array $attributes = [])
+    {
+        return (new self())->set($name, $content, $attributes);
+    }
 
     /**
      * @return string
      */
     public function render()
     {
-        return ! $this->isEmpty()
-            ? Markup::meta('name', $this->name, $this->content)->render()
-            : '';
+        if ($this->isEmpty()) {
+            return '';
+        }
+
+        return Markup::meta('name', $this->name, $this->content)->render();
     }
 
     /**
@@ -186,12 +191,12 @@ class Meta extends AbstractMeta implements MetaInterface
      */
     public function isEmpty()
     {
-        return empty($this->name) or empty($this->content);
+        return empty($this->name) || empty($this->content);
     }
 
     /**
-     * @param string $name
-     * @param string $value
+     * @param  string $name
+     * @param  string $value
      *
      * @throws Exception
      * @throws InvalidTypeException
@@ -210,14 +215,14 @@ class Meta extends AbstractMeta implements MetaInterface
     /**
      * Check if is string value
      *
-     * @param string $name
-     * @param string $value
+     * @param  string $name
+     * @param  string $value
      *
      * @throws InvalidTypeException
      */
     private function checkIsString($name, $value)
     {
-        if (! is_string($value)) {
+        if ( ! is_string($value)) {
             throw new InvalidTypeException($name, $value);
         }
     }

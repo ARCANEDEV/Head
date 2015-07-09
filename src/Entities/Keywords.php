@@ -3,6 +3,10 @@
 use Arcanedev\Head\Contracts\Entities\KeywordsInterface;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Class Keywords
+ * @package Arcanedev\Head\Entities
+ */
 class Keywords extends AbstractMeta implements KeywordsInterface
 {
     /* ------------------------------------------------------------------------------------------------
@@ -40,7 +44,7 @@ class Keywords extends AbstractMeta implements KeywordsInterface
     /**
      * Set Keywords
      *
-     * @param string|array $keywords
+     * @param  string|array $keywords
      *
      * @throws InvalidTypeException
      *
@@ -64,14 +68,13 @@ class Keywords extends AbstractMeta implements KeywordsInterface
     /**
      * Set Keywords form array
      *
-     * @param array $keywords
+     * @param  array $keywords
      *
      * @return Keywords
      */
     private function setFromArray(array $keywords = [])
     {
         $this->checkAllKeywords($keywords);
-
         $this->keywords = array_filter($keywords);
 
         return $this;
@@ -99,9 +102,11 @@ class Keywords extends AbstractMeta implements KeywordsInterface
      */
     public function render()
     {
-        return ! $this->isEmpty()
-            ? $this->renderMetaTag('keywords', $this->getSEOKeywords())
-            : '';
+        if ($this->isEmpty()) {
+            return '';
+        }
+
+        return $this->renderMetaTag('keywords', $this->getSEOKeywords());
     }
 
     /**
@@ -131,14 +136,14 @@ class Keywords extends AbstractMeta implements KeywordsInterface
     /**
      * Check Keywords Type
      *
-     * @param string|array $keywords
+     * @param  string|array $keywords
      *
      * @throws InvalidTypeException
      */
     private function checkType($keywords)
     {
         if (
-            ! is_string($keywords) and
+            ! is_string($keywords) &&
             ! is_array($keywords)
         ) {
             throw new InvalidTypeException('keywords', $keywords, 'string or array');

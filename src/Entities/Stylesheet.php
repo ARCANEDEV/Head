@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Traits\VersionableTrait;
 
+/**
+ * Class Stylesheet
+ * @package Arcanedev\Head\Entities
+ */
 class Stylesheet
 {
     /* ------------------------------------------------------------------------------------------------
@@ -21,6 +25,11 @@ class Stylesheet
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Style source path
+     *
+     * @var string
+     */
     protected $src;
 
     /* ------------------------------------------------------------------------------------------------
@@ -32,27 +41,27 @@ class Stylesheet
         $this->src = '';
     }
 
-    /**
-     * Make a Script
-     *
-     * @param string $source
-     *
-     * @return Script
-     */
-    public static function make($source)
-    {
-        return (new self)->setSrc($source);
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get src path
+     *
+     * @return string
      */
     public function getSrc()
     {
         return $this->src;
     }
 
+    /**
+     * Set src path
+     *
+     * @param  string $source
+     *
+     * @return self
+     */
     public function setSrc($source)
     {
         $this->src = $source;
@@ -60,6 +69,11 @@ class Stylesheet
         return $this;
     }
 
+    /**
+     * Get file
+     *
+     * @return mixed|string
+     */
     public function getFile()
     {
         if ($this->isEmpty()) {
@@ -71,6 +85,11 @@ class Stylesheet
         return count($elts) > 0 ? end($elts) : '';
     }
 
+    /**
+     * Get type
+     *
+     * @return string
+     */
     public function getType()
     {
         return self::TYPE;
@@ -79,6 +98,23 @@ class Stylesheet
     /* ------------------------------------------------------------------------------------------------
      |  Main Function
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Make a style
+     *
+     * @param  string $source
+     *
+     * @return Script
+     */
+    public static function make($source)
+    {
+        return (new self)->setSrc($source);
+    }
+
+    /**
+     * Render
+     *
+     * @return string
      */
     public function render()
     {

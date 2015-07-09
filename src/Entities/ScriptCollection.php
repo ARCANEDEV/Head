@@ -3,6 +3,10 @@
 use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Head\Support\Collection;
 
+/**
+ * Class ScriptCollection
+ * @package Arcanedev\Head\Entities
+ */
 class ScriptCollection extends Collection implements Renderable
 {
     /* ------------------------------------------------------------------------------------------------
@@ -12,17 +16,16 @@ class ScriptCollection extends Collection implements Renderable
     /**
      * Add a Script
      *
-     * @param string $source
+     * @param  string $source
      *
      * @return ScriptCollection
      */
     public function add($source)
     {
         $script = Script::make($source);
+        $key    = $script->getFile();
 
-        $key = $script->getFile();
-
-        if (! $this->has($key) ) {
+        if ( ! $this->has($key)) {
             $this->put($key, $script);
         }
 
@@ -32,7 +35,7 @@ class ScriptCollection extends Collection implements Renderable
     /**
      * Add many Scripts
      *
-     * @param array $sources
+     * @param  array $sources
      *
      * @return ScriptCollection
      */

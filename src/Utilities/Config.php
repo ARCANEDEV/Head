@@ -4,6 +4,10 @@ use Arcanedev\Head\Exceptions\FileNotFoundException;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Head\Support\Collection;
 
+/**
+ * Class Config
+ * @package Arcanedev\Head\Utilities
+ */
 class Config extends Collection
 {
     /* ------------------------------------------------------------------------------------------------

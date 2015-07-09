@@ -2,6 +2,10 @@
 
 use DateTime;
 
+/**
+ * Class ArticleObject
+ * @package Arcanedev\Head\Entities\OpenGraph\Objects
+ */
 class ArticleObject extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------

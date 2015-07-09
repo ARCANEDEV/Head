@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Traits\VersionableTrait;
 
+/**
+ * Class Script
+ * @package Arcanedev\Head\Entities
+ */
 class Script
 {
     /* ------------------------------------------------------------------------------------------------
@@ -9,6 +13,12 @@ class Script
      | ------------------------------------------------------------------------------------------------
      */
     use VersionableTrait;
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const TYPE     = 'text/javascript';
 
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -28,8 +38,6 @@ class Script
      */
     protected $cdn = false;
 
-    const TYPE     = 'text/javascript';
-
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
@@ -39,27 +47,27 @@ class Script
         $this->src = '';
     }
 
-    /**
-     * Make a Script
-     *
-     * @param string $source
-     *
-     * @return Script
-     */
-    public static function make($source)
-    {
-        return (new self)->setSrc($source);
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get src path
+     *
+     * @return string
      */
     public function getSrc()
     {
         return $this->src;
     }
 
+    /**
+     * Set src path
+     *
+     * @param  string $source
+     *
+     * @return self
+     */
     public function setSrc($source)
     {
         $this->src = $source;
@@ -67,6 +75,11 @@ class Script
         return $this;
     }
 
+    /**
+     * Get file
+     *
+     * @return mixed|string
+     */
     public function getFile()
     {
         if ($this->isEmpty()) {
@@ -82,6 +95,23 @@ class Script
      |  Main Function
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Make a Script
+     *
+     * @param  string $source
+     *
+     * @return Script
+     */
+    public static function make($source)
+    {
+        return (new self)->setSrc($source);
+    }
+
+    /**
+     * Render
+     *
+     * @return string
+     */
     public function render()
     {
         if ($this->isEmpty()) {
@@ -90,7 +120,7 @@ class Script
 
         $type = '';
 
-        if (! $this->isHTML5()) {
+        if ( ! $this->isHTML5()) {
             $type = ' type="' . self::TYPE . '"';
         }
 

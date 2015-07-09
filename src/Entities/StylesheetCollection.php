@@ -3,6 +3,10 @@
 use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Head\Support\Collection;
 
+/**
+ * Class StylesheetCollection
+ * @package Arcanedev\Head\Entities
+ */
 class StylesheetCollection extends Collection implements Renderable
 {
     /* ------------------------------------------------------------------------------------------------
@@ -12,17 +16,16 @@ class StylesheetCollection extends Collection implements Renderable
     /**
      * Add a Stylesheet source
      *
-     * @param string $source
+     * @param  string $source
      *
      * @return StylesheetCollection
      */
     public function add($source)
     {
         $style = Stylesheet::make($source);
+        $key  = $style->getFile();
 
-        $key = $style->getFile();
-
-        if (! $this->has($key) ) {
+        if ( ! $this->has($key)) {
             $this->put($key, $style);
         }
 
@@ -32,7 +35,7 @@ class StylesheetCollection extends Collection implements Renderable
     /**
      * Add many Stylesheet sources
      *
-     * @param array $sources
+     * @param  array $sources
      *
      * @return StylesheetCollection
      */

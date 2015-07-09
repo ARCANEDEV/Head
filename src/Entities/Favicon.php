@@ -3,6 +3,10 @@
 use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Markup\Markup;
 
+/**
+ * Class Favicon
+ * @package Arcanedev\Head\Entities
+ */
 class Favicon implements Renderable
 {
     /* ------------------------------------------------------------------------------------------------
@@ -75,11 +79,19 @@ class Favicon implements Renderable
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Render
+     *
+     * @return string
+     */
     public function render()
     {
         return implode(PHP_EOL, $this->toArray());
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         if ($this->isEmpty()) {
@@ -125,19 +137,5 @@ class Favicon implements Renderable
     public function isEmpty()
     {
         return empty($this->icon);
-    }
-
-    /**
-     * Check if favicon exists
-     *
-     * @param  string $extension
-     *
-     * @return bool
-     */
-    private function isFaviconExists($extension = 'ico')
-    {
-        $headers = @get_headers($this->getPath($extension));
-
-        return strpos($headers[0], '200') !== false;
     }
 }

@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Interface CharsetInterface
+ * @package Arcanedev\Head\Contracts\Entities
+ */
 interface CharsetInterface
 {
     /* ------------------------------------------------------------------------------------------------

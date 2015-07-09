@@ -40,3 +40,36 @@ if ( ! function_exists('base_url')) {
         return rtrim($protocol . '://' . $host, '/') . '/' . $path;
     }
 }
+
+if ( ! function_exists('get_default_charsets')) {
+    /**
+     * Get default charsets
+     *
+     * @return string[]
+     */
+    function get_default_charsets() {
+        return require __DIR__ . '/data/charsets.php';
+    }
+}
+
+if ( ! function_exists('get_supported_locales')) {
+    /**
+     * Get supported locales
+     *
+     * @return array
+     */
+    function get_supported_locales() {
+        return require __DIR__ . '/data/locales.php';
+    }
+}
+
+if ( ! function_exists('get_og_types')) {
+    /**
+     * Get OpenGraph types
+     *
+     * @return array
+     */
+    function get_og_types() {
+        return require __DIR__ . '/data/open-graph/types.php';
+    }
+}

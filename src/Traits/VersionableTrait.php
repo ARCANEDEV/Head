@@ -5,6 +5,10 @@ use Arcanedev\Head\Support\HTMLVersion;
 use Arcanedev\Head\Exceptions\InvalidHTMLVersionException;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Trait VersionableTrait
+ * @package Arcanedev\Head\Traits
+ */
 trait VersionableTrait
 {
     /* ------------------------------------------------------------------------------------------------

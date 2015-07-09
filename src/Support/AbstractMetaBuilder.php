@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Contracts\Arrayable;
 
+/**
+ * Class AbstractMetaBuilder
+ * @package Arcanedev\Head\Support
+ */
 abstract class AbstractMetaBuilder
 {
     /* ------------------------------------------------------------------------------------------------

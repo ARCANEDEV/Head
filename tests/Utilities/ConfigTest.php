@@ -3,13 +3,16 @@
 use Arcanedev\Head\Tests\TestCase;
 use Arcanedev\Head\Utilities\Config;
 
+/**
+ * Class ConfigTest
+ * @package Arcanedev\Head\Tests\Utilities
+ */
 class ConfigTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    const CONFIG_CLASS = 'Arcanedev\\Head\\Utilities\\Config';
     /** @var Config */
     private $config;
 
@@ -36,6 +39,6 @@ class ConfigTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::CONFIG_CLASS, $this->config);
+        $this->assertInstanceOf(Config::class, $this->config);
     }
 }

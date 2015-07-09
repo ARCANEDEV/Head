@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Objects;
 
+/**
+ * Class ProfileObject
+ * @package Arcanedev\Head\Entities\OpenGraph\Objects
+ */
 class ProfileObject extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------

@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Interface DescriptionInterface
+ * @package Arcanedev\Head\Contracts\Entities
+ */
 interface DescriptionInterface
 {
     /* ------------------------------------------------------------------------------------------------

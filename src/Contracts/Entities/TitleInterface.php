@@ -3,6 +3,10 @@
 use Arcanedev\Head\Exceptions\EmptyTitleException;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Interface TitleInterface
+ * @package Arcanedev\Head\Contracts\Entities
+ */
 interface TitleInterface
 {
     /* ------------------------------------------------------------------------------------------------

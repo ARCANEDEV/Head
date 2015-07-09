@@ -3,6 +3,10 @@
 use Arcanedev\Head\Contracts\Arrayable;
 use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 
+/**
+ * Class AbstractMedia
+ * @package Arcanedev\Head\Entities\OpenGraph\Medias
+ */
 abstract class AbstractMedia implements Arrayable
 {
     /* ------------------------------------------------------------------------------------------------
@@ -35,7 +39,9 @@ abstract class AbstractMedia implements Arrayable
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @return string URL string or null if not set
+     * Get URL
+     *
+     * @return string
      */
     public function getURL()
     {
@@ -45,13 +51,13 @@ abstract class AbstractMedia implements Arrayable
     /**
      * Set the media URL
      *
-     * @param string $url - resource location
+     * @param  string $url - resource location
      *
      * @return self
      */
     public function setURL($url)
     {
-        if ( $this->checkURL($url) ) {
+        if ($this->checkURL($url)) {
             $url = trim($url);
 
             $url = $this->verifyUrl($url);
@@ -81,12 +87,12 @@ abstract class AbstractMedia implements Arrayable
      */
     public function setSecureURL($url)
     {
-        if ( $this->checkURL($url) ) {
+        if ($this->checkURL($url)) {
             $url = trim($url);
 
             $url = $this->verifySecureURL($url);
 
-            if ( ! empty($url) ) {
+            if ( ! empty($url)) {
                 $this->secureUrl = $url;
             }
         }
@@ -113,7 +119,7 @@ abstract class AbstractMedia implements Arrayable
      */
     public function setType( $type )
     {
-        if ( $this->checkType($type) ) {
+        if ($this->checkType($type)) {
             $this->type = $type;
         }
 
@@ -126,7 +132,7 @@ abstract class AbstractMedia implements Arrayable
      */
     public function isEmpty()
     {
-        return ! isset($this->url) or empty($this->url);
+        return ! isset($this->url) || empty($this->url);
     }
 
     /**
@@ -153,7 +159,7 @@ abstract class AbstractMedia implements Arrayable
      */
     protected static function checkExtension($extension)
     {
-        return is_string($extension) and ! empty($extension);
+        return is_string($extension) && ! empty($extension);
     }
 
     /**
@@ -163,7 +169,7 @@ abstract class AbstractMedia implements Arrayable
      */
     private function verifyUrl($url)
     {
-        if (! OpenGraph::VERIFY_URLS) {
+        if ( ! OpenGraph::VERIFY_URLS) {
             return $url;
         }
 
@@ -177,7 +183,7 @@ abstract class AbstractMedia implements Arrayable
      */
     private function verifySecureURL($secureURL)
     {
-        if (! OpenGraph::VERIFY_URLS) {
+        if ( ! OpenGraph::VERIFY_URLS) {
             return $secureURL;
         }
 
@@ -206,7 +212,7 @@ abstract class AbstractMedia implements Arrayable
      */
     public function removeURL()
     {
-        if (! empty($this->url)) {
+        if ( ! empty($this->url)) {
             $this->url = '';
         }
     }

@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Support\AbstractMetaBuilder;
 
+/**
+ * Class OGMetaBuilder
+ * @package Arcanedev\Head\Entities\OpenGraph
+ */
 class OGMetaBuilder extends AbstractMetaBuilder
 {
     /* ------------------------------------------------------------------------------------------------

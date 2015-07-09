@@ -1,10 +1,13 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Objects;
 
-use Arcanedev\Head\Entities\OpenGraph;
-
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use DateTime;
 use DateTimeZone;
 
+/**
+ * Class AbstractObject
+ * @package Arcanedev\Head\Entities\OpenGraph\Objects
+ */
 class AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------
@@ -35,21 +38,20 @@ class AbstractObject
      */
     public function toHTML()
     {
-        return rtrim( OpenGraph::buildHTML( get_object_vars($this), static::PREFIX ), PHP_EOL );
+        return rtrim(OpenGraph::buildHTML(get_object_vars($this), static::PREFIX), PHP_EOL);
     }
 
     /**
      * Convert a DateTime object to GMT and format as an ISO 8601 string.
      *
-     * @param DateTime $date - date to convert
+     * @param  DateTime $date
      *
-     * @return string - ISO 8601 formatted datetime string
+     * @return string
      */
     public static function datetimeToIso8601(DateTime $date)
     {
-        $date->setTimezone(new DateTimeZone('GMT'));
-
-        return $date->format('c');
+        return $date->setTimezone(new DateTimeZone('GMT'))
+                    ->format('c');
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -65,14 +67,11 @@ class AbstractObject
      *
      * @return bool - true if URL is non-empty string. if VERIFY_URLS set then URL must also properly respond to a HTTP request.
      */
-    public static function isValidUrl( $url )
+    public static function isValidUrl($url, array $types = ['text/html', 'application/xhtml+xml'])
     {
-        if ( is_string($url) && !empty($url) )
-        {
-            if ( OpenGraph::VERIFY_URLS ) {
-                $url = self::isValidUrl($url, ['text/html', 'application/xhtml+xml']);
-
-                if ( ! empty($url) ) {
+        if (is_string($url) && ! empty($url)) {
+            if (OpenGraph::VERIFY_URLS) {
+                if ( ! empty(self::isValidUrl($url, $types))) {
                     return true;
                 }
             }

@@ -2,13 +2,16 @@
 
 use Arcanedev\Head\Entities\Charset;
 
+/**
+ * Class CharsetTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class CharsetTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
      |  Constants
      | ------------------------------------------------------------------------------------------------
      */
-    const CHARSET_CLASS = 'Arcanedev\\Head\\Entities\\Charset';
     const UTF_CHARSET   = 'UTF-8';
     const ISO_CHARSET   = 'ISO-8859-15';
 
@@ -37,17 +40,13 @@ class CharsetTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::CHARSET_CLASS, $this->charset);
+        $this->assertInstanceOf(Charset::class, $this->charset);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_charset()
     {
         $this->assertEquals(self::UTF_CHARSET, $this->charset->get());
@@ -67,9 +66,7 @@ class CharsetTest extends TestCase
         $this->charset->set(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_is_supported_charset()
     {
         $this->assertTrue($this->charset->supported(self::UTF_CHARSET));
@@ -80,17 +77,13 @@ class CharsetTest extends TestCase
         $this->assertFalse($this->charset->supported('WTF-8'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_default_if_not_supported()
     {
         $this->assertEquals('UTF-8', $this->charset->set('WTF-8')->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_html_version()
     {
         $this->assertEquals('5', $this->charset->getVersion());
@@ -132,9 +125,7 @@ class CharsetTest extends TestCase
         $this->charset->setVersion(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render_meta_tag()
     {
         $this->assertEquals('<meta charset="UTF-8">', $this->charset->render());
@@ -158,9 +149,7 @@ class CharsetTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_has_default_charsets()
     {
         $method          = parent::getMethod('Charset', 'getDefaultCharsets');

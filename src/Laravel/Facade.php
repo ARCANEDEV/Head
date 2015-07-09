@@ -1,6 +1,11 @@
 <?php namespace Arcanedev\Head\Laravel;
+use Illuminate\Support\Facades\Facade as IlluminateFacade;
 
-class Facade extends \Illuminate\Support\Facades\Facade
+/**
+ * Class Facade
+ * @package Arcanedev\Head\Laravel
+ */
+class Facade extends IlluminateFacade
 {
     /**
      * Get the registered name of the component.

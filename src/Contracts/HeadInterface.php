@@ -9,6 +9,10 @@ use Arcanedev\Head\Entities\MetaCollection;
 use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Interface HeadInterface
+ * @package Arcanedev\Head\Contracts
+ */
 interface HeadInterface
 {
     /* ------------------------------------------------------------------------------------------------

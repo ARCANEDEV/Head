@@ -7,6 +7,10 @@ use Arcanedev\Head\Exceptions\InvalidTypeException;
 use Arcanedev\Markup\Entities\Tag;
 use Arcanedev\Markup\Markup;
 
+/**
+ * Class Title
+ * @package Arcanedev\Head\Entities
+ */
 class Title implements TitleInterface, Renderable
 {
     /* ------------------------------------------------------------------------------------------------
@@ -81,7 +85,7 @@ class Title implements TitleInterface, Renderable
     /**
      * Set Title
      *
-     * @param string $title
+     * @param  string $title
      *
      * @throws InvalidTypeException
      * @throws EmptyTitleException
@@ -91,7 +95,6 @@ class Title implements TitleInterface, Renderable
     public function set($title)
     {
         $this->checkTitle($title);
-
         $this->title = $title;
 
         return $this;
@@ -100,7 +103,7 @@ class Title implements TitleInterface, Renderable
     /**
      * Set or Get Site Name
      *
-     * @param string $siteName
+     * @param  string $siteName
      *
      * @throws InvalidTypeException
      *
@@ -109,7 +112,6 @@ class Title implements TitleInterface, Renderable
     public function siteName($siteName = '')
     {
         $this->checkIsString('site name', $siteName);
-
         $siteName = trim($siteName);
 
         return empty($siteName)
@@ -119,7 +121,8 @@ class Title implements TitleInterface, Renderable
 
     /**
      * Set Site Name
-     * @param string $siteName
+     *
+     * @param  string $siteName
      *
      * @throws InvalidTypeException
      *
@@ -167,7 +170,7 @@ class Title implements TitleInterface, Renderable
     /**
      * Set Site Name visibility
      *
-     * @param bool $visible
+     * @param  bool $visible
      *
      * @return Title
      */
@@ -201,7 +204,7 @@ class Title implements TitleInterface, Renderable
     /**
      * Set Site Name Position
      *
-     * @param bool $first
+     * @param  bool $first
      *
      * @return Title
      */
@@ -215,7 +218,7 @@ class Title implements TitleInterface, Renderable
     /**
      * Set or Get Separator
      *
-     * @param string $separator
+     * @param  string $separator
      *
      * @throws InvalidTypeException
      *
@@ -243,7 +246,9 @@ class Title implements TitleInterface, Renderable
     }
 
     /**
-     * @param string $separator
+     * Set title separator
+     *
+     * @param  string $separator
      *
      * @throws InvalidTypeException
      *
@@ -259,7 +264,9 @@ class Title implements TitleInterface, Renderable
     }
 
     /**
-     * @param array $config
+     * Set config
+     *
+     * @param  array $config
      *
      * @return Title
      */
@@ -268,9 +275,7 @@ class Title implements TitleInterface, Renderable
         // TODO: Add check config method
         $this->setSeparator($config['separator']);
 
-        $config['first']
-            ? $this->siteNameLast()
-            : $this->siteNameFirst();
+        $config['first'] ? $this->siteNameLast() : $this->siteNameFirst();
 
         $this->setSiteName($config['site-name']['content']);
         $this->setSiteNameVisibility($config['site-name']['enabled']);
@@ -306,13 +311,10 @@ class Title implements TitleInterface, Renderable
      */
     private function getFirst(&$title)
     {
-        if ($this->checkSiteName() and $this->isSiteNameFirst()) {
+        if ($this->checkSiteName() && $this->isSiteNameFirst())
             $this->renderSiteName($title);
-
-            return;
-        }
-
-        $this->renderTitle($title);
+        else
+            $this->renderTitle($title);
     }
 
     /**
@@ -322,17 +324,14 @@ class Title implements TitleInterface, Renderable
      */
     private function getLast(&$title)
     {
-        if ( ! $this->checkSiteName() ) {
+        if ( ! $this->checkSiteName()) {
             return;
         }
 
-        if ( ! $this->isSiteNameFirst() ) {
+        if ( ! $this->isSiteNameFirst())
             $this->renderSiteName($title);
-
-            return;
-        }
-
-        $this->renderTitle($title);
+        else
+            $this->renderTitle($title);
     }
 
     /**
@@ -352,7 +351,7 @@ class Title implements TitleInterface, Renderable
      */
     private function renderSiteName(&$title)
     {
-        if ( $this->checkSiteName() ) {
+        if ($this->checkSiteName()) {
             $title[] = $this->getSitename();
         }
     }
@@ -364,7 +363,7 @@ class Title implements TitleInterface, Renderable
      */
     private function renderSeparator(&$title)
     {
-        if ( $this->checkSeparator() ) {
+        if ($this->checkSeparator()) {
             $title[] = $this->getSeparator();
         }
     }
@@ -430,7 +429,17 @@ class Title implements TitleInterface, Renderable
      */
     private function checkSiteName()
     {
-        return ! $this->isSiteNameEmpty() and $this->isSiteNameVisible();
+        return ! $this->isSiteNameEmpty() && $this->isSiteNameVisible();
+    }
+
+    /**
+     * Check if Separator is Renderable
+     *
+     * @return bool
+     */
+    private function checkSeparator()
+    {
+        return ! $this->isSeparatorEmpty() && $this->checkSiteName();
     }
 
     /**
@@ -444,19 +453,9 @@ class Title implements TitleInterface, Renderable
     }
 
     /**
-     * Check if Separator is Renderable
-     *
-     * @return bool
-     */
-    private function checkSeparator()
-    {
-        return ! $this->isSeparatorEmpty() and $this->checkSiteName();
-    }
-
-    /**
      * Check Title
      *
-     * @param string $title
+     * @param  string $title
      *
      * @throws EmptyTitleException
      * @throws InvalidTypeException
@@ -467,7 +466,7 @@ class Title implements TitleInterface, Renderable
 
         $title = trim($title);
 
-        if ( empty($title) ) {
+        if (empty($title)) {
             throw new EmptyTitleException('The title is empty !');
         }
     }

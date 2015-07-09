@@ -3,14 +3,12 @@
 use Arcanedev\Head\Entities\OpenGraph\Medias\AbstractMedia;
 use Arcanedev\Head\Tests\Entities\TestCase;
 
+/**
+ * Class AbstractMediaTestCase
+ * @package Arcanedev\Head\Tests\Entities\OpenGraph\Medias
+ */
 abstract class AbstractMediaTestCase extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const OG_ABSTRACT_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\AbstractMedia';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -39,7 +37,7 @@ abstract class AbstractMediaTestCase extends TestCase
     protected function assertAbstractMediaInstance()
     {
         if ( $this->isMediaNotNull() ) {
-            $this->assertInstanceOf(self::OG_ABSTRACT_MEDIA_CLASS, $this->media);
+            $this->assertInstanceOf(AbstractMedia::class, $this->media);
         }
     }
 

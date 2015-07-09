@@ -2,6 +2,10 @@
 
 use DateTime;
 
+/**
+ * Class VideoObject
+ * @package Arcanedev\Head\Entities\OpenGraph\Objects
+ */
 class VideoObject extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------

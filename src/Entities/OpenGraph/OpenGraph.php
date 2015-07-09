@@ -1,13 +1,16 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph;
 
+use Arcanedev\Head\Contracts\Entities\OpenGraphInterface;
+use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Head\Entities\OpenGraph\Medias\AudioMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
-
-use Arcanedev\Head\Contracts\Entities\OpenGraphInterface;
-use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Head\Entities\Title;
 
+/**
+ * Class OpenGraph
+ * @package Arcanedev\Head\Entities\OpenGraph
+ */
 class OpenGraph implements OpenGraphInterface, Renderable
 {
     /* ------------------------------------------------------------------------------------------------
@@ -22,7 +25,8 @@ class OpenGraph implements OpenGraphInterface, Renderable
     const VERSION = '1.3';
 
     /**
-     * Should we remotely request each referenced URL to make sure it exists and returns the expected Internet media type?
+     * Should we remotely request each referenced URL to make sure it exists and returns
+     * the expected Internet media type?
      *
      * @var bool
      */
@@ -84,24 +88,24 @@ class OpenGraph implements OpenGraphInterface, Renderable
      * An array of OpenGraphProtocolImage objects
      *
      * @var array
+     * @TODO: Change this to ImageCollection
      */
-    // TODO: Change this to ImageCollection
     protected $images;
 
     /**
      * An array of OpenGraphProtocolAudio objects
      *
      * @var array
+     * @TODO: Change this to AudioCollection
      */
-    // TODO: Change this to AudioCollection
     protected $audios;
 
     /**
      * An array of OpenGraphProtocolVideo objects
      *
      * @var array
+     * @TODO: Change this to VideoCollection
      */
-    // TODO: Change this to VideoCollection
     protected $videos;
 
     /* ------------------------------------------------------------------------------------------------
@@ -136,7 +140,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
     public function setType($type)
     {
         if (
-            is_string($type) and
+            is_string($type) &&
             in_array($type, self::supportedTypes(true), true)
         ) {
             $this->type = $type;
@@ -158,9 +162,9 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Set Title
      *
-     * @param string $title
+     * @param  string $title
      *
-     * @return OpenGraph
+     * @return self
      */
     public function setTitle($title)
     {
@@ -190,9 +194,9 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Set Site name
      *
-     * @param string $siteName
+     * @param  string $siteName
      *
-     * @return OpenGraph
+     * @return self
      */
     public function setSiteName($siteName)
     {
@@ -224,11 +228,11 @@ class OpenGraph implements OpenGraphInterface, Renderable
      *
      * @param string $description
      *
-     * @return OpenGraph
+     * @return self
      */
     public function setDescription($description)
     {
-        if (is_string($description) and ! empty($description)) {
+        if (is_string($description) && ! empty($description)) {
             $description = trim( $description );
 
             if (strlen($description) > 255) {
@@ -254,13 +258,13 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Set the Canonical URL
      *
-     * @param string $url
+     * @param  string $url
      *
-     * @return OpenGraph
+     * @return self
      */
     public function setURL($url)
     {
-        if (! is_string($url) or empty($url)) {
+        if ( ! is_string($url) || empty($url)) {
             return $this;
         }
 
@@ -272,7 +276,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
             ]);
         }
 
-        if (! empty($url)) {
+        if ( ! empty($url)) {
             $this->url = $url;
         }
 
@@ -292,9 +296,9 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Set the determiner
      *
-     * @param string $determiner
+     * @param  string $determiner
      *
-     * @return OpenGraph
+     * @return self
      */
     public function setDeterminer($determiner)
     {
@@ -318,14 +322,14 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Set locale in the format (language_TERRITORY)
      *
-     * @var string $locale
+     * @param  string $locale
      *
-     * @return OpenGraph
+     * @return self
      */
     public function setLocale($locale)
     {
         if (
-            is_string($locale) and
+            is_string($locale) &&
             in_array($locale, self::supportedLocales(true))
         ) {
             $this->locale = $locale;
@@ -349,9 +353,9 @@ class OpenGraph implements OpenGraphInterface, Renderable
      * The first image added is given priority by the Open Graph Protocol spec.
      * Implementors may choose a different image based on size requirements or preferences.
      *
-     * @param ImageMedia $image
+     * @param  ImageMedia $image
      *
-     * @return OpenGraph
+     * @return self
      */
     public function addImage(ImageMedia $image)
     {
@@ -369,10 +373,10 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Add ImageMedia to Collection
      *
-     * @param string     $imageUrl
-     * @param ImageMedia $image
+     * @param  string     $imageUrl
+     * @param  ImageMedia $image
      *
-     * @return $this
+     * @return self
      */
     private function addImageToCollection($imageUrl, ImageMedia $image)
     {
@@ -403,9 +407,9 @@ class OpenGraph implements OpenGraphInterface, Renderable
      * The first video is given priority by the Open Graph protocol spec.
      * Implementors may choose a different video based on size requirements or preferences.
      *
-     * @param VideoMedia $video
+     * @param  VideoMedia $video
      *
-     * @return OpenGraph
+     * @return self
      */
     public function addVideo(VideoMedia $video)
     {
@@ -418,7 +422,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
         $video->removeURL();
         $value = [$video_url, [$video]];
 
-        if (! isset($this->videos)) {
+        if ( ! isset($this->videos)) {
             $this->videos = [$value];
         }
         else {
@@ -442,9 +446,9 @@ class OpenGraph implements OpenGraphInterface, Renderable
      * Add an audio reference
      * The first audio is given priority by the Open Graph protocol spec.
      *
-     * @param AudioMedia $audio
+     * @param  AudioMedia $audio
      *
-     * @return OpenGraph|string
+     * @return self|string
      */
     public function addAudio(AudioMedia $audio)
     {
@@ -471,6 +475,13 @@ class OpenGraph implements OpenGraphInterface, Renderable
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Update the title
+     *
+     * @param  Title $title
+     *
+     * @return self
+     */
     public function update(Title $title)
     {
         $this->setTitle($title->getTitle())
@@ -482,7 +493,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Enable OpenGraph
      *
-     * @return OpenGraph
+     * @return self
      */
     public function enable()
     {
@@ -492,7 +503,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Disable OpenGraph
      *
-     * @return OpenGraph
+     * @return self
      */
     public function disable()
     {
@@ -502,9 +513,9 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Set OpenGraph to Enable/Disable
      *
-     * @param bool $enabled
+     * @param  bool $enabled
      *
-     * @return OpenGraph
+     * @return self
      */
     private function setEnabled($enabled)
     {
@@ -520,13 +531,17 @@ class OpenGraph implements OpenGraphInterface, Renderable
      */
     public function render()
     {
-        return $this->isEnabled() ? $this->toHTML() : '';
+        if ( ! $this->isEnabled()) {
+            return '';
+        }
+
+        return $this->toHTML();
     }
 
     /**
      * Output the OpenGraphProtocol object as HTML elements string
      *
-     * @return string meta elements
+     * @return string
      */
     private function toHTML()
     {
@@ -696,7 +711,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
     /**
      * Parse URL
      *
-     * @param string $url
+     * @param  string $url
      *
      * @return string
      */

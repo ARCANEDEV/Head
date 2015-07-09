@@ -8,6 +8,10 @@ use Arcanedev\Head\Entities\Title;
 use Arcanedev\Head\Laravel\Facade as Head;
 use Arcanedev\Head\Tests\LaravelTestCase;
 
+/**
+ * Class FacadeTest
+ * @package Arcanedev\Head\Tests\Laravel
+ */
 class FacadeTest extends LaravelTestCase
 {
     /* ------------------------------------------------------------------------------------------------

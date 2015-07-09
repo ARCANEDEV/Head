@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\Keywords;
 
+/**
+ * Class KeywordsTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class KeywordsTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const KEYWORDS_CLASS = 'Arcanedev\\Head\\Entities\\Keywords';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -35,20 +33,16 @@ class KeywordsTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::KEYWORDS_CLASS, $this->keywords);
+        $this->assertInstanceOf(Keywords::class, $this->keywords);
 
         $this->assertTrue($this->keywords->isEmpty());
         $this->assertEquals([], $this->keywords->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_keywords_from_array()
     {
         $arrayKeywords = $this->getKeywordsArray();
@@ -58,9 +52,7 @@ class KeywordsTest extends TestCase
         $this->assertEquals($arrayKeywords, $this->keywords->get());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_keywords_from_string()
     {
         $stringKeywords = $this->getKeywordsString();
@@ -92,9 +84,7 @@ class KeywordsTest extends TestCase
         ]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render()
     {
         $this->assertEquals('', $this->keywords->render());

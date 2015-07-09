@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Objects;
 
+/**
+ * Class VideoEpisodeObject
+ * @package Arcanedev\Head\Entities\OpenGraph\Objects
+ */
 class VideoEpisodeObject extends VideoObject
 {
     /* ------------------------------------------------------------------------------------------------

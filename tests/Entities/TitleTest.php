@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\Title;
 
+/**
+ * Class TitleTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class TitleTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const TITLE_CLASS = 'Arcanedev\\Head\\Entities\\Title';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -35,19 +33,14 @@ class TitleTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::TITLE_CLASS, $this->title);
-
+        $this->assertInstanceOf(Title::class, $this->title);
         $this->assertEmpty($this->title->render());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_title()
     {
         $this->title->set('My awesome title');
@@ -75,9 +68,7 @@ class TitleTest extends TestCase
         $this->title->set(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_site_name()
     {
         $siteName = 'Company Name';
@@ -87,9 +78,7 @@ class TitleTest extends TestCase
         $this->assertEquals($siteName, $this->title->siteName());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_toggle_site_name_visibility()
     {
         $this->assertTrue($this->title->isSiteNameVisible());
@@ -104,9 +93,7 @@ class TitleTest extends TestCase
         $this->assertFalse($this->title->isSiteNameHidden());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_separator()
     {
         $this->title->separator(' -');
@@ -122,9 +109,7 @@ class TitleTest extends TestCase
         $this->assertTrue($this->title->isSeparatorEmpty());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render_title()
     {
         $title = 'Hello world';
@@ -135,9 +120,7 @@ class TitleTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render_title_with_siteName()
     {
         $title    = 'My awesome title';
@@ -150,9 +133,7 @@ class TitleTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render_title_without_site_name()
     {
         $title    = 'My awesome title';
@@ -167,9 +148,7 @@ class TitleTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render_title_with_order()
     {
         $title    = 'My awesome title';
@@ -194,9 +173,7 @@ class TitleTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render_title_six()
     {
         $title     = 'My awesome title';

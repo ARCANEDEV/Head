@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Support\AbstractMetaBuilder;
 
+/**
+ * Class TwitterMetaBuilder
+ * @package Arcanedev\Head\Entities\TwitterCard
+ */
 class TwitterMetaBuilder extends AbstractMetaBuilder
 {
     /* ------------------------------------------------------------------------------------------------

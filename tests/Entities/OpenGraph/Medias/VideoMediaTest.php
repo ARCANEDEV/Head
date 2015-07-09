@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
 
+/**
+ * Class VideoMediaTest
+ * @package Arcanedev\Head\Tests\Entities\OpenGraph\Medias
+ */
 class VideoMediaTest extends VisualMediaTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const OG_VIDEO_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\VideoMedia';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -39,19 +37,15 @@ class VideoMediaTest extends VisualMediaTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::OG_VIDEO_MEDIA_CLASS, $this->media);
+        $this->assertInstanceOf(VideoMedia::class, $this->media);
         $this->assertVisualMediaInstance();
         $this->assertAbstractMediaInstance();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_url()
     {
         $this->assertCanSetAndGetURL('http://www.company.com/video.mp4');
@@ -59,33 +53,25 @@ class VideoMediaTest extends VisualMediaTestCase
         $this->assertEquals('video/mp4', $this->media->getTypeFromUrl());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_secure_url()
     {
         $this->assertCanSetAndGetSecureURL('https://www.company.com/video.mp4');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_type()
     {
         $this->assertCanSetAndGetType('application/x-shockwave-flash');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function assert_can_set_and_get_width_and_height()
     {
         parent::assertCanSetAndGetWidthAndHeight();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_convert_extension_to_media_type()
     {
         $extensions = [

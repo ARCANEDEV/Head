@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Medias;
 
+/**
+ * Class VideoMedia
+ * @package Arcanedev\Head\Entities\OpenGraph\Medias
+ */
 class VideoMedia extends VisualMedia
 {
     /* ------------------------------------------------------------------------------------------------
@@ -25,8 +29,8 @@ class VideoMedia extends VisualMedia
      */
     protected function checkType($type)
     {
-        return $type === 'application/x-shockwave-flash'
-            or substr_compare( $type, 'video/', 0, 6 ) === 0;
+        return $type === 'application/x-shockwave-flash' ||
+               substr_compare( $type, 'video/', 0, 6 ) === 0;
     }
 
     /* ------------------------------------------------------------------------------------------------

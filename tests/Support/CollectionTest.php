@@ -3,14 +3,12 @@
 use Arcanedev\Head\Support\Collection;
 use Arcanedev\Head\Tests\TestCase;
 
+/**
+ * Class CollectionTest
+ * @package Arcanedev\Head\Tests\Support
+ */
 class CollectionTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const COLLECTION_CLASS = 'Arcanedev\\Head\\Support\\Collection';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -40,18 +38,14 @@ class CollectionTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::COLLECTION_CLASS, $this->collection);
+        $this->assertInstanceOf(Collection::class, $this->collection);
         $this->assertCount(0, $this->collection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add()
     {
         $this->collection->put('foo', 'bar');
@@ -61,9 +55,7 @@ class CollectionTest extends TestCase
         $this->assertCount(2, $this->collection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_add_like_array()
     {
         $this->collection['foo'] = 'bar';
@@ -76,9 +68,7 @@ class CollectionTest extends TestCase
         $this->assertCount(3, $this->collection);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_all()
     {
         $this->collection->put('foo', 'bar');
@@ -97,9 +87,7 @@ class CollectionTest extends TestCase
         $this->assertArrayHasKey('bar', $items);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_get_one()
     {
         $this->collection->put('foo', 'bar');
@@ -112,9 +100,7 @@ class CollectionTest extends TestCase
         $this->assertEquals($default, $this->collection->get('baz', $default));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_unset()
     {
         $this->collection->put('foo', 'bar');
@@ -128,9 +114,7 @@ class CollectionTest extends TestCase
         $this->assertNull($this->collection->get('foo'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_each_loop()
     {
         $this->collection->put('foo', 'bar');
@@ -141,9 +125,7 @@ class CollectionTest extends TestCase
         });
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_instantiate_with_collection()
     {
         $collection = new Collection([

@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 
+/**
+ * Class ImageMediaTest
+ * @package Arcanedev\Head\Tests\Entities\OpenGraph\Medias
+ */
 class ImageMediaTest extends VisualMediaTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const OG_IMAGE_MEDIA_CLASS = 'Arcanedev\\Head\\Entities\\OpenGraph\\Medias\\ImageMedia';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -39,22 +37,15 @@ class ImageMediaTest extends VisualMediaTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(
-            self::OG_IMAGE_MEDIA_CLASS,
-            $this->media
-        );
+        $this->assertInstanceOf(ImageMedia::class, $this->media);
         $this->assertVisualMediaInstance();
         $this->assertAbstractMediaInstance();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_url()
     {
         $url = 'http://www.company.com/image.jpg';
@@ -69,33 +60,25 @@ class ImageMediaTest extends VisualMediaTestCase
         $this->assertEquals('', $this->media->toString());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_secure_url()
     {
         $this->assertCanSetAndGetSecureURL('https://www.company.com/image.jpg');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_type()
     {
         $this->assertCanSetAndGetType('image/jpeg');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_width_and_height()
     {
         $this->assertCanSetAndGetWidthAndHeight();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_convert_extension_to_media_type()
     {
         $extensions = [
@@ -114,9 +97,7 @@ class ImageMediaTest extends VisualMediaTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_convert_to_array()
     {
         $height    = 120;

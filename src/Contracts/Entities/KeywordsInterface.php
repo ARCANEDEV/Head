@@ -2,6 +2,10 @@
 
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Interface KeywordsInterface
+ * @package Arcanedev\Head\Contracts\Entities
+ */
 interface KeywordsInterface
 {
     /* ------------------------------------------------------------------------------------------------

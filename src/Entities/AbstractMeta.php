@@ -2,13 +2,12 @@
 
 use Arcanedev\Markup\Markup;
 
+/**
+ * Class AbstractMeta
+ * @package Arcanedev\Head\Entities
+ */
 abstract class AbstractMeta
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Properties
-     | ------------------------------------------------------------------------------------------------
-     */
-
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
@@ -27,9 +26,11 @@ abstract class AbstractMeta
      */
     protected function renderMetaTag($name, $content, array $attributes = [])
     {
-        return ! $this->isEmpty()
-            ? Markup::meta('name', $name, $content, $attributes)->render()
-            : '';
+        if ($this->isEmpty()) {
+            return '';
+        }
+
+        return Markup::meta('name', $name, $content, $attributes)->render();
     }
 
     /* ------------------------------------------------------------------------------------------------

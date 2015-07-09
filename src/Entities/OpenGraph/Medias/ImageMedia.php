@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Medias;
 
+/**
+ * Class ImageMedia
+ * @package Arcanedev\Head\Entities\OpenGraph\Medias
+ */
 class ImageMedia extends VisualMedia
 {
     /* ------------------------------------------------------------------------------------------------

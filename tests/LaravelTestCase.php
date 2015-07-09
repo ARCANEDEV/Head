@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\Head\Tests;
 
+/**
+ * Class LaravelTestCase
+ * @package Arcanedev\Head\Tests
+ */
 abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
 {
     /* ------------------------------------------------------------------------------------------------
@@ -21,26 +25,30 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Register Service Providers
+     * Get package providers.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      *
      * @return array
      */
-    protected function getPackageProviders()
+    protected function getPackageProviders($app)
     {
         return [
-            'Arcanedev\Head\Laravel\ServiceProvider'
+            \Arcanedev\Head\Laravel\ServiceProvider::class
         ];
     }
 
     /**
-     * Register Aliases
+     * Get package aliases.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      *
      * @return array
      */
-    protected function getPackageAliases()
+    protected function getPackageAliases($app)
     {
         return [
-            'Facade' => 'Arcanedev\Head\Laravel\Facade'
+            'Head' => \Arcanedev\Head\Laravel\Facade::class
         ];
     }
 
@@ -52,5 +60,18 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
+    }
+
+    /**
+     * Call artisan command and return code.
+     *
+     * @param string $command
+     * @param array $parameters
+     *
+     * @return int
+     */
+    public function artisan($command, $parameters = [])
+    {
+        // TODO: Implement artisan() method.
     }
 }

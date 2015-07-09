@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Medias;
 
+/**
+ * Class VisualMedia
+ * @package Arcanedev\Head\Entities\OpenGraph\Medias
+ */
 abstract class VisualMedia extends AbstractMedia
 {
     /* ------------------------------------------------------------------------------------------------
@@ -25,10 +29,12 @@ abstract class VisualMedia extends AbstractMedia
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @param int $width
-     * @param int $height
+     * Set dimensions
      *
-     * @return VisualMedia
+     * @param  int $width
+     * @param  int $height
+     *
+     * @return self
      */
     public function setDimensions($width, $height)
     {
@@ -39,7 +45,9 @@ abstract class VisualMedia extends AbstractMedia
     }
 
     /**
-     * @return int width in pixels
+     * Get width in pixels
+     *
+     * @return int
      */
     public function getWidth()
     {
@@ -47,15 +55,15 @@ abstract class VisualMedia extends AbstractMedia
     }
 
     /**
-     * Set the object width
+     * Set the object width in pixels
      *
-     * @param int $width - width in pixels
+     * @param  int $width
      *
-     * @return VisualMedia
+     * @return self
      */
     public function setWidth($width)
     {
-        if ( $this->isValidDimension($width) ) {
+        if ($this->isValidDimension($width)) {
             $this->width = $width;
         }
 
@@ -63,7 +71,9 @@ abstract class VisualMedia extends AbstractMedia
     }
 
     /**
-     * @return int - height in pixels
+     * Get height in pixels
+     *
+     * @return int
      */
     public function getHeight()
     {
@@ -73,9 +83,9 @@ abstract class VisualMedia extends AbstractMedia
     /**
      * Set the height of the referenced object in pixels
      *
-     * @var int - height of the referenced object in pixels
+     * @param  int
      *
-     * @return VisualMedia
+     * @return self
      */
     public function setHeight($height)
     {
@@ -91,12 +101,14 @@ abstract class VisualMedia extends AbstractMedia
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @param int $dimension
+     * Check is valid dimension
+     *
+     * @param  int $dimension
      *
      * @return bool
      */
     public function isValidDimension($dimension)
     {
-        return is_int($dimension) and $dimension > 0;
+        return is_int($dimension) && $dimension > 0;
     }
 }

@@ -6,6 +6,10 @@ use ArrayAccess;
 use Closure;
 use Countable;
 
+/**
+ * Class Collection
+ * @package Arcanedev\Head\Support
+ */
 class Collection implements Countable, ArrayAccess, Arrayable
 {
     /* ------------------------------------------------------------------------------------------------

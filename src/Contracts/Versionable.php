@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\Head\Contracts;
 
+/**
+ * Interface Versionable
+ * @package Arcanedev\Head\Contracts
+ */
 interface Versionable
 {
     /* ------------------------------------------------------------------------------------------------

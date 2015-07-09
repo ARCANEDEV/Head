@@ -3,6 +3,10 @@
 use Arcanedev\Head\Contracts\Entities\DescriptionInterface;
 use Arcanedev\Head\Exceptions\InvalidTypeException;
 
+/**
+ * Class Description
+ * @package Arcanedev\Head\Entities
+ */
 class Description extends AbstractMeta implements DescriptionInterface
 {
     /* ------------------------------------------------------------------------------------------------
@@ -40,7 +44,7 @@ class Description extends AbstractMeta implements DescriptionInterface
     /**
      * Set Description
      *
-     * @param string $description
+     * @param  string $description
      *
      * @throws InvalidTypeException
      *
@@ -49,7 +53,6 @@ class Description extends AbstractMeta implements DescriptionInterface
     public function set($description)
     {
         $this->check($description);
-
         $this->description = $description;
 
         return $this;
@@ -77,9 +80,11 @@ class Description extends AbstractMeta implements DescriptionInterface
      */
     public function render()
     {
-        return ! $this->isEmpty()
-            ? $this->renderMetaTag('description', $this->getSEODescription())
-            : '';
+        if ($this->isEmpty()) {
+            return '';
+        }
+
+        return $this->renderMetaTag('description', $this->getSEODescription());
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -99,7 +104,7 @@ class Description extends AbstractMeta implements DescriptionInterface
     /**
      * Check Description
      *
-     * @param string $description
+     * @param  string $description
      *
      * @throws InvalidTypeException
      */

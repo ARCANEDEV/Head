@@ -2,14 +2,12 @@
 
 use Arcanedev\Head\Entities\Description;
 
+/**
+ * Class DescriptionTest
+ * @package Arcanedev\Head\Tests\Entities
+ */
 class DescriptionTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const DESCRIPTION_CLASS = 'Arcanedev\\Head\\Entities\\Description';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -35,18 +33,14 @@ class DescriptionTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::DESCRIPTION_CLASS, $this->description);
+        $this->assertInstanceOf(Description::class, $this->description);
         $this->assertTrue($this->description->isEmpty());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_set_and_get_description()
     {
         $this->assertEquals('', $this->description->get());
@@ -67,9 +61,7 @@ class DescriptionTest extends TestCase
         $this->description->set(true);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function test_can_render()
     {
         $this->assertEquals('', $this->description->render());

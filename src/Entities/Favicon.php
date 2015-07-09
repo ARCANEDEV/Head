@@ -20,9 +20,9 @@ class Favicon implements Renderable
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    public function __construct()
+    public function __construct($icon = '')
     {
-        $this->icon = '';
+        $this->setIcon($icon);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ class Favicon implements Renderable
      *
      * @return Favicon
      */
-    public function setConfig($icon = '')
+    public function setIcon($icon = '')
     {
         $this->icon = $icon;
 

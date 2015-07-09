@@ -321,10 +321,10 @@ class HeadTest extends TestCase
             '<title>' . $title . '</title>',
             '<meta name="description" content="' . $description . '"/>',
             '<meta name="keywords" content="' . implode(', ', $arrayKeywords) .'"/>',
-            '<meta name="author" content="ARCANEDEV"/>',
-            '<meta name="robots" content="noindex, nofollow"/>',
             '<link href="' . base_url('favicon.ico'). '" rel="icon" type="image/x-icon"/>',
             '<link href="' . base_url('favicon.png'). '" rel="icon" type="image/png"/>',
+            '<meta name="author" content="ARCANEDEV"/>',
+            '<meta name="robots" content="noindex, nofollow"/>',
         ];
 
         // SEO

@@ -23,7 +23,7 @@ class FaviconTest extends TestCase
     {
         parent::setUp();
 
-        $this->favicon = (new Favicon)->setConfig('favicon');
+        $this->favicon = new Favicon('favicon');
     }
 
     public function tearDown()

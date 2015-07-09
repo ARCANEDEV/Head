@@ -153,7 +153,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     {
         $this->setCharset($this->config->get('charset', Charset::DEFAULT_CHARSET));
         $this->title->setConfig($this->config->get('title', []));
-        $this->favicon->setConfig($this->config->get('favicon', ''));
+        $this->favicon->setIcon($this->config->get('favicon', ''));
 
         return $this;
     }
@@ -263,15 +263,39 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set Site name
      *
-     * @param string $sitename
+     * @param string $siteName
      *
      * @return Head
      */
-    public function setSiteName($sitename)
+    public function setSiteName($siteName)
     {
-        $this->title->setSiteName($sitename);
+        $this->title->setSiteName($siteName);
 
         return $this->updateTitleDependencies();
+    }
+
+    /**
+     * Show the site name
+     *
+     * @return self
+     */
+    public function showSiteName()
+    {
+        $this->title->showSiteName();
+
+        return $this;
+    }
+
+    /**
+     * Hide the site name
+     *
+     * @return self
+     */
+    public function hideSiteName()
+    {
+        $this->title->hideSiteName();
+
+        return $this;
     }
 
     /**
@@ -477,6 +501,20 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
         return $this;
     }
 
+    /**
+     * Set favicon path (without extension)
+     *
+     * @param  string $path
+     *
+     * @return self
+     */
+    public function setFavicon($path)
+    {
+        $this->favicon->setIcon($path);
+
+        return $this;
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Facebook / OpenGraph Functions
      | ------------------------------------------------------------------------------------------------
@@ -516,6 +554,58 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
     /* ------------------------------------------------------------------------------------------------
+     |  Twitter Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Enable twitter card
+     *
+     * @return self
+     */
+    public function doTwitter()
+    {
+        $this->twitterCard->enable();
+
+        return $this;
+    }
+
+    /**
+     * Disable twitter card
+     *
+     * @return self
+     */
+    public function noTwitter()
+    {
+        $this->twitterCard->disable();
+
+        return $this;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Google analytics Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * @todo: complete the implementation
+     *
+     * @return self
+     */
+    public function showAnalytics()
+    {
+        return $this;
+    }
+
+    /**
+     * @todo: complete the implementation
+     *
+     * @return self
+     */
+    public function hideAnalytics()
+    {
+        return $this;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
@@ -545,11 +635,11 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
             $this->title->render(),
             $this->description->render(),
             $this->keywords->render(),
+            $this->favicon->render(),
             $this->metas->render(),
             $this->openGraph->render(),
             $this->styles->render(),
             $scripts ? $this->scripts->render() : '',
-            $this->favicon->render(),
         ]);
     }
 

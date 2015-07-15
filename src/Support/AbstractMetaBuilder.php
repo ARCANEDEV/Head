@@ -27,7 +27,7 @@ abstract class AbstractMetaBuilder
     protected static $metaName = 'name';
 
     /* ------------------------------------------------------------------------------------------------
-     |  Functions
+     |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
     /**
@@ -54,6 +54,8 @@ abstract class AbstractMetaBuilder
     }
 
     /**
+     * Generate attributes metas
+     *
      * @param array  $output
      * @param array  $attributes
      * @param string $prefix
@@ -68,10 +70,10 @@ abstract class AbstractMetaBuilder
     /**
      * Generate Property Meta
      *
-     * @param array               $output
-     * @param string              $prefix
-     * @param object|array|string $content
-     * @param string              $property
+     * @param array                  $output
+     * @param string                 $prefix
+     * @param Arrayable|array|string $content
+     * @param string                 $property
      */
     protected static function generatePropertyMeta(&$output, $prefix, $content, $property)
     {

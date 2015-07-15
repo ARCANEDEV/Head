@@ -40,7 +40,9 @@ class FaviconTest extends TestCase
     /** @test */
     public function test_can_be_instantiated()
     {
+        $this->favicon = new Favicon;
         $this->assertInstanceOf(Favicon::class, $this->favicon);
+        $this->assertEmpty($this->favicon->render());
     }
 
     /** @test */

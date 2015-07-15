@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\Head\Entities;
 
 use Arcanedev\Head\Contracts\Renderable;
+use Arcanedev\Head\Exceptions\InvalidGoogleAnalyticsIdException;
 
 /**
  * Class Analytics
@@ -148,10 +149,19 @@ class Analytics implements Renderable
     /**
      * Check Google Analytics ID
      *
-     * @param string $id
+     * @param  string $id
+     *
+     * @throws InvalidGoogleAnalyticsIdException
      */
-    private function checkId($id)
+    private function checkId(&$id)
     {
+        $id = strtoupper(trim($id));
+
+        if ( ! empty($id) && ! preg_match('/UA-\d+-\d{1,2}$/', $id)) {
+            throw new InvalidGoogleAnalyticsIdException(
+                "The google analytics Id [$id] is invalid, must be like UA-XXXXXX-X."
+            );
+        }
     }
 
     /**

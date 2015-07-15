@@ -80,6 +80,17 @@ class AnalyticsTest extends TestCase
         $this->assertTrue($this->analytics->isEnabled());
     }
 
+    /**
+     * @test
+     *
+     * @expectedException        \Arcanedev\Head\Exceptions\InvalidGoogleAnalyticsIdException
+     * @expectedExceptionMessage The google analytics Id [UA-12345678-9-12] is invalid, must be like UA-XXXXXX-X.
+     */
+    public function it_must_throw_invalid_ga_id_exception()
+    {
+        $this->analytics->setId('UA-12345678-9-01');
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------

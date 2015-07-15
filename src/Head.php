@@ -481,7 +481,10 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function scripts()
     {
-        return $this->scripts->render();
+        return $this->implode([
+            $this->scripts->render(),
+            $this->analytics->render()
+        ]);
     }
 
     /**
@@ -633,7 +636,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function render($scripts = false)
     {
-        return implode(PHP_EOL, $this->toArray($scripts));
+        return $this->implode($this->toArray($scripts));
     }
 
     /**
@@ -645,7 +648,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      */
     public function toArray($scripts = false)
     {
-        return array_filter([
+        return [
             $this->charset->render(),
             $this->title->render(),
             $this->description->render(),
@@ -654,9 +657,8 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
             $this->metas->render(),
             $this->openGraph->render(),
             $this->styles->render(),
-            $scripts ? $this->scripts->render()   : '',
-            $scripts ? $this->analytics->render() : '',
-        ]);
+            $scripts ? $this->scripts() : '',
+        ];
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -671,5 +673,17 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     public function isOpenGraphEnabled()
     {
         return $this->openGraph->isEnabled();
+    }
+
+    /**
+     * Implode all elements
+     *
+     * @param  array $elements
+     *
+     * @return string
+     */
+    private function implode(array $elements)
+    {
+        return implode(PHP_EOL, array_filter($elements));
     }
 }

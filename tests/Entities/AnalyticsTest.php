@@ -84,7 +84,7 @@ class AnalyticsTest extends TestCase
      * @test
      *
      * @expectedException        \Arcanedev\Head\Exceptions\InvalidGoogleAnalyticsIdException
-     * @expectedExceptionMessage The google analytics Id [UA-12345678-9-12] is invalid, must be like UA-XXXXXX-X.
+     * @expectedExceptionMessage The google analytics Id [UA-12345678-9-01] is invalid, must be like UA-XXXXXX-X.
      */
     public function it_must_throw_invalid_ga_id_exception()
     {

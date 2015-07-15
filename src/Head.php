@@ -4,6 +4,7 @@ use Arcanedev\Head\Contracts\Arrayable;
 use Arcanedev\Head\Contracts\HeadInterface;
 use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Head\Contracts\Versionable;
+use Arcanedev\Head\Entities\Analytics;
 use Arcanedev\Head\Entities\Charset;
 use Arcanedev\Head\Entities\Description;
 use Arcanedev\Head\Entities\Favicon;
@@ -71,6 +72,9 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /** @var TwitterCard */
     protected $twitterCard;
 
+    /** @var Analytics */
+    protected $analytics;
+
     /** @var array */
     protected $misc = [];
 
@@ -101,6 +105,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
 
         $this->openGraph   = new OpenGraph;
         $this->twitterCard = new TwitterCard;
+        $this->analytics   = new Analytics;
 
         $this->initVersion();
     }
@@ -122,7 +127,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set Configuration
      *
-     * @param array $config
+     * @param  array $config
      *
      * @return Head
      */
@@ -134,12 +139,12 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
     /**
-     * @param string $path
+     * @param  string $path
      *
      * @throws FileNotFoundException
      * @throws InvalidTypeException
      *
-     * @return Head
+     * @return self
      */
     public function configPath($path)
     {
@@ -149,11 +154,17 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     }
 
 
+    /**
+     * Load Entities config
+     *
+     * @return self
+     */
     private function loadEntities()
     {
         $this->setCharset($this->config->get('charset', Charset::DEFAULT_CHARSET));
         $this->title->setConfig($this->config->get('title', []));
         $this->favicon->setIcon($this->config->get('favicon', ''));
+        $this->analytics->setConfig($this->config->get('analytics', []));
 
         return $this;
     }
@@ -177,7 +188,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      *
      * @param Charset|string $charset
      *
-     * @return Head
+     * @return self
      */
     public function setCharset($charset)
     {
@@ -200,7 +211,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      *
      * @throws InvalidTypeException
      *
-     * @return Head
+     * @return self
      */
     public function set($title, $description, $keywords = [])
     {
@@ -232,11 +243,11 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set Title
      *
-     * @param Title|string $title
+     * @param  Title|string $title
      *
      * @throws InvalidTypeException
      *
-     * @return Head
+     * @return self
      */
     public function setTitle($title)
     {
@@ -263,9 +274,9 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set Site name
      *
-     * @param string $siteName
+     * @param  string $siteName
      *
-     * @return Head
+     * @return self
      */
     public function setSiteName($siteName)
     {
@@ -301,7 +312,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Update Title Dependencies (OpenGraph & Twitter)
      *
-     * @return Head
+     * @return self
      */
     private function updateTitleDependencies()
     {
@@ -327,7 +338,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      *
      * @throws InvalidTypeException
      *
-     * @return Head
+     * @return self
      */
     public function setDescription($description)
     {
@@ -344,7 +355,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Update Description Dependencies (OpenGraph & Twitter)
      *
-     * @return Head
+     * @return self
      */
     private function updateDescriptionDependencies()
     {
@@ -367,7 +378,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set Keywords
      *
-     * @param Keywords|array|string $keywords
+     * @param  Keywords|array|string $keywords
      *
      * @throws InvalidTypeException
      *
@@ -398,11 +409,11 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Add Meta
      *
-     * @param string $name
-     * @param string $content
-     * @param array  $attributes
+     * @param  string $name
+     * @param  string $content
+     * @param  array  $attributes
      *
-     * @return Head
+     * @return self
      */
     public function addMeta($name, $content, $attributes = [])
     {
@@ -414,9 +425,9 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Set Meta
      *
-     * @param Meta $meta
+     * @param  Meta $meta
      *
-     * @return Head
+     * @return self
      */
     public function setMeta(Meta $meta)
     {
@@ -428,7 +439,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Render Style tags
      *
-     * @return String
+     * @return string
      */
     public function styles()
     {
@@ -438,9 +449,9 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Add a Stylesheet
      *
-     * @param string $source
+     * @param  string $source
      *
-     * @return Head
+     * @return self
      */
     public function addStyle($source)
     {
@@ -452,7 +463,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Add a Stylesheet
      *
-     * @param array $sources
+     * @param  array $sources
      *
      * @return Head
      */
@@ -476,7 +487,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Add a Javascript file
      *
-     * @param string $source
+     * @param  string $source
      *
      * @return Head
      */
@@ -490,7 +501,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Add many Javascript files
      *
-     * @param array $sources
+     * @param  array $sources
      *
      * @return Head
      */
@@ -532,7 +543,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Enable OpenGraph
      *
-     * @return Head
+     * @return self
      */
     public function doFacebook()
     {
@@ -544,7 +555,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Disable OpenGraph
      *
-     * @return Head
+     * @return self
      */
     public function noFacebook()
     {
@@ -586,22 +597,26 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @todo: complete the implementation
+     * Enable the Google Analytics
      *
      * @return self
      */
     public function showAnalytics()
     {
+        $this->analytics->enable();
+
         return $this;
     }
 
     /**
-     * @todo: complete the implementation
+     * Disable the Google Analytics
      *
      * @return self
      */
     public function hideAnalytics()
     {
+        $this->analytics->disable();
+
         return $this;
     }
 
@@ -612,7 +627,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Render Head Tags
      *
-     * @param bool $scripts
+     * @param  bool $scripts
      *
      * @return string
      */
@@ -624,7 +639,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
     /**
      * Get Head Tags array
      *
-     * @param bool $scripts
+     * @param  bool $scripts
      *
      * @return string
      */
@@ -639,7 +654,8 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
             $this->metas->render(),
             $this->openGraph->render(),
             $this->styles->render(),
-            $scripts ? $this->scripts->render() : '',
+            $scripts ? $this->scripts->render()   : '',
+            $scripts ? $this->analytics->render() : '',
         ]);
     }
 

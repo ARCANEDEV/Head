@@ -135,7 +135,9 @@ return [
      */
     'analytics' => [
         'active'    => false,
+
         'id'        => '',
+
         'script'    => '',
     ],
 ];

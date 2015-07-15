@@ -46,7 +46,7 @@ abstract class AbstractMetaBuilder
             $prefix = static::$prefix;
         }
 
-        if (! empty($attributes)) {
+        if ( ! empty($attributes)) {
             self::generateAttributesMetas($output, $attributes, $prefix);
         }
 
@@ -75,18 +75,17 @@ abstract class AbstractMetaBuilder
      */
     protected static function generatePropertyMeta(&$output, $prefix, $content, $property)
     {
-        if (is_object($content) or is_array($content)) {
-            if (is_object($content) and $content instanceof Arrayable) {
-                $content = $content->toArray();
-            }
-
+        if (is_object($content) || is_array($content)) {
             if ((is_string($property) and ! empty($property))) {
                 $prefix .= ':' . $property;
             }
 
-            $output[] = self::html($content, $prefix);
+            $output[] = self::html(
+                $content instanceof Arrayable ? $content->toArray() : $content,
+                $prefix
+            );
         }
-        elseif (! empty($content)) {
+        elseif ( ! empty($content)) {
             $output[] = self::meta($prefix, $property, $content);
         }
     }
@@ -118,7 +117,7 @@ abstract class AbstractMetaBuilder
      */
     private static function getMetaProperty($prefix, $property)
     {
-        $property = (is_string($property) and ! empty($property))
+        $property = (is_string($property) && ! empty($property))
             ? ':' . htmlspecialchars($property)
             : '';
 
@@ -142,8 +141,8 @@ abstract class AbstractMetaBuilder
     /**
      * Implode output array
      *
-     * @param array  $output
-     * @param string $glue
+     * @param  array  $output
+     * @param  string $glue
      *
      * @return string
      */

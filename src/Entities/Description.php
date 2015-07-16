@@ -80,10 +80,6 @@ class Description extends AbstractMeta implements DescriptionInterface
      */
     public function render()
     {
-        if ($this->isEmpty()) {
-            return '';
-        }
-
         return $this->renderMetaTag('description', $this->getSEODescription());
     }
 

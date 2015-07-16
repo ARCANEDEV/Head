@@ -1,10 +1,10 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Objects;
 
 /**
- * Class VideoEpisodeObject
+ * Class VideoEpisode
  * @package Arcanedev\Head\Entities\OpenGraph\Objects
  */
-class VideoEpisodeObject extends VideoObject
+class VideoEpisode extends Video
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -34,11 +34,11 @@ class VideoEpisodeObject extends VideoObject
     /**
      * Set the URL of a video.tv_show which this episode belongs to
      *
-     * @param string $url URL of a video.tv_show
+     * @param  string $url URL of a video.tv_show
      *
-     * @return VideoEpisodeObject
+     * @return self
      */
-    public function setSeries( $url )
+    public function setSeries($url)
     {
         if (self::isValidUrl($url)) {
             $this->series = $url;

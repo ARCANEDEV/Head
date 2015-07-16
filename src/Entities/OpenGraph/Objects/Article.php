@@ -3,10 +3,10 @@
 use DateTime;
 
 /**
- * Class ArticleObject
+ * Class Article
  * @package Arcanedev\Head\Entities\OpenGraph\Objects
  */
-class ArticleObject extends AbstractObject
+class Article extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------
      |  Constants
@@ -31,42 +31,40 @@ class ArticleObject extends AbstractObject
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * When the article was first published.
-     * ISO 8601 formatted string.
+     * When the article was first published. - ISO 8601 formatted string.
      * @var string
      */
     protected $published_time;
 
     /**
-     * When the article was last changed
-     * ISO 8601 formatted string.
+     * When the article was last changed - ISO 8601 formatted string.
      * @var string
      */
     protected $modified_time;
 
     /**
-     * When the article is considered out-of-date
-     * ISO 8601 formatted string.
+     * When the article is considered out-of-date - ISO 8601 formatted string.
+     *
      * @var string
      */
     protected $expiration_time;
 
     /**
-     * Writers of the article.
-     * Array of author URIs
+     * Writers of the article - Array of author URIs
      * @var array
      */
     protected $author;
 
     /**
      * High-level section or category
+     *
      * @var string
      */
     protected $section;
 
     /**
-     * Content tag
-     * Array of tag strings
+     * Content tag - Array of tag strings
+     *
      * @var array
      */
     protected $tag;
@@ -74,9 +72,6 @@ class ArticleObject extends AbstractObject
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Initialize arrays
      */
     public function __construct()
     {
@@ -90,6 +85,7 @@ class ArticleObject extends AbstractObject
      */
     /**
      * When the article was first published
+     *
      * @return string ISO 8601 formatted publication date and optional time
      */
     public function getPublishedTime()
@@ -100,9 +96,9 @@ class ArticleObject extends AbstractObject
     /**
      * Set when the article was first published
      *
-     * @param DateTime|string $pubdate - ISO 8601 formatted datetime string or DateTime object for conversion
+     * @param  DateTime|string $pubdate - ISO 8601 formatted datetime string or DateTime object for conversion
      *
-     * @return ArticleObject
+     * @return self
      */
     public function setPublishedTime($pubdate)
     {
@@ -111,7 +107,7 @@ class ArticleObject extends AbstractObject
         }
 
         // At least YYYY-MM-DD
-        if (is_string($pubdate) and strlen($pubdate) >= 10) {
+        if (is_string($pubdate) && strlen($pubdate) >= 10) {
             $this->published_time = $pubdate;
         }
 
@@ -131,18 +127,18 @@ class ArticleObject extends AbstractObject
     /**
      * Set when the article was last changed
      *
-     * @param DateTime|string $updated - ISO 8601 formatted datetime string or DateTime object for conversion
+     * @param  DateTime|string $updated - ISO 8601 formatted datetime string or DateTime object for conversion
      *
-     * @return ArticleObject
+     * @return self
      */
     public function setModifiedTime($updated)
     {
-        if ( $updated instanceof DateTime ) {
+        if ($updated instanceof DateTime) {
             $this->modified_time = self::datetimeToIso8601($updated);
         }
 
         // At least YYYY-MM-DD
-        if ( is_string($updated) and strlen($updated) >= 10 ) {
+        if (is_string($updated) && strlen($updated) >= 10) {
             $this->modified_time = $updated;
         }
 
@@ -161,17 +157,17 @@ class ArticleObject extends AbstractObject
     /**
      * Set when the article content expires
      *
-     * @param DateTime|string $expires - ISO formatted datetime string or DateTime object for conversion
+     * @param  DateTime|string $expires - ISO formatted datetime string or DateTime object for conversion
      *
-     * @return $this
+     * @return self
      */
     public function setExpirationTime( $expires )
     {
-        if ( $expires instanceof DateTime ) {
+        if ($expires instanceof DateTime) {
             $this->expiration_time = self::datetimeToIso8601($expires);
         }
 
-        if ( is_string($expires) and strlen($expires) >= 10 ) {
+        if (is_string($expires) && strlen($expires) >= 10) {
             $this->expiration_time = $expires;
         }
 
@@ -191,14 +187,17 @@ class ArticleObject extends AbstractObject
     /**
      * Add an author URI
      *
-     * @param string $author_uri - Author URI
+     * @param  string $authorUri - Author URI
      *
-     * @return ArticleObject
+     * @return self
      */
-    public function addAuthor( $author_uri )
+    public function addAuthor($authorUri)
     {
-        if (self::isValidUrl($author_uri) and ! in_array($author_uri, $this->author)) {
-            $this->author[] = $author_uri;
+        if (
+            self::isValidUrl($authorUri) &&
+            ! in_array($authorUri, $this->author)
+        ) {
+            $this->author[] = $authorUri;
         }
 
         return $this;
@@ -215,13 +214,13 @@ class ArticleObject extends AbstractObject
     /**
      * Set the top-level content section
      *
-     * @param string $section
+     * @param  string $section
      *
-     * @return ArticleObject
+     * @return self
      */
-    public function setSection( $section )
+    public function setSection($section)
     {
-        if (is_string($section) and ! empty($section)) {
+        if (is_string($section) && ! empty($section)) {
             $this->section = $section;
         }
 
@@ -230,6 +229,7 @@ class ArticleObject extends AbstractObject
 
     /**
      * Content tags
+     *
      * @return array content tags
      */
     public function getTags()
@@ -242,10 +242,11 @@ class ArticleObject extends AbstractObject
      *
      * @param string $tag content tag
      *
-     * @return ArticleObject
+     * @return self
      */
-    public function addTag( $tag ) {
-        if (is_string($tag) and ! empty($tag)) {
+    public function addTag($tag)
+    {
+        if (is_string($tag) && ! empty($tag)) {
             $this->tag[] = $tag;
         }
 

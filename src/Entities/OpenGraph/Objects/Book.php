@@ -3,10 +3,10 @@
 use DateTime;
 
 /**
- * Class BookObject
+ * Class Book
  * @package Arcanedev\Head\Entities\OpenGraph\Objects
  */
-class BookObject extends AbstractObject
+class Book extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------
      |  Constants
@@ -88,14 +88,14 @@ class BookObject extends AbstractObject
     /**
      * Add an author URI.
      *
-     * @param string $author_uri
+     * @param  string $authorUri
      *
-     * @return BookObject
+     * @return self
      */
-    public function addAuthor( $author_uri )
+    public function addAuthor($authorUri)
     {
-        if (self::isValidUrl($author_uri) and ! in_array($author_uri, $this->author)) {
-            $this->author[] = $author_uri;
+        if (self::isValidUrl($authorUri) && ! in_array($authorUri, $this->author)) {
+            $this->author[] = $authorUri;
         }
 
         return $this;
@@ -114,11 +114,11 @@ class BookObject extends AbstractObject
     /**
      * Set an International Standard Book Number
      *
-     * @param string $isbn
+     * @param  string $isbn
      *
-     * @return BookObject
+     * @return self
      */
-    public function setISBN( $isbn )
+    public function setISBN($isbn)
     {
         $this->isbn = $this->prepareISBN($isbn);
 
@@ -138,18 +138,18 @@ class BookObject extends AbstractObject
     /**
      * Set the book release date
      *
-     * @param DateTime|string $release_date release date as DateTime or as an ISO 8601 formatted string
+     * @param  DateTime|string $release_date release date as DateTime or as an ISO 8601 formatted string
      *
-     * @return $this
+     * @return self
      */
-    public function setReleaseDate( $release_date )
+    public function setReleaseDate($release_date)
     {
         if ($release_date instanceof DateTime) {
             $this->release_date = self::datetimeToIso8601($release_date);
         }
 
         // at least YYYY-MM-DD
-        if (is_string($release_date) and strlen($release_date) >= 10) {
+        if (is_string($release_date) && strlen($release_date) >= 10) {
             $this->release_date = $release_date;
         }
 
@@ -168,15 +168,15 @@ class BookObject extends AbstractObject
     /**
      * Add a book topic tag
      *
-     * @param string $tag topic tag
+     * @param  string $tag topic tag
      *
-     * @return BookObject
+     * @return self
      */
-    public function addTag( $tag )
+    public function addTag($tag)
     {
         if (
-            is_string($tag) and
-            ! empty($tag) and
+            is_string($tag) &&
+            ! empty($tag) &&
             ! in_array($tag, $this->tag)
         ) {
             $this->tag[] = $tag;
@@ -192,7 +192,7 @@ class BookObject extends AbstractObject
     /**
      * Published after 2007
      *
-     * @param string $isbn
+     * @param  string $isbn
      *
      * @return bool
      */
@@ -204,7 +204,7 @@ class BookObject extends AbstractObject
     /**
      * Published before 2007
      *
-     * @param string $isbn
+     * @param  string $isbn
      *
      * @return bool
      */
@@ -213,15 +213,20 @@ class BookObject extends AbstractObject
         return $this->checkISBNVersion($isbn, 13);
     }
 
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Functions
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
-     * @param string $isbn
-     * @param int    $lenght
+     * @param  string $isbn
+     * @param  int    $lenght
      *
      * @return bool
      */
     private function checkISBNVersion($isbn, $lenght)
     {
-        return strlen($isbn) === $lenght and is_numeric(substr($isbn, 0, $lenght - 1));
+        return strlen($isbn) === $lenght && is_numeric(substr($isbn, 0, $lenght - 1));
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -229,7 +234,7 @@ class BookObject extends AbstractObject
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @param $isbn
+     * @param  string $isbn
      *
      * @return string|null
      */
@@ -241,7 +246,7 @@ class BookObject extends AbstractObject
 
         $isbn = trim(str_replace('-', '', $isbn));
 
-        if ( $this->isOldISBNVersion($isbn) ) {
+        if ($this->isOldISBNVersion($isbn)) {
             $verifySum  = 0;
             $chars      = str_split($isbn);
 
@@ -251,11 +256,11 @@ class BookObject extends AbstractObject
 
             $checkDigit = 11 - ($verifySum % 11);
 
-            if ( $checkDigit == $chars[9] or ($chars[9] == 'X' and $checkDigit == 10) ) {
+            if ($checkDigit == $chars[9] || ($chars[9] == 'X' && $checkDigit == 10)) {
                 return $isbn;
             }
         }
-        elseif ( $this->isNewISBNVersion($isbn) ) {
+        elseif ($this->isNewISBNVersion($isbn)) {
             $verifySum  = 0;
             $chars      = str_split($isbn);
 

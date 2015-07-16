@@ -1,10 +1,10 @@
 <?php namespace Arcanedev\Head\Entities\OpenGraph\Objects;
 
 /**
- * Class ProfileObject
+ * Class Profile
  * @package Arcanedev\Head\Entities\OpenGraph\Objects
  */
-class ProfileObject extends AbstractObject
+class Profile extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------
      |  Constants
@@ -71,14 +71,14 @@ class ProfileObject extends AbstractObject
     /**
      * Set the person's given name
      *
-     * @param string $first_name given name
+     * @param  string $firstName
      *
-     * @return ProfileObject
+     * @return self
      */
-    public function setFirstName( $first_name )
+    public function setFirstName($firstName)
     {
-        if (is_string($first_name) and ! empty($first_name)) {
-            $this->first_name = $first_name;
+        if ($this->checkName($firstName)) {
+            $this->first_name = $firstName;
         }
 
         return $this;
@@ -97,14 +97,14 @@ class ProfileObject extends AbstractObject
     /**
      * Set the person's family name
      *
-     * @param string $last_name family name
+     * @param  string $lastName
      *
-     * @return ProfileObject
+     * @return self
      */
-    public function setLastName( $last_name )
+    public function setLastName($lastName)
     {
-        if (is_string($last_name) and ! empty($last_name)) {
-            $this->last_name = $last_name;
+        if ($this->checkName($lastName)) {
+            $this->last_name = $lastName;
         }
 
         return $this;
@@ -123,13 +123,13 @@ class ProfileObject extends AbstractObject
     /**
      * Set the account username
      *
-     * @param string $username username
+     * @param  string $username
      *
-     * @return ProfileObject
+     * @return self
      */
-    public function setUsername( $username )
+    public function setUsername($username)
     {
-        if (is_string($username) and ! empty($username)) {
+        if ($this->checkName($username)) {
             $this->username = $username;
         }
 
@@ -137,7 +137,7 @@ class ProfileObject extends AbstractObject
     }
 
     /**
-     * The person's gender. male|female
+     * The person's gender.
      *
      * @return string male|female
      */
@@ -149,16 +149,44 @@ class ProfileObject extends AbstractObject
     /**
      * Set the person's gender
      *
-     * @param string $gender male|female
+     * @param  string $gender male|female
      *
-     * @return $this
+     * @return self
      */
     public function setGender($gender)
     {
-        if (is_string($gender) and in_array($gender, ['male', 'female'])) {
+        if ($this->checkGender($gender)) {
             $this->gender = $gender;
         }
 
         return $this;
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Check name
+     *
+     * @param  string $name
+     *
+     * @return bool
+     */
+    private function checkName($name)
+    {
+        return is_string($name) && ! empty($name);
+    }
+
+    /**
+     * Check gender
+     *
+     * @param  string $gender
+     *
+     * @return bool
+     */
+    private function checkGender(&$gender)
+    {
+        return is_string($gender) && in_array($gender, ['male', 'female']);
     }
 }

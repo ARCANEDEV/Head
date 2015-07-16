@@ -3,10 +3,10 @@
 use DateTime;
 
 /**
- * Class VideoObject
+ * Class Video
  * @package Arcanedev\Head\Entities\OpenGraph\Objects
  */
-class VideoObject extends AbstractObject
+class Video extends AbstractObject
 {
     /* ------------------------------------------------------------------------------------------------
      |  Constants
@@ -101,15 +101,15 @@ class VideoObject extends AbstractObject
     /**
      * Add an actor URL with an optional role association
      *
-     * @param string $url  - Author URL of og:type profile
-     * @param string $role - The role the given actor played in this video work.
+     * @param  string $url  - Author URL of og:type profile
+     * @param  string $role - The role the given actor played in this video work.
      *
-     * @return VideoObject
+     * @return self
      */
-    public function addActor($url, $role='')
+    public function addActor($url, $role = '')
     {
-        if (self::isValidUrl($url) and ! in_array($url, $this->actor)) {
-            $this->actor[] = ( ! empty($role) and is_string($role))
+        if (self::isValidUrl($url) && ! in_array($url, $this->actor)) {
+            $this->actor[] = ( ! empty($role) && is_string($role))
                 ? [$url, 'role' => $role]
                 : $url;
         }
@@ -130,13 +130,13 @@ class VideoObject extends AbstractObject
     /**
      * Add a director profile URL
      *
-     * @param string $url - director profile URL
+     * @param  string $url - director profile URL
      *
-     * @return VideoObject
+     * @return self
      */
     public function addDirector($url)
     {
-        if (self::isValidUrl($url) and ! in_array($url, $this->director)) {
+        if (self::isValidUrl($url) && ! in_array($url, $this->director)) {
             $this->director[] = $url;
         }
 
@@ -156,13 +156,13 @@ class VideoObject extends AbstractObject
     /**
      * Add a writer profile URL
      *
-     * @param string $url - writer profile URL
+     * @param  string $url - writer profile URL
      *
-     * @return VideoObject
+     * @return self
      */
-    public function addWriter( $url )
+    public function addWriter($url)
     {
-        if (static::isValidUrl($url) and ! in_array($url, $this->writer)) {
+        if (static::isValidUrl($url) && ! in_array($url, $this->writer)) {
             $this->writer[] = $url;
         }
 
@@ -182,13 +182,13 @@ class VideoObject extends AbstractObject
     /**
      * Set the video duration in whole seconds
      *
-     * @param int $duration - video duration in whole seconds
+     * @param  int $duration - video duration in whole seconds
      *
-     * @return $this
+     * @return self
      */
     public function setDuration( $duration )
     {
-        if (is_int($duration) and $duration > 0) {
+        if (is_int($duration) && $duration > 0) {
             $this->duration = $duration;
         }
 
@@ -208,18 +208,18 @@ class VideoObject extends AbstractObject
     /**
      * Set the date this video was first released
      *
-     * @param DateTime|string $release_date - date video was first released
+     * @param  DateTime|string $release_date - date video was first released
      *
-     * @return VideoObject
+     * @return self
      */
-    public function setReleaseDate( $release_date )
+    public function setReleaseDate($release_date)
     {
         if ($release_date instanceof DateTime) {
             $this->release_date = static::datetimeToIso8601($release_date);
         }
 
         // at least YYYY-MM-DD
-        if (is_string($release_date) and strlen($release_date) >= 10) {
+        if (is_string($release_date) && strlen($release_date) >= 10) {
             $this->release_date = $release_date;
         }
 
@@ -239,13 +239,13 @@ class VideoObject extends AbstractObject
     /**
      * Add a tag word or topic related to this video
      *
-     * @param string $tag tag word or topic
+     * @param  string $tag tag word or topic
      *
-     * @return VideoObject
+     * @return self
      */
     public function addTag($tag)
     {
-        if (is_string($tag) and ! in_array($tag, $this->tag)) {
+        if (is_string($tag) && ! in_array($tag, $this->tag)) {
             $this->tag[] = $tag;
         }
 

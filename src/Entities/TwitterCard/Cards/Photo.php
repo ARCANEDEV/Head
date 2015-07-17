@@ -26,6 +26,10 @@ class Photo extends AbstractCard
      */
     public function render()
     {
-        // TODO: Implement render() method.
+        if ($this->isEmpty()) {
+            return '';
+        }
+
+        return '';
     }
 }

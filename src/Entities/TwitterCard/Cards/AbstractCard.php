@@ -12,20 +12,31 @@ abstract class AbstractCard implements Renderable
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /** @var string */
+    /**
+     *
+     * @var string
+     */
     protected $card;
 
-    /** @var string */
+    /**
+     * The Twitter @username the card should be attributed to.
+     *
+     * @var string
+     */
     protected $site        = '';
 
-    /** @var string */
+    /**
+     * Title should be concise and will be truncated at 70 characters.
+     *
+     * @var string
+     */
     protected $title       = '';
 
-    /** @var string */
-    protected $description = '';
-
+    /**
+     * @var array
+     */
     protected $baseRequired = [
-        'title', 'description',
+        'site', 'title',
     ];
 
     /* ------------------------------------------------------------------------------------------------
@@ -41,13 +52,62 @@ abstract class AbstractCard implements Renderable
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Get card type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->card;
+    }
+
+    /**
+     * Get site
+     *
+     * @return string
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * Set site
+     *
+     * @param  string $site
+     *
+     * @return self
+     */
+    public function setSite($site)
+    {
+        $this->checkSite($site);
+
+        $this->site = $site;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * Set title
+     *
+     * @param  string $title
+     *
+     * @return self
+     */
     public function setTitle($title)
     {
+        $this->checkTitle($title);
         $this->title = $title;
 
         return $this;
@@ -57,7 +117,6 @@ abstract class AbstractCard implements Renderable
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-
 
     /* ------------------------------------------------------------------------------------------------
      |  Check Functions
@@ -70,6 +129,58 @@ abstract class AbstractCard implements Renderable
      */
     public function isEmpty()
     {
-        return empty($this->title);
+        return empty($this->site) || empty($this->title) || empty($this->description);
+    }
+
+    /**
+     * Check site
+     *
+     * @param string $site
+     */
+    private function checkSite(&$site)
+    {
+        if (empty($site)) {
+            throw new \InvalidArgumentException(
+                'The site attribute must not be empty.'
+            );
+        }
+
+        if ( ! starts_with($site, '@')) {
+            $site = '@' . $site;
+        }
+    }
+
+    /**
+     * Check title
+     *
+     * @param string $title
+     */
+    private function checkTitle(&$title)
+    {
+        if (empty($title)) {
+            throw new \InvalidArgumentException(
+                'The title attribute must not be empty.'
+            );
+        }
+
+        $title = $this->truncate($title, 70);
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Truncate text
+     *
+     * @param  string $text
+     * @param  int    $max
+     * @param  string $end
+     *
+     * @return string
+     */
+    protected function truncate($text, $max, $end = '...')
+    {
+        return str_limit($text, $max - strlen($end), $end);
     }
 }

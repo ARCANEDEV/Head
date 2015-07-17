@@ -17,12 +17,12 @@ class TwitterMetaBuilder extends AbstractMetaBuilder
      *
      * @var string
      */
-    protected static $prefix = 'twitter';
+    protected static $prefix    = 'twitter';
 
     /**
      * Meta attribute name. Use 'property' if you prefer RDF or 'name' if you prefer HTML validation
      *
      * @var string
      */
-    protected static $metaName = 'name';
+    protected static $metaName  = 'name';
 }

@@ -522,7 +522,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      *
      * @return self
      */
-    public function setFavicon($path)
+    public function setFavicon($path = 'favicon')
     {
         $this->favicon->setIcon($path);
 
@@ -572,11 +572,21 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Get Twitter card
+     *
+     * @return TwitterCard
+     */
+    public function twitterCard()
+    {
+        return $this->twitterCard;
+    }
+
+    /**
      * Enable twitter card
      *
      * @return self
      */
-    public function doTwitter()
+    public function doTwitterCard()
     {
         $this->twitterCard->enable();
 
@@ -588,7 +598,7 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      *
      * @return self
      */
-    public function noTwitter()
+    public function noTwitterCard()
     {
         $this->twitterCard->disable();
 
@@ -666,13 +676,23 @@ class Head implements HeadInterface, Renderable, Arrayable, Versionable
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check if OpenGraph Enabled
+     * Check if OpenGraph is enabled
      *
      * @return bool
      */
     public function isOpenGraphEnabled()
     {
         return $this->openGraph->isEnabled();
+    }
+
+    /**
+     * Check if TwitterCard is enabled
+     *
+     * @return bool
+     */
+    public function isTwitterCardEnabled()
+    {
+        return $this->twitterCard->isEnabled();
     }
 
     /**

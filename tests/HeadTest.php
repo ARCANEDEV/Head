@@ -6,6 +6,7 @@ use Arcanedev\Head\Entities\Keywords;
 use Arcanedev\Head\Entities\Meta;
 use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use Arcanedev\Head\Entities\Title;
+use Arcanedev\Head\Entities\TwitterCard\TwitterCard;
 use Arcanedev\Head\Head;
 
 /**
@@ -345,6 +346,26 @@ class HeadTest extends TestCase
     }
 
     /** @test */
+    public function it_can_get_twitter_card_class()
+    {
+        $this->assertInstanceOf(TwitterCard::class, $this->head->twitterCard());
+    }
+
+    /** @test */
+    public function it_can_enable_and_disable_twitter_card()
+    {
+        $this->assertFalse($this->head->isTwitterCardEnabled());
+
+        $this->head->doTwitterCard();
+
+        $this->assertTrue($this->head->isTwitterCardEnabled());
+
+        $this->head->noTwitterCard();
+
+        $this->assertFalse($this->head->isTwitterCardEnabled());
+    }
+
+    /** @test */
     public function it_can_render_all()
     {
         $title         = 'Hello world';
@@ -432,6 +453,21 @@ class HeadTest extends TestCase
         ]);
 
         $this->assertEquals($scripts, $this->head->scripts());
+    }
+
+    /** @test */
+    public function it_can_add_favicon()
+    {
+        $this->head->setFavicon('favicon');
+
+        $this->assertEquals(
+            implode(PHP_EOL, [
+                '<meta charset="UTF-8">',
+                '<link href="favicon.ico" rel="icon" type="image/x-icon"/>',
+                '<link href="favicon.png" rel="icon" type="image/png"/>',
+            ])
+            , $this->head->render()
+        );
     }
 
     /* ------------------------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ class PhotoTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @var Photo */
-    private $card;
+    protected $card;
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -43,5 +43,61 @@ class PhotoTest extends TestCase
     {
         $this->assertInstanceOf(Photo::class, $this->card);
         $this->assertEmpty($this->card->render());
+        $this->assertEquals('photo', $this->card->getType());
+    }
+
+    /** @test */
+    public function it_can_set_and_get_creator()
+    {
+        $creator = 'Arcanedev';
+
+        $this->card->setCreator($creator);
+
+        $this->assertEquals('@' . $creator, $this->card->getCreator());
+    }
+
+    /** @test */
+    public function it_can_set_and_get_image()
+    {
+        $image = 'http://www.arcanedev.net/uploads/images/posts/thumbs/default/welcome-to-arcanedev.jpg';
+
+        $this->card->setImage($image);
+
+        $this->assertEquals($image, $this->card->getImage());
+    }
+
+    /** @test */
+    public function it_can_set_and_get_url()
+    {
+        $url = 'http://www.arcanedev.net/uploads/images/posts/thumbs/default/welcome-to-arcanedev.jpg';
+
+        $this->card->setUrl($url);
+
+        $this->assertEquals($url, $this->card->getUrl());
+    }
+
+    /** @test */
+    public function it_can_render()
+    {
+        $username    = 'Arcanedev';
+        $title       = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.';
+        $image       = 'http://www.arcanedev.net/uploads/images/posts/thumbs/default/welcome-to-arcanedev.jpg';
+
+        $this->card->setSite($username);
+        $this->card->setCreator($username);
+        $this->card->setTitle($title);
+        $this->card->setImage($image);
+        $this->card->setUrl($image);
+
+        $tags = $this->generateTags([
+            'card'        => 'photo',
+            'site'        => '@' . $username,
+            'creator'     => '@' . $username,
+            'title'       => $title,
+            'image'       => $image,
+            'url'         => $image,
+        ]);
+
+        $this->assertEquals($tags, $this->card->render());
     }
 }

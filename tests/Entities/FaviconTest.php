@@ -50,10 +50,27 @@ class FaviconTest extends TestCase
     {
         $this->assertEquals(
             implode(PHP_EOL, [
-                '<link href="' . base_url('favicon.ico') . '" rel="icon" type="image/x-icon"/>',
-                '<link href="' . base_url('favicon.png') . '" rel="icon" type="image/png"/>'
+                $this->getTag('favicon.ico', 'image/x-icon'),
+                $this->getTag('favicon.png', 'image/png'),
             ]),
             $this->favicon->render()
         );
+    }
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Other Functions
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get favicon tag
+     *
+     * @param  string $icon
+     * @param  string $type
+     *
+     * @return string
+     */
+    public function getTag($icon, $type)
+    {
+        return '<link href="' . base_url($icon) . '" rel="icon" type="'. $type .'"/>';
     }
 }

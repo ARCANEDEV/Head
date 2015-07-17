@@ -3,6 +3,8 @@
 /**
  * Class Summary
  * @package Arcanedev\Head\Entities\TwitterCard\Cards
+ *
+ * @link https://dev.twitter.com/cards/types/summary
  */
 class Summary extends AbstractCard
 {
@@ -10,6 +12,8 @@ class Summary extends AbstractCard
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /** @var string */
+    protected $card = 'summary';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

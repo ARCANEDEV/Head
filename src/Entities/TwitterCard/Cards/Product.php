@@ -3,6 +3,8 @@
 /**
  * Class Product
  * @package Arcanedev\Head\Entities\TwitterCard\Cards
+ *
+ * @link https://dev.twitter.com/cards/types/product
  */
 class Product extends AbstractCard
 {
@@ -10,6 +12,8 @@ class Product extends AbstractCard
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /** @var string */
+    protected $card = 'product';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

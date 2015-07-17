@@ -12,13 +12,21 @@ abstract class AbstractCard implements Renderable
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    protected $card        = 'app';
+    /** @var string */
+    protected $card;
 
+    /** @var string */
     protected $site        = '';
 
+    /** @var string */
     protected $title       = '';
 
+    /** @var string */
     protected $description = '';
+
+    protected $baseRequired = [
+        'title', 'description',
+    ];
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor

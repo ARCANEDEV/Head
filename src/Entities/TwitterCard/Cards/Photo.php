@@ -3,6 +3,8 @@
 /**
  * Class Photo
  * @package Arcanedev\Head\Entities\TwitterCard\Cards
+ *
+ * @link https://dev.twitter.com/cards/types/photo
  */
 class Photo extends AbstractCard
 {
@@ -10,6 +12,8 @@ class Photo extends AbstractCard
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /** @var string */
+    protected $card = 'photo';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

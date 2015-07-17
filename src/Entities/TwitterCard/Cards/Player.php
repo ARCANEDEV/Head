@@ -3,6 +3,8 @@
 /**
  * Class Player
  * @package Arcanedev\Head\Entities\TwitterCard\Cards
+ *
+ * @link https://dev.twitter.com/cards/types/player
  */
 class Player extends AbstractCard
 {
@@ -10,6 +12,8 @@ class Player extends AbstractCard
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /** @var string */
+    protected $card = 'player';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

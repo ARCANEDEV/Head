@@ -36,12 +36,13 @@ class TwitterCard implements Renderable
     protected $url         = '';
 
     private static $types  = [
+        'app'                 => 'App',
         'gallery'             => 'Gallery',
-        'summary'             => 'Summary',
-        'summary_large_image' => 'Summary Large Image',
         'photo'               => 'Photo',
         'player'              => 'Player',
         'product'             => 'Product',
+        'summary'             => 'Summary',
+        'summary_large_image' => 'Summary Large Image',
     ];
 
     /* ------------------------------------------------------------------------------------------------

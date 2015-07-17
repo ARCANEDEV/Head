@@ -2,6 +2,7 @@
 
 use Arcanedev\Head\Contracts\Renderable;
 use Arcanedev\Head\Exceptions\InvalidGoogleAnalyticsIdException;
+use Arcanedev\Head\Traits\EnablerTrait;
 
 /**
  * Class Analytics
@@ -10,6 +11,12 @@ use Arcanedev\Head\Exceptions\InvalidGoogleAnalyticsIdException;
 class Analytics implements Renderable
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Traits
+     | ------------------------------------------------------------------------------------------------
+     */
+    use EnablerTrait;
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
@@ -17,11 +24,6 @@ class Analytics implements Renderable
      * @var string
      */
     protected $id      = '';
-
-    /**
-     * @var bool
-     */
-    protected $enabled = false;
 
     /**
      * @var string
@@ -59,30 +61,6 @@ class Analytics implements Renderable
     }
 
     /**
-     * Get enable status
-     *
-     * @return bool
-     */
-    public function isEnabled()
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * Set enabled
-     *
-     * @param  bool $enabled
-     *
-     * @return self
-     */
-    private function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    /**
      * Set config
      *
      * @param  array $config
@@ -108,26 +86,6 @@ class Analytics implements Renderable
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Enable the google analytics
-     *
-     * @return self
-     */
-    public function enable()
-    {
-        return $this->setEnabled(true);
-    }
-
-    /**
-     * Disable the google analytics
-     *
-     * @return self
-     */
-    public function disable()
-    {
-        return $this->setEnabled(false);
-    }
-
     /**
      * Render Google analytics script
      *
@@ -171,7 +129,7 @@ class Analytics implements Renderable
      */
     public function isRenderable()
     {
-        return $this->enabled && ! empty($this->id);
+        return $this->isEnabled() && ! empty($this->id);
     }
 
     /* ------------------------------------------------------------------------------------------------

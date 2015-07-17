@@ -1,70 +1,75 @@
 <?php namespace Arcanedev\Head\Entities\TwitterCard;
 
+use Arcanedev\Head\Contracts\Renderable;
+use Arcanedev\Head\Traits\EnablerTrait;
+
 /**
  * Class TwitterCard
  * @package Arcanedev\Head\Entities\TwitterCard
  *
  * @todo: complete the implementation
  */
-class TwitterCard
+class TwitterCard implements Renderable
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Traits
+     | ------------------------------------------------------------------------------------------------
+     */
+    use EnablerTrait;
+
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @var bool
-     */
-    protected $enabled = false;
+    protected $card        = 'summary';
+
+    protected $site        = ''; // @
+
+    protected $creator     = ''; // @
+
+    protected $title       = '';
+
+    protected $description = '';
+
+    protected $image       = '';
+
+    protected $url         = '';
+
+    private static $types  = [
+        'gallery'             => 'Gallery',
+        'summary'             => 'Summary',
+        'summary_large_image' => 'Summary Large Image',
+        'photo'               => 'Photo',
+        'player'              => 'Player',
+        'product'             => 'Product',
+    ];
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    public function __destruct()
+    public function __construct()
     {
-        // TODO: Implement __destruct() method.
+        // TODO: Implement __construct() method.
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Getter & Setters
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Set enabled
-     *
-     * @param  bool $enabled
-     *
-     * @return self
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Enable twitter card
-     *
-     * @return self
-     */
-    public function enable()
+    public function render()
     {
-        return $this->setEnabled(true);
+        if ($this->isEnabled()) {
+            return '';
+        }
+
+        return '';
     }
 
-    /**
-     * Disable twitter card
-     *
-     * @return self
+    /* ------------------------------------------------------------------------------------------------
+     |  Check Functions
+     | ------------------------------------------------------------------------------------------------
      */
-    public function disable()
-    {
-        return $this->setEnabled(false);
-    }
+
 }

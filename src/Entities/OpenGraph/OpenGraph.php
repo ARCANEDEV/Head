@@ -6,6 +6,7 @@ use Arcanedev\Head\Entities\OpenGraph\Medias\AudioMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\ImageMedia;
 use Arcanedev\Head\Entities\OpenGraph\Medias\VideoMedia;
 use Arcanedev\Head\Entities\Title;
+use Arcanedev\Head\Traits\EnablerTrait;
 
 /**
  * Class OpenGraph
@@ -13,6 +14,12 @@ use Arcanedev\Head\Entities\Title;
  */
 class OpenGraph implements OpenGraphInterface, Renderable
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Traits
+     | ------------------------------------------------------------------------------------------------
+     */
+    use EnablerTrait;
+
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -24,9 +31,6 @@ class OpenGraph implements OpenGraphInterface, Renderable
      * @var bool
      */
     const VERIFY_URLS  = false;
-
-    /** @var bool */
-    protected $enabled = false;
 
     /**
      * Page classification according to a pre-defined set of base types.
@@ -354,7 +358,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
     {
         $imageUrl = $image->getURL();
 
-        if (! empty($imageUrl)) {
+        if ( ! empty($imageUrl)) {
             $image->removeURL();
 
             $this->addImageToCollection($imageUrl, $image);
@@ -375,7 +379,7 @@ class OpenGraph implements OpenGraphInterface, Renderable
     {
         $value = [$imageUrl, [$image]];
 
-        if (! ($this->imagesCount() > 0)) {
+        if ( ! ($this->imagesCount() > 0)) {
             $this->images    = [$value];
         }
         else {
@@ -484,40 +488,6 @@ class OpenGraph implements OpenGraphInterface, Renderable
     }
 
     /**
-     * Enable OpenGraph
-     *
-     * @return self
-     */
-    public function enable()
-    {
-        return $this->setEnabled(true);
-    }
-
-    /**
-     * Disable OpenGraph
-     *
-     * @return self
-     */
-    public function disable()
-    {
-        return $this->setEnabled(false);
-    }
-
-    /**
-     * Set OpenGraph to Enable/Disable
-     *
-     * @param  bool $enabled
-     *
-     * @return self
-     */
-    private function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    /**
      * Render OpenGraph
      *
      * @return string
@@ -596,16 +566,6 @@ class OpenGraph implements OpenGraphInterface, Renderable
      |  Check Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Check if Open Graph is enabled
-     *
-     * @return bool
-     */
-    public function isEnabled()
-    {
-        return $this->enabled;
-    }
-
     /**
      * Cleans a URL string, then checks to see if a given URL is addressable,
      * returns a 200 OK response, and matches the accepted Internet media types (if provided).

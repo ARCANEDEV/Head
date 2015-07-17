@@ -13,6 +13,7 @@ abstract class AbstractCard implements Renderable
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Twitter card type
      *
      * @var string
      */

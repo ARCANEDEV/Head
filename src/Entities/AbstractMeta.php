@@ -18,6 +18,8 @@ abstract class AbstractMeta
     abstract public function render();
 
     /**
+     * Render meta tag
+     *
      * @param  string $name
      * @param  string $content
      * @param  array  $attributes
@@ -38,6 +40,8 @@ abstract class AbstractMeta
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Check is empty
+     *
      * @return bool
      */
     abstract public function isEmpty();

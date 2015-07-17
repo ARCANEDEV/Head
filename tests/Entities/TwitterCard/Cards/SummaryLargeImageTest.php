@@ -14,7 +14,7 @@ class SummaryLargeImageTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @var SummaryLargeImage */
-    private $card;
+    protected $card;
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

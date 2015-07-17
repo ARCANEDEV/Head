@@ -38,7 +38,7 @@ class ImageMediaTest extends VisualMediaTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(ImageMedia::class, $this->media);
         $this->assertVisualMediaInstance();
@@ -46,7 +46,7 @@ class ImageMediaTest extends VisualMediaTestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_url()
+    public function it_can_set_and_get_url()
     {
         $url = 'http://www.company.com/image.jpg';
 
@@ -61,25 +61,25 @@ class ImageMediaTest extends VisualMediaTestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_secure_url()
+    public function it_can_set_and_get_secure_url()
     {
         $this->assertCanSetAndGetSecureURL('https://www.company.com/image.jpg');
     }
 
     /** @test */
-    public function test_can_set_and_get_type()
+    public function it_can_set_and_get_type()
     {
         $this->assertCanSetAndGetType('image/jpeg');
     }
 
     /** @test */
-    public function test_can_set_and_get_width_and_height()
+    public function it_can_set_and_get_width_and_height()
     {
         $this->assertCanSetAndGetWidthAndHeight();
     }
 
     /** @test */
-    public function test_can_convert_extension_to_media_type()
+    public function it_can_convert_extension_to_media_type()
     {
         $extensions = [
             'jpeg'  => 'image/jpeg',
@@ -98,7 +98,7 @@ class ImageMediaTest extends VisualMediaTestCase
     }
 
     /** @test */
-    public function test_can_convert_to_array()
+    public function it_can_convert_to_array()
     {
         $height    = 120;
         $width     = 120;

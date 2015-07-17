@@ -38,13 +38,13 @@ class StylesheetTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Stylesheet::class, $this->stylesheet);
     }
 
     /** @test */
-    public function test_can_set_and_get_source()
+    public function it_can_set_and_get_source()
     {
         $src  = 'assets/css/style.css';
         $this->stylesheet->setSrc($src);
@@ -53,7 +53,7 @@ class StylesheetTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_filename_from_source()
+    public function it_can_get_filename_from_source()
     {
         $this->assertEquals('', $this->stylesheet->getFile());
 
@@ -65,13 +65,13 @@ class StylesheetTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_type()
+    public function it_can_get_type()
     {
         $this->assertEquals('text/css', $this->stylesheet->getType());
     }
 
     /** @test */
-    public function test_can_make_stylesheet()
+    public function it_can_make_stylesheet()
     {
         $file = "style.css";
         $src  = "assets/css/$file";
@@ -83,7 +83,7 @@ class StylesheetTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $this->assertEquals('', $this->stylesheet->render());
 

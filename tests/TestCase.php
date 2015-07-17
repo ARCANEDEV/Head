@@ -3,6 +3,10 @@
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 
+/**
+ * Class TestCase
+ * @package Arcanedev\Head\Tests
+ */
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     /* ------------------------------------------------------------------------------------------------
@@ -16,8 +20,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @param string $class
-     * @param string $method
+     * @param  string $class
+     * @param  string $method
      *
      * @return \ReflectionMethod
      */

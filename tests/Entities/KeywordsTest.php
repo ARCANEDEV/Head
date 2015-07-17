@@ -34,16 +34,16 @@ class KeywordsTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Keywords::class, $this->keywords);
-
         $this->assertTrue($this->keywords->isEmpty());
+        $this->assertEmpty($this->keywords->render());
         $this->assertEquals([], $this->keywords->get());
     }
 
     /** @test */
-    public function test_can_set_and_get_keywords_from_array()
+    public function it_can_set_and_get_keywords_from_array()
     {
         $arrayKeywords = $this->getKeywordsArray();
         $this->keywords->set($arrayKeywords);
@@ -53,7 +53,7 @@ class KeywordsTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_keywords_from_string()
+    public function it_can_set_and_get_keywords_from_string()
     {
         $stringKeywords = $this->getKeywordsString();
         $this->keywords->set($stringKeywords);
@@ -67,7 +67,7 @@ class KeywordsTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception()
+    public function it_must_throw_invalid_type_exception()
     {
         $this->keywords->set(true);
     }
@@ -77,7 +77,7 @@ class KeywordsTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception_on_array_keywords()
+    public function it_must_throw_invalid_type_exception_on_array_keywords()
     {
         $this->keywords->set([
             'keyword 1', 'keyword 2', 123, false
@@ -85,7 +85,7 @@ class KeywordsTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $this->assertEquals('', $this->keywords->render());
 

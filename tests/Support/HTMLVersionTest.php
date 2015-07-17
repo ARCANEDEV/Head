@@ -39,7 +39,7 @@ class HTMLVersionTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->htmlVersion = new HTMLVersion;
         $this->assertInstanceOf(HTMLVersion::class, $this->htmlVersion);
@@ -51,7 +51,7 @@ class HTMLVersionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_version()
+    public function it_can_set_and_get_version()
     {
         $this->assertEquals('4', $this->htmlVersion->set('4')->get());
         $this->assertEquals('5', $this->htmlVersion->set('5')->get());
@@ -61,7 +61,7 @@ class HTMLVersionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_check_version()
+    public function it_can_check_version()
     {
         $this->htmlVersion->set('5');
         $this->assertTrue($this->htmlVersion->isHTML5());
@@ -75,7 +75,7 @@ class HTMLVersionTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\Exception
      */
-    public function test_must_throw_exception_on_empty_version()
+    public function it_must_throw_exception_on_empty_version()
     {
         $this->htmlVersion->set('');
     }
@@ -85,7 +85,7 @@ class HTMLVersionTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception()
+    public function it_must_throw_invalid_type_exception()
     {
         $this->htmlVersion->set(true);
     }
@@ -95,7 +95,7 @@ class HTMLVersionTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidHTMLVersionException
      */
-    public function test_must_throw_invalid_html_version_exception()
+    public function it_must_throw_invalid_html_version_exception()
     {
         $this->htmlVersion->set('1');
     }

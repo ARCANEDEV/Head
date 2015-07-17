@@ -38,32 +38,32 @@ class AudioMediaTest extends AbstractMediaTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(AudioMedia::class, $this->media);
         $this->assertAbstractMediaInstance();
     }
 
     /** @test */
-    public function test_can_set_and_get_url()
+    public function it_can_set_and_get_url()
     {
         $this->assertCanSetAndGetURL('http://www.company.com/audio.mp3');
     }
 
     /** @test */
-    public function test_can_set_and_get_secure_url()
+    public function it_can_set_and_get_secure_url()
     {
         $this->assertCanSetAndGetSecureURL('https://www.company.com/audio.mp3');
     }
 
     /** @test */
-    public function test_can_set_and_get_type()
+    public function it_can_set_and_get_type()
     {
         $this->assertCanSetAndGetType('audio/mpeg');
     }
 
     /** @test */
-    public function test_can_convert_extension_to_media_type()
+    public function it_can_convert_extension_to_media_type()
     {
         $extensions = [
             'swf'   => 'application/x-shockwave-flash',

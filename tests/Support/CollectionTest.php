@@ -39,14 +39,14 @@ class CollectionTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Collection::class, $this->collection);
         $this->assertCount(0, $this->collection);
     }
 
     /** @test */
-    public function test_can_add()
+    public function it_can_add()
     {
         $this->collection->put('foo', 'bar');
         $this->assertCount(1, $this->collection);
@@ -56,7 +56,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_like_array()
+    public function it_can_add_like_array()
     {
         $this->collection['foo'] = 'bar';
         $this->assertCount(1, $this->collection);
@@ -69,7 +69,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_all()
+    public function it_can_get_all()
     {
         $this->collection->put('foo', 'bar');
         $this->collection->put('bar', 'foo');
@@ -88,7 +88,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_one()
+    public function it_can_get_one()
     {
         $this->collection->put('foo', 'bar');
         $this->collection->put('bar', 'foo');
@@ -101,7 +101,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_unset()
+    public function it_can_unset()
     {
         $this->collection->put('foo', 'bar');
         $this->collection->put('bar', 'foo');
@@ -115,7 +115,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_each_loop()
+    public function it_can_each_loop()
     {
         $this->collection->put('foo', 'bar');
         $this->collection->put('bar', 'foo');
@@ -126,7 +126,7 @@ class CollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_instantiate_with_collection()
+    public function it_can_instantiate_with_collection()
     {
         $collection = new Collection([
             'foo'   => 'bar',

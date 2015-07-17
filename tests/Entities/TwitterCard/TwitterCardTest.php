@@ -39,8 +39,22 @@ class TwitterCardTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(TwitterCard::class, $this->twitterCard);
+        $this->assertFalse($this->twitterCard->isEnabled());
+        $this->assertEmpty($this->twitterCard->render());
+    }
+
+    /** @test */
+    public function it_can_enable_and_disable()
+    {
+        $this->twitterCard->enable();
+
+        $this->assertTrue($this->twitterCard->isEnabled());
+
+        $this->twitterCard->disable();
+
+        $this->assertFalse($this->twitterCard->isEnabled());
     }
 }

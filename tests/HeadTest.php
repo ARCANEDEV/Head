@@ -4,6 +4,7 @@ use Arcanedev\Head\Entities\Charset;
 use Arcanedev\Head\Entities\Description;
 use Arcanedev\Head\Entities\Keywords;
 use Arcanedev\Head\Entities\Meta;
+use Arcanedev\Head\Entities\OpenGraph\OpenGraph;
 use Arcanedev\Head\Entities\Title;
 use Arcanedev\Head\Head;
 
@@ -43,14 +44,14 @@ class HeadTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Head::class, $this->head);
         $this->assertEquals('UTF-8', $this->head->charset()->get());
     }
 
     /** @test */
-    public function test_can_get_default_config()
+    public function it_can_get_default_config()
     {
         $config     = $this->head->getConfig();
 
@@ -59,7 +60,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_config_from_array()
+    public function it_can_set_and_get_config_from_array()
     {
         $this->head->setConfig([
             'charset' => 'ISO-8859-1',
@@ -73,7 +74,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_config_from_file()
+    public function it_can_set_and_get_config_from_file()
     {
         $this->head->configPath(__DIR__ . '/data/config-valid.php');
 
@@ -89,7 +90,7 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\FileNotFoundException
      */
-    public function test_must_throw_file_not_found_exception_on_config_path()
+    public function it_must_throw_file_not_found_exception_on_config_path()
     {
         $this->head->configPath(__DIR__ . '/data/config-not-found.php');
     }
@@ -99,13 +100,13 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception_on_config_path()
+    public function it_must_throw_invalid_type_exception_on_config_path()
     {
         $this->head->configPath(__DIR__ . '/data/config-invalid.php');
     }
 
     /** @test */
-    public function test_can_set_and_get_charset()
+    public function it_can_set_and_get_charset()
     {
         $this->assertEquals('UTF-8', $this->head->charset()->get());
         $this->assertEquals(
@@ -135,13 +136,13 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception_on_charset()
+    public function it_must_throw_invalid_type_exception_on_charset()
     {
         $this->head->setCharset(true);
     }
 
     /** @test */
-    public function test_can_set_and_get_title()
+    public function it_can_set_and_get_title()
     {
         $title = 'Hello Title';
         $this->head->setTitle($title);
@@ -154,7 +155,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_site_name()
+    public function it_can_set_and_get_site_name()
     {
         $siteName = 'Company name';
 
@@ -164,7 +165,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_by_title_class()
+    public function it_can_set_and_get_by_title_class()
     {
         $title = new Title;
         $title->set('Hello Title')
@@ -180,18 +181,45 @@ class HeadTest extends TestCase
         );
     }
 
+    /** @test */
+    public function it_can_show_and_hide_site_name()
+    {
+        $title    = 'Hello Title';
+        $siteName = 'Company Name';
+        $this->head->setTitle($title)->setSiteName($siteName);
+
+        $this->assertEquals(
+            "<title>$title - $siteName</title>",
+            $this->head->title()->render()
+        );
+
+        $this->head->hideSiteName();
+
+        $this->assertEquals(
+            "<title>$title</title>",
+            $this->head->title()->render()
+        );
+
+        $this->head->showSiteName();
+
+        $this->assertEquals(
+            "<title>$title - $siteName</title>",
+            $this->head->title()->render()
+        );
+    }
+
     /**
      * @test
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception_on_title()
+    public function it_must_throw_invalid_type_exception_on_title()
     {
         $this->head->setTitle(true);
     }
 
     /** @test */
-    public function test_can_set_and_get_description()
+    public function it_can_set_and_get_description()
     {
         $description = 'Hello Description';
         $this->head->setDescription($description);
@@ -204,7 +232,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_by_description_class()
+    public function it_can_set_and_get_by_description_class()
     {
         $description = new Description;
         $description->set('Hello Description');
@@ -222,13 +250,13 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception_on_description()
+    public function it_must_throw_invalid_type_exception_on_description()
     {
         $this->head->setDescription(true);
     }
 
     /** @test */
-    public function test_can_set_and_get_keywords()
+    public function it_can_set_and_get_keywords()
     {
         // Array Keywords
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
@@ -246,7 +274,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_set_and_get_by_keywords_class()
+    public function it_set_and_get_by_keywords_class()
     {
         $arrayKeywords  = ['keyword 1', 'keyword 2', 'keyword 3', 'keyword 4', 'keyword 5'];
 
@@ -263,13 +291,13 @@ class HeadTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception_on_keywords()
+    public function it_must_throw_invalid_type_exception_on_keywords()
     {
         $this->head->setKeywords(true);
     }
 
     /** @test */
-    public function test_can_set_and_get_title_description_keywords()
+    public function it_can_set_and_get_title_description_keywords()
     {
         $title       = 'Hello Title';
         $description = 'Hello Description';
@@ -282,7 +310,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_metas()
+    public function it_can_set_and_get_metas()
     {
         $this->assertEquals('', $this->head->metas()->render());
 
@@ -297,7 +325,13 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_enable_and_disable_open_graph()
+    public function it_can_get_open_graph_class()
+    {
+        $this->assertInstanceOf(OpenGraph::class, $this->head->openGraph());
+    }
+
+    /** @test */
+    public function it_can_enable_and_disable_open_graph()
     {
         $this->assertFalse($this->head->isOpenGraphEnabled());
 
@@ -311,7 +345,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render_all()
+    public function it_can_render_all()
     {
         $title         = 'Hello world';
         $description   = 'Description of the hello world';
@@ -341,7 +375,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_and_render_styles()
+    public function it_can_add_and_render_styles()
     {
         $this->head->addStyle('assets/css/style.css');
         $this->head->addStyle('assets/css/bootstrap.min.css');
@@ -355,7 +389,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_many_and_render_styles()
+    public function it_can_add_many_and_render_styles()
     {
         $this->head->addStyles([
             'assets/css/style.css',
@@ -371,7 +405,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_and_render_scripts()
+    public function it_can_add_and_render_scripts()
     {
         $this->head->addScript('assets/js/jquery.min.js');
         $this->head->addScript('assets/js/bootstrap.min.js');
@@ -385,7 +419,7 @@ class HeadTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_many_and_render_scripts()
+    public function it_can_add_many_and_render_scripts()
     {
         $this->head->addScripts([
             'assets/js/jquery.min.js',

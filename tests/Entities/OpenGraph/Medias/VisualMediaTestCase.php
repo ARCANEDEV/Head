@@ -30,7 +30,7 @@ abstract class VisualMediaTestCase extends AbstractMediaTestCase
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Test Functions
+     |  Asserts Functions
      | ------------------------------------------------------------------------------------------------
      */
     protected function assertVisualMediaInstance()

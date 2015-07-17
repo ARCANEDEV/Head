@@ -38,14 +38,14 @@ class ScriptCollectionTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(ScriptCollection::class, $this->scriptCollection);
         $this->assertCount(0, $this->scriptCollection);
     }
 
     /** @test */
-    public function test_can_add_script()
+    public function it_can_add_script()
     {
         $this->scriptCollection->add('assets/js/jquery-min.js');
         $this->assertCount(1, $this->scriptCollection);
@@ -58,7 +58,7 @@ class ScriptCollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_many_scripts()
+    public function it_can_add_many_scripts()
     {
         $this->scriptCollection->addMany([
             'assets/js/jquery-min.js',
@@ -70,7 +70,7 @@ class ScriptCollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $scripts = [];
 

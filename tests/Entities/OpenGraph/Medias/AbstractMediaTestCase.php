@@ -31,7 +31,7 @@ abstract class AbstractMediaTestCase extends TestCase
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Test Functions
+     |  Asserts Functions
      | ------------------------------------------------------------------------------------------------
      */
     protected function assertAbstractMediaInstance()

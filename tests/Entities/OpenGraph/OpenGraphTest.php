@@ -42,7 +42,7 @@ class OpenGraphTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(OpenGraph::class, $this->og);
         // TODO: Add Countable to collections
@@ -53,7 +53,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_type()
+    public function it_can_set_and_get_type()
     {
         $type = 'website';
         $this->og->setType($type);
@@ -62,7 +62,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_title()
+    public function it_can_set_and_get_title()
     {
         $title = 'Hello World';
         $this->og->setTitle($title);
@@ -75,7 +75,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_site_name()
+    public function it_can_set_and_get_site_name()
     {
         $siteName = 'Company Name';
         $this->og->setSiteName($siteName);
@@ -88,7 +88,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_description()
+    public function it_can_set_and_get_description()
     {
         $description = 'Hello world description';
         $this->og->setDescription($description);
@@ -102,7 +102,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_url()
+    public function it_can_set_and_get_url()
     {
         $this->og->setURL('');
         $this->assertEmpty($this->og->getURL());
@@ -117,7 +117,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_determiner()
+    public function it_can_set_and_get_determiner()
     {
         $determiner = 'the';
         $this->og->setDeterminer($determiner);
@@ -126,7 +126,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_locale()
+    public function it_can_set_and_get_locale()
     {
         $locale = 'fr_FR';
         $this->og->setLocale($locale);
@@ -135,7 +135,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_enable_and_disable_open_graph()
+    public function it_can_enable_and_disable_open_graph()
     {
         $this->assertFalse($this->og->isEnabled());
 
@@ -147,7 +147,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_image()
+    public function it_can_add_image()
     {
         $this->assertEquals(0, $this->og->imagesCount());
 
@@ -173,7 +173,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_video()
+    public function it_can_add_video()
     {
         $this->assertEquals(0, $this->og->videosCount());
 
@@ -199,7 +199,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_not_add_video_without_url()
+    public function it_can_not_add_video_without_url()
     {
         $this->assertEquals(0, $this->og->videosCount());
 
@@ -210,7 +210,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_audios()
+    public function it_can_add_audios()
     {
         $this->assertEquals(0, $this->og->audiosCount());
 
@@ -232,7 +232,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_not_add_audio_without_url()
+    public function it_can_not_add_audio_without_url()
     {
         $this->assertEquals(0, $this->og->audiosCount());
 
@@ -243,7 +243,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $this->og->enable();
         $this->assertEquals('', $this->og->render());
@@ -276,7 +276,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_validate_url()
+    public function it_can_validate_url()
     {
         $this->assertEmpty(OpenGraph::isValidUrl(''));
         $this->assertEmpty(OpenGraph::isValidUrl('invalid-url'));
@@ -288,7 +288,7 @@ class OpenGraphTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_supported_types()
+    public function it_can_get_supported_types()
     {
         $this->assertEquals(8,  count(OpenGraph::supportedTypes()));
         $this->assertEquals(43, count(OpenGraph::supportedTypes(true)));

@@ -34,14 +34,15 @@ class DescriptionTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Description::class, $this->description);
         $this->assertTrue($this->description->isEmpty());
+        $this->assertEmpty($this->description->render());
     }
 
     /** @test */
-    public function test_can_set_and_get_description()
+    public function it_can_set_and_get_description()
     {
         $this->assertEquals('', $this->description->get());
 
@@ -56,13 +57,13 @@ class DescriptionTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception()
+    public function it_must_throw_invalid_type_exception()
     {
         $this->description->set(true);
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $this->assertEquals('', $this->description->render());
 

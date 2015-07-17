@@ -41,7 +41,7 @@ class MetaBuilderTest extends TestCase
     /**
      * @test
      */
-    public function test_can_render_meta_tags()
+    public function it_can_render_meta_tags()
     {
         $prefix     = 'arc';
 

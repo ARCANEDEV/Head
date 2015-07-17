@@ -38,13 +38,13 @@ class ScriptTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Script::class, $this->script);
     }
 
     /** @test */
-    public function test_can_set_and_get_source()
+    public function it_can_set_and_get_source()
     {
         $src  = 'assets/js/jquery-min.js';
         $this->script->setSrc($src);
@@ -53,7 +53,7 @@ class ScriptTest extends TestCase
     }
 
     /** @test */
-    public function test_can_get_filename_from_source()
+    public function it_can_get_filename_from_source()
     {
         $this->assertEquals('', $this->script->getFile());
 
@@ -65,7 +65,7 @@ class ScriptTest extends TestCase
     }
 
     /** @test */
-    public function test_can_make_script()
+    public function it_can_make_script()
     {
         $file = 'jquery-min.js';
         $src  = "assets/js/$file";
@@ -77,7 +77,7 @@ class ScriptTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $this->assertEquals('', $this->script->render());
 

@@ -38,14 +38,14 @@ class MetaCollectionTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(MetaCollection::class, $this->metaCollection);
         $this->assertCount(0, $this->metaCollection);
     }
 
     /** @test */
-    public function test_can_add_many_metas_from_array()
+    public function it_can_add_many_metas_from_array()
     {
         $this->metaCollection = MetaCollection::make([
             [
@@ -66,7 +66,7 @@ class MetaCollectionTest extends TestCase
      * @expectedException \Arcanedev\Head\Exceptions\Exception
      * @expectedExceptionMessage The meta [name] attribute not found !
      */
-    public function test_must_throw_exception_on_name_not_found()
+    public function it_must_throw_exception_on_name_not_found()
     {
         MetaCollection::make([
             [
@@ -84,7 +84,7 @@ class MetaCollectionTest extends TestCase
      * @expectedException \Arcanedev\Head\Exceptions\Exception
      * @expectedExceptionMessage The meta [content] attribute not found !
      */
-    public function test_must_throw_exception_on_content_not_found()
+    public function it_must_throw_exception_on_content_not_found()
     {
         MetaCollection::make([
             [
@@ -97,7 +97,7 @@ class MetaCollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $metas = [
             [

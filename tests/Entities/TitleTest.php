@@ -34,14 +34,14 @@ class TitleTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Title::class, $this->title);
         $this->assertEmpty($this->title->render());
     }
 
     /** @test */
-    public function test_can_set_and_get_title()
+    public function it_can_set_and_get_title()
     {
         $this->title->set('My awesome title');
         $this->assertEquals('My awesome title', $this->title->get());
@@ -53,7 +53,7 @@ class TitleTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\EmptyTitleException
      */
-    public function test_must_throw_empty_title_exception()
+    public function it_must_throw_empty_title_exception()
     {
         $this->title->set('');
     }
@@ -63,13 +63,13 @@ class TitleTest extends TestCase
      *
      * @expectedException \Arcanedev\Head\Exceptions\InvalidTypeException
      */
-    public function test_must_throw_invalid_type_exception()
+    public function it_must_throw_invalid_type_exception()
     {
         $this->title->set(true);
     }
 
     /** @test */
-    public function test_can_set_and_get_site_name()
+    public function it_can_set_and_get_site_name()
     {
         $siteName = 'Company Name';
         $this->title->setSiteName($siteName);
@@ -79,7 +79,7 @@ class TitleTest extends TestCase
     }
 
     /** @test */
-    public function test_can_toggle_site_name_visibility()
+    public function it_can_toggle_site_name_visibility()
     {
         $this->assertTrue($this->title->isSiteNameVisible());
         $this->assertFalse($this->title->isSiteNameHidden());
@@ -94,7 +94,7 @@ class TitleTest extends TestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_separator()
+    public function it_can_set_and_get_separator()
     {
         $this->title->separator(' -');
         $this->assertEquals('-', $this->title->separator());
@@ -110,7 +110,7 @@ class TitleTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render_title()
+    public function it_can_render_title()
     {
         $title = 'Hello world';
 
@@ -121,7 +121,7 @@ class TitleTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render_title_with_siteName()
+    public function it_can_render_title_with_siteName()
     {
         $title    = 'My awesome title';
         $siteName = 'Site Name';
@@ -134,7 +134,7 @@ class TitleTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render_title_without_site_name()
+    public function it_can_render_title_without_site_name()
     {
         $title    = 'My awesome title';
         $siteName = 'Site Name';
@@ -149,7 +149,7 @@ class TitleTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render_title_with_order()
+    public function it_can_render_title_with_order()
     {
         $title    = 'My awesome title';
         $siteName = 'Site Name';
@@ -174,7 +174,7 @@ class TitleTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render_title_six()
+    public function it_can_render_title_six()
     {
         $title     = 'My awesome title';
         $siteName  = 'Company Name';

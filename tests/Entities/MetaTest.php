@@ -42,6 +42,7 @@ class MetaTest extends TestCase
     {
         $this->assertInstanceOf(Meta::class, $this->meta);
         $this->assertTrue($this->meta->isEmpty());
+        $this->assertEmpty($this->meta->render());
     }
 
     /** @test */

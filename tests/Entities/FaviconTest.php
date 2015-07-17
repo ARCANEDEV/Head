@@ -38,7 +38,7 @@ class FaviconTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->favicon = new Favicon;
         $this->assertInstanceOf(Favicon::class, $this->favicon);
@@ -46,7 +46,7 @@ class FaviconTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $this->assertEquals(
             implode(PHP_EOL, [

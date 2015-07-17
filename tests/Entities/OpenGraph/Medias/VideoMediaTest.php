@@ -38,7 +38,7 @@ class VideoMediaTest extends VisualMediaTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(VideoMedia::class, $this->media);
         $this->assertVisualMediaInstance();
@@ -46,7 +46,7 @@ class VideoMediaTest extends VisualMediaTestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_url()
+    public function it_can_set_and_get_url()
     {
         $this->assertCanSetAndGetURL('http://www.company.com/video.mp4');
 
@@ -54,13 +54,13 @@ class VideoMediaTest extends VisualMediaTestCase
     }
 
     /** @test */
-    public function test_can_set_and_get_secure_url()
+    public function it_can_set_and_get_secure_url()
     {
         $this->assertCanSetAndGetSecureURL('https://www.company.com/video.mp4');
     }
 
     /** @test */
-    public function test_can_set_and_get_type()
+    public function it_can_set_and_get_type()
     {
         $this->assertCanSetAndGetType('application/x-shockwave-flash');
     }
@@ -72,7 +72,7 @@ class VideoMediaTest extends VisualMediaTestCase
     }
 
     /** @test */
-    public function test_can_convert_extension_to_media_type()
+    public function it_can_convert_extension_to_media_type()
     {
         $extensions = [
             'swf'   => 'application/x-shockwave-flash',

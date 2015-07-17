@@ -40,7 +40,7 @@ class StylesheetCollectionTest extends TestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function test_can_be_instantiated()
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(
             StylesheetCollection::class,
@@ -49,7 +49,7 @@ class StylesheetCollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_style()
+    public function it_can_add_style()
     {
         $this->styleCollection->add('assets/css/style.css');
         $this->assertCount(1, $this->styleCollection);
@@ -62,7 +62,7 @@ class StylesheetCollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_add_many_styles()
+    public function it_can_add_many_styles()
     {
         $this->styleCollection->addMany([
             'assets/css/style.css',
@@ -73,7 +73,7 @@ class StylesheetCollectionTest extends TestCase
         $this->assertCount(2, $this->styleCollection);
     }
 
-    public function test_can_ignore_duplicated_styles()
+    public function it_can_ignore_duplicated_styles()
     {
         $this->styleCollection->add('assets/css/bootstrap.min.css');
         $this->styleCollection->add('assets/css/style.css');
@@ -87,7 +87,7 @@ class StylesheetCollectionTest extends TestCase
     }
 
     /** @test */
-    public function test_can_render()
+    public function it_can_render()
     {
         $styles = [];
 

@@ -292,11 +292,14 @@ class Title implements TitleInterface, Renderable
         }
 
         $title = [];
+
         $this->getFirst($title);
         $this->renderSeparator($title);
         $this->getLast($title);
 
-        return $this->tag->setText(implode(' ', $title));
+        $this->tag->setText(implode(' ', $title));
+
+        return $this->tag->render();
     }
 
     /**

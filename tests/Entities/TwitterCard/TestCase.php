@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\Head\Tests\Entities\TwitterCard;
 
+use Arcanedev\Head\Entities\TwitterCard\Cards\AbstractCard;
 use Arcanedev\Head\Tests\Entities\TestCase as EntitiesTestCase;
 
 /**
@@ -8,6 +9,13 @@ use Arcanedev\Head\Tests\Entities\TestCase as EntitiesTestCase;
  */
 abstract class TestCase extends EntitiesTestCase
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
+    /** @var AbstractCard */
+    protected $card;
+
     /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------

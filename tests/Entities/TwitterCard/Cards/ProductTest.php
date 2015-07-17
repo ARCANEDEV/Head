@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\Head\Tests\Entities\TwitterCard\Cards;
 
 use Arcanedev\Head\Entities\TwitterCard\Cards\Product;
-use Arcanedev\Head\Tests\Entities\TestCase;
+use Arcanedev\Head\Tests\Entities\TwitterCard\TestCase;
 
 /**
  * Class ProductTest

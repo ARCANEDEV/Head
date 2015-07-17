@@ -1,7 +1,7 @@
 <?php namespace Arcanedev\Head\Tests\Entities\TwitterCard\Cards;
 
 use Arcanedev\Head\Entities\TwitterCard\Cards\Summary;
-use Arcanedev\Head\Tests\Entities\TestCase;
+use Arcanedev\Head\Tests\Entities\TwitterCard\TestCase;
 
 /**
  * Class SummaryTest
@@ -156,27 +156,5 @@ class SummaryTest extends TestCase
         ]);
 
         $this->assertEquals($tags, $this->card->render());
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Generate twitter card tags
-     *
-     * @param  array $tags
-     *
-     * @return string
-     */
-    private function generateTags(array $tags)
-    {
-        $result = [];
-
-        foreach ($tags as $name => $content) {
-            $result[] = "<meta name=\"twitter:$name\" content=\"$content\">";
-        }
-
-        return implode(PHP_EOL, $result);
     }
 }

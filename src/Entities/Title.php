@@ -295,7 +295,9 @@ class Title implements TitleInterface, Renderable
 
         $this->getFirst($title);
         $this->renderSeparator($title);
-        $this->getLast($title);
+        if ($this->checkSiteName()) {
+            $this->getLast($title);
+        }
 
         $this->tag->setText(implode(' ', $title));
 
@@ -309,10 +311,9 @@ class Title implements TitleInterface, Renderable
      */
     private function getFirst(&$title)
     {
-        if ($this->checkSiteName() && $this->isSiteNameFirst())
-            $this->renderSiteName($title);
-        else
-            $this->renderTitle($title);
+        $title[] = ($this->checkSiteName() && $this->isSiteNameFirst())
+            ? $this->getSitename()
+            : $this->get();
     }
 
     /**
@@ -322,36 +323,9 @@ class Title implements TitleInterface, Renderable
      */
     private function getLast(&$title)
     {
-        if ( ! $this->checkSiteName()) {
-            return;
-        }
-
-        if ( ! $this->isSiteNameFirst())
-            $this->renderSiteName($title);
-        else
-            $this->renderTitle($title);
-    }
-
-    /**
-     * Render Title
-     *
-     * @param array $title
-     */
-    private function renderTitle(&$title)
-    {
-        $title[] = $this->get();
-    }
-
-    /**
-     * Render Site Name
-     *
-     * @param array $title
-     */
-    private function renderSiteName(&$title)
-    {
-        if ($this->checkSiteName()) {
-            $title[] = $this->getSitename();
-        }
+        $title[] = $this->isSiteNameFirst()
+            ? $this->get()
+            : $this->getSitename();
     }
 
     /**

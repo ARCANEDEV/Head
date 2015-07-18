@@ -48,6 +48,7 @@ abstract class TestCase extends EntitiesTestCase
 
     /**
      * Generate twitter card tags
+     *
      * @param  string $name
      * @param  string $content
      *

@@ -32,9 +32,29 @@ abstract class TestCase extends EntitiesTestCase
         $result = [];
 
         foreach ($tags as $name => $content) {
-            $result[] = "<meta name=\"twitter:$name\" content=\"$content\">";
+            if (is_array($content)) {
+                foreach(array_dot($content, $name . ':') as $key => $value) {
+                    $result[] = $this->generateTag(str_replace('.', ':', $key), $value);
+                }
+
+                continue;
+            }
+
+            $result[] = $this->generateTag($name, $content);
         }
 
         return implode(PHP_EOL, $result);
+    }
+
+    /**
+     * Generate twitter card tags
+     * @param  string $name
+     * @param  string $content
+     *
+     * @return string
+     */
+    private function generateTag($name, $content)
+    {
+        return "<meta name=\"twitter:$name\" content=\"$content\">";
     }
 }

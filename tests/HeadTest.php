@@ -402,8 +402,8 @@ class HeadTest extends TestCase
         $this->head->addStyle('assets/css/bootstrap.min.css');
 
         $styles = implode(PHP_EOL, [
-            '<link rel="stylesheet" src="assets/css/style.css">',
-            '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
+            '<link rel="stylesheet" href="assets/css/style.css">',
+            '<link rel="stylesheet" href="assets/css/bootstrap.min.css">',
         ]);
 
         $this->assertEquals($styles, $this->head->styles());
@@ -418,8 +418,8 @@ class HeadTest extends TestCase
         ]);
 
         $styles = implode(PHP_EOL, [
-            '<link rel="stylesheet" src="assets/css/style.css">',
-            '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
+            '<link rel="stylesheet" href="assets/css/style.css">',
+            '<link rel="stylesheet" href="assets/css/bootstrap.min.css">',
         ]);
 
         $this->assertEquals($styles, $this->head->styles());

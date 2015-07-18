@@ -41,6 +41,7 @@ class StylesheetTest extends TestCase
     public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Stylesheet::class, $this->stylesheet);
+        $this->assertEmpty($this->stylesheet->render());
     }
 
     /** @test */
@@ -92,13 +93,13 @@ class StylesheetTest extends TestCase
         $this->stylesheet->setSrc($src);
 
         $this->assertEquals(
-            "<link rel=\"stylesheet\" src=\"$src\">",
+            "<link rel=\"stylesheet\" href=\"$src\">",
             $this->stylesheet->render()
         );
 
         $this->stylesheet->setVersion(4);
         $this->assertEquals(
-            "<link rel=\"stylesheet\" $type src=\"$src\">",
+            "<link rel=\"stylesheet\" $type href=\"$src\">",
             $this->stylesheet->render()
         );
     }

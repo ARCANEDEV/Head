@@ -342,8 +342,8 @@ class FacadeTest extends LaravelTestCase
         Head::addStyle('assets/css/bootstrap.min.css');
 
         $styles = implode(PHP_EOL, [
-            '<link rel="stylesheet" src="assets/css/style.css">',
-            '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
+            '<link rel="stylesheet" href="assets/css/style.css">',
+            '<link rel="stylesheet" href="assets/css/bootstrap.min.css">',
         ]);
 
         $this->assertEquals($styles, Head::styles());
@@ -358,8 +358,8 @@ class FacadeTest extends LaravelTestCase
         ]);
 
         $styles = implode(PHP_EOL, [
-            '<link rel="stylesheet" src="assets/css/style.css">',
-            '<link rel="stylesheet" src="assets/css/bootstrap.min.css">',
+            '<link rel="stylesheet" href="assets/css/style.css">',
+            '<link rel="stylesheet" href="assets/css/bootstrap.min.css">',
         ]);
 
         $this->assertEquals($styles, Head::styles());

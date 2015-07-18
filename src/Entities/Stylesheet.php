@@ -128,7 +128,7 @@ class Stylesheet
             $type = ' type="' . $this->getType() . '"';
         }
 
-        return '<link rel="'. self::REL .'"' . $type  . ' src="' . $this->getSrc() . '">';
+        return '<link rel="'. self::REL .'"' . $type  . ' href="' . $this->getSrc() . '">';
     }
 
     /* ------------------------------------------------------------------------------------------------

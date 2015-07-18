@@ -125,6 +125,6 @@ class StylesheetCollectionTest extends TestCase
      */
     private function getTag($src)
     {
-        return '<link rel="stylesheet" src="' . $src . '">';
+        return '<link rel="stylesheet" href="' . $src . '">';
     }
 }

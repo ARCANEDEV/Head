@@ -5,6 +5,7 @@
  * @package Arcanedev\Head\Entities\TwitterCard\Cards
  *
  * @link https://dev.twitter.com/cards/types/player
+ * @todo: Complete the class implementation
  */
 class Player extends AbstractCard
 {

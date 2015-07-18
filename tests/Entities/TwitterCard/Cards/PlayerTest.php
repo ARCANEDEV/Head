@@ -43,5 +43,6 @@ class PlayerTest extends TestCase
     {
         $this->assertInstanceOf(Player::class, $this->card);
         $this->assertEmpty($this->card->render());
+        $this->assertEquals('player', $this->card->getType());
     }
 }

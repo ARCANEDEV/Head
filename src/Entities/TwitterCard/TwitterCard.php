@@ -8,7 +8,7 @@ use Arcanedev\Head\Traits\EnablerTrait;
  * Class TwitterCard
  * @package Arcanedev\Head\Entities\TwitterCard
  *
- * @todo: complete the implementation
+ * @todo: Complete the class implementation
  */
 class TwitterCard implements Renderable
 {
@@ -82,6 +82,10 @@ class TwitterCard implements Renderable
         // TODO: Implement __construct() method.
     }
 
+    /* ------------------------------------------------------------------------------------------------
+     |  Getters & Setters
+     | ------------------------------------------------------------------------------------------------
+     */
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -100,5 +104,4 @@ class TwitterCard implements Renderable
      |  Check Functions
      | ------------------------------------------------------------------------------------------------
      */
-
 }

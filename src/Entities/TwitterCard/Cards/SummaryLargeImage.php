@@ -29,7 +29,7 @@ class SummaryLargeImage extends AbstractCard
      *
      * @var string
      */
-    protected $creator     = '';
+    protected $creator      = '';
 
     /**
      * Title should be concise and will be truncated at 70 characters.
@@ -60,7 +60,7 @@ class SummaryLargeImage extends AbstractCard
      *
      * @var string
      */
-    protected $image       = '';
+    protected $image = '';
 
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
@@ -178,7 +178,7 @@ class SummaryLargeImage extends AbstractCard
      */
     public function isEmpty()
     {
-        return parent::isEmpty() || empty($this->description);
+        return parent::isEmpty() || empty($this->title) || empty($this->description);
     }
 
     /**

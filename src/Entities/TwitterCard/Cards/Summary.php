@@ -145,7 +145,7 @@ class Summary extends AbstractCard
      */
     public function isEmpty()
     {
-        return parent::isEmpty() || empty($this->description);
+        return parent::isEmpty() || empty($this->title) || empty($this->description);
     }
 
     /**

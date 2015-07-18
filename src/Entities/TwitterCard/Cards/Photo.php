@@ -169,6 +169,16 @@ class Photo extends AbstractCard
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Check if empty
+     *
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return parent::isEmpty() || empty($this->title);
+    }
+
+    /**
      * Check creator
      *
      * @param string $creator

@@ -130,7 +130,7 @@ abstract class AbstractCard implements Renderable
      */
     public function isEmpty()
     {
-        return empty($this->site) || empty($this->title);
+        return empty($this->card) || empty($this->site);
     }
 
     /**
